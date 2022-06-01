@@ -44,7 +44,7 @@ Cabo Verde Elecronic Invoice
 .Build eFatura and SAFT-CV
 [source, bash]
 ----
-mvn -Pefcv,saftcv clean install
+mvn -P efcv,saftcv clean install
 ----
 
 == Reference
