@@ -21,13 +21,26 @@
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>5.3.1</version>
+                <version>6.0.0</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
+                            <skipValidateSpec>true</skipValidateSpec>
+                            
+                            <!-- <verbose>true</verbose> -->
+
+                            <configOptions>
+                                <identifierNamingConvention>snake_case</identifierNamingConvention>
+                                <allowUnicodeIdentifiers></allowUnicodeIdentifiers>
+                                <legacyDiscriminatorBehavior>true</legacyDiscriminatorBehavior>
+                                <serializationLibrary>gson</serializationLibrary>
+                                <withXml>true</withXml>
+                            </configOptions>
+                            
+
                             <inputSpec>${project.basedir}/src/main/resources/openapi_ 1_1_0.yaml</inputSpec>
                             <generatorName>java</generatorName>
                             <packageName>io.github.kriolos.efatura.clientapi.generated</packageName>

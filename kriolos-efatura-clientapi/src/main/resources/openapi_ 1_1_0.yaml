@@ -72,7 +72,7 @@ paths:
       tags:
       - DATA
       summary: Devolve a data/hora atual da Plataforma Eletrónica.
-      operationId: DataResource_getPeDateTime
+      operationId: PublicDataResource_getPeDateTime
       responses:
         "200":
           description: OK
@@ -200,6 +200,34 @@ paths:
       - SecurityScheme:
         - cv_ef_dfe_create
         - cv_ef_dfe_all
+    delete:
+      tags:
+      - DFE
+      summary: Elimina todos os DFEs e os respetivos eventos no repositório de Homologação/Teste.
+      operationId: DfeResource_deleteDfeEvent
+      parameters:
+      - name: cv-ef-repository-code
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseLong'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseLong'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_dfe_delete
+        - cv_ef_dfe_all
   /v1/dfe/pdf/{Id}:
     get:
       tags:
@@ -308,8 +336,48 @@ paths:
       tags:
       - EVENT
       summary: Lista de eventos limitada em 10000 eventos.
-      operationId: EventResource_getEventList
+      operationId: EventResource_getEventListV1
       parameters:
+      - name: AuthorizedDateEnd
+        in: query
+        schema:
+          type: string
+      - name: AuthorizedDateStart
+        in: query
+        schema:
+          type: string
+      - name: DocumentNumberEnd
+        in: query
+        schema:
+          type: string
+      - name: DocumentNumberStart
+        in: query
+        schema:
+          type: string
+      - name: DocumentTypeCodes
+        in: query
+        schema:
+          type: string
+      - name: EventId
+        in: query
+        schema:
+          type: string
+      - name: EventTypeCodes
+        in: query
+        schema:
+          type: string
+      - name: IUD
+        in: query
+        schema:
+          type: string
+      - name: LedCode
+        in: query
+        schema:
+          type: string
+      - name: Year
+        in: query
+        schema:
+          type: string
       - name: cv-ef-repository-code
         in: header
         schema:
@@ -339,10 +407,6 @@ paths:
       operationId: EventResource_createEvent
       parameters:
       - name: cv-ef-repository-code
-        in: header
-        schema:
-          type: string
-      - name: cv-ef-software-code
         in: header
         schema:
           type: string
@@ -376,7 +440,7 @@ paths:
       - SecurityScheme:
         - cv_ef_event_create
         - cv_ef_event_all
-  /v1/event/{Id}:
+  /v1/event/xml/{Id}:
     get:
       tags:
       - EVENT
@@ -402,6 +466,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseString'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_event_read
+        - cv_ef_event_all
+  /v1/event/{Id}:
+    get:
+      tags:
+      - EVENT
+      summary: Consulta de evento com ID.
+      operationId: EventResource_getEventById
+      parameters:
+      - name: Id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: cv-ef-repository-code
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseEvent'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseEvent'
         "401":
           description: Not Authorized
         "403":
@@ -1156,6 +1254,83 @@ paths:
       - SecurityScheme:
         - cv_ef_dfe_read_list
         - cv_ef_dfe_all
+  /v2/event:
+    get:
+      tags:
+      - EVENT
+      summary: Lista de eventos que suporta paginação.
+      operationId: EventResource_getEventListV2
+      parameters:
+      - name: AuthorizedDateEnd
+        in: query
+        schema:
+          type: string
+      - name: AuthorizedDateStart
+        in: query
+        schema:
+          type: string
+      - name: DocumentNumberEnd
+        in: query
+        schema:
+          type: string
+      - name: DocumentNumberStart
+        in: query
+        schema:
+          type: string
+      - name: DocumentTypeCodes
+        in: query
+        schema:
+          type: string
+      - name: EventId
+        in: query
+        schema:
+          type: string
+      - name: EventTypeCodes
+        in: query
+        schema:
+          type: string
+      - name: IUD
+        in: query
+        schema:
+          type: string
+      - name: ItemsPerPage
+        in: query
+        schema:
+          type: string
+      - name: LedCode
+        in: query
+        schema:
+          type: string
+      - name: Page
+        in: query
+        schema:
+          type: string
+      - name: Year
+        in: query
+        schema:
+          type: string
+      - name: cv-ef-repository-code
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/EventListPaginationResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventListPaginationResponse'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_event_read
+        - cv_ef_event_all
 components:
   schemas:
     Address:
@@ -1298,6 +1473,12 @@ components:
         _calcTaxTotalAmountRoundedByLine:
           format: double
           type: number
+        _calcWithholdingTaxTotalAmount:
+          format: double
+          type: number
+        _calcWithholdingTaxTotalAmountRoundedByLine:
+          format: double
+          type: number
         _calcPayableAmount:
           format: double
           type: number
@@ -1360,8 +1541,10 @@ components:
         NetTotal:
           format: double
           type: number
-        Tax:
-          $ref: '#/components/schemas/DfeLineTax'
+        Taxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DfeLineTax'
         Item:
           $ref: '#/components/schemas/DfeLineItem'
     DfeLineItem:
@@ -1410,6 +1593,9 @@ components:
         TaxExemptionReasonCode:
           format: int32
           type: integer
+        TaxTotal:
+          format: double
+          type: number
     DfeListPaginationResponse:
       type: object
       properties:
@@ -1422,6 +1608,10 @@ components:
             wrapped: true
         processedObject:
           type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
           writeOnly: true
         succeeded:
           type: boolean
@@ -1447,6 +1637,10 @@ components:
             wrapped: true
         processedObject:
           type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
           writeOnly: true
         succeeded:
           type: boolean
@@ -1539,8 +1733,10 @@ components:
         PaymentAmount:
           format: double
           type: number
-        Tax:
-          $ref: '#/components/schemas/DfeLineTax'
+        Taxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DfeLineTax'
     DfeRentReceipt:
       type: object
       properties:
@@ -1608,6 +1804,9 @@ components:
         Discount:
           $ref: '#/components/schemas/DfeDiscount'
         TaxTotalAmount:
+          format: double
+          type: number
+        WithholdingTaxTotalAmount:
           format: double
           type: number
         PayableRoundingAmount:
@@ -1687,6 +1886,10 @@ components:
             wrapped: true
         processedObject:
           type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
           writeOnly: true
         succeeded:
           type: boolean
@@ -1843,6 +2046,88 @@ components:
       - STG
       - TST
       type: string
+    Event:
+      type: object
+      properties:
+        Id:
+          type: string
+        Version:
+          type: string
+        Transmission:
+          $ref: '#/components/schemas/EfTransmission'
+        RepositoryCode:
+          format: int32
+          type: integer
+        EventTypeCode:
+          type: string
+        EmitterTaxId:
+          $ref: '#/components/schemas/EfTaxId'
+        IssueDateTime:
+          type: string
+        IssueReasonDescription:
+          type: string
+        IUDs:
+          type: array
+          items:
+            type: string
+        Year:
+          format: int32
+          type: integer
+        LedCode:
+          format: int32
+          type: integer
+        LedDescription:
+          type: string
+        Serie:
+          type: string
+        DocumentTypeCode:
+          format: int32
+          type: integer
+        DocumentNumberStart:
+          format: int32
+          type: integer
+        DocumentNumberEnd:
+          format: int32
+          type: integer
+        emitterTaxId:
+          format: int32
+          type: integer
+        idMaxLength:
+          format: int32
+          type: integer
+        idRegex:
+          type: string
+        idRegexMessage:
+          type: string
+    EventListPaginationResponse:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          xml:
+            name: Messages
+            wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
+        payload:
+          allOf:
+          - $ref: '#/components/schemas/ItemsPaginationObject'
+          - xml:
+              name: Payload
+      xml:
+        name: Response
     EventListProcessingResponse:
       type: object
       properties:
@@ -1856,6 +2141,10 @@ components:
         processedObject:
           type: object
           writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -1864,22 +2153,19 @@ components:
         payload:
           type: array
           items:
-            $ref: '#/components/schemas/EventSummaryDto'
+            $ref: '#/components/schemas/EventSummary'
           xml:
             name: Payload
             wrapped: true
       xml:
         name: Response
-    EventSummaryDto:
+    EventSummary:
       type: object
       properties:
         Id:
           type: string
         EventTypeCode:
           type: string
-        EmitterTaxId:
-          format: int32
-          type: integer
         IssueDateTime:
           format: date
           type: string
@@ -2042,6 +2328,10 @@ components:
         processedObject:
           type: object
           writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2066,6 +2356,10 @@ components:
         processedObject:
           type: object
           writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2074,6 +2368,35 @@ components:
         payload:
           allOf:
           - $ref: '#/components/schemas/Dfe'
+          - xml:
+              name: Payload
+      xml:
+        name: Response
+    PayloadProcessingResponseEvent:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          xml:
+            name: Messages
+            wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
+        payload:
+          allOf:
+          - $ref: '#/components/schemas/Event'
           - xml:
               name: Payload
       xml:
@@ -2090,6 +2413,10 @@ components:
             wrapped: true
         processedObject:
           type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
           writeOnly: true
         succeeded:
           type: boolean
@@ -2115,6 +2442,10 @@ components:
             wrapped: true
         processedObject:
           type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
           writeOnly: true
         succeeded:
           type: boolean
@@ -2142,6 +2473,10 @@ components:
         processedObject:
           type: object
           writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2167,6 +2502,10 @@ components:
             wrapped: true
         processedObject:
           type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
           writeOnly: true
         succeeded:
           type: boolean
@@ -2194,6 +2533,10 @@ components:
         processedObject:
           type: object
           writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2219,6 +2562,10 @@ components:
             wrapped: true
         processedObject:
           type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
           writeOnly: true
         succeeded:
           type: boolean
@@ -2246,6 +2593,10 @@ components:
         processedObject:
           type: object
           writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2255,6 +2606,35 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TaxPayerCv'
+          xml:
+            name: Payload
+      xml:
+        name: Response
+    PayloadProcessingResponseLong:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          xml:
+            name: Messages
+            wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
+        payload:
+          format: int64
+          type: integer
           xml:
             name: Payload
       xml:
@@ -2271,6 +2651,10 @@ components:
             wrapped: true
         processedObject:
           type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
           writeOnly: true
         succeeded:
           type: boolean
@@ -2297,6 +2681,10 @@ components:
         processedObject:
           type: object
           writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2321,6 +2709,10 @@ components:
             wrapped: true
         processedObject:
           type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
           writeOnly: true
         succeeded:
           type: boolean
@@ -2347,6 +2739,10 @@ components:
         processedObject:
           type: object
           writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2371,6 +2767,10 @@ components:
             wrapped: true
         processedObject:
           type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
           writeOnly: true
         succeeded:
           type: boolean
@@ -2397,6 +2797,10 @@ components:
         processedObject:
           type: object
           writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2421,6 +2825,10 @@ components:
             wrapped: true
         processedObject:
           type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
           writeOnly: true
         succeeded:
           type: boolean
@@ -2466,8 +2874,10 @@ components:
           type: string
         oAuthClientSecret:
           type: string
-        oAuthRedirectUri:
-          type: string
+        oAuthRedirectUris:
+          type: array
+          items:
+            type: string
         isEnabled:
           type: boolean
         customerTaxId:
@@ -2502,8 +2912,10 @@ components:
           type: string
         oAuthClientSecret:
           type: string
-        oAuthRedirectUri:
-          type: string
+        oAuthRedirectUris:
+          type: array
+          items:
+            type: string
         isEnabled:
           type: boolean
         created:
@@ -2596,8 +3008,10 @@ components:
           type: string
         oAuthClientSecret:
           type: string
-        oAuthRedirectUri:
-          type: string
+        oAuthRedirectUris:
+          type: array
+          items:
+            type: string
         isEnabled:
           type: boolean
     SoftwareTransmitterEntity:
@@ -2618,8 +3032,10 @@ components:
           type: string
         oAuthClientSecret:
           type: string
-        oAuthRedirectUri:
-          type: string
+        oAuthRedirectUris:
+          type: array
+          items:
+            type: string
         isEnabled:
           type: boolean
         created:
@@ -2678,9 +3094,13 @@ components:
         serialNumber:
           type: integer
         issuerDN:
-          $ref: '#/components/schemas/Principal'
+          allOf:
+          - $ref: '#/components/schemas/Principal'
+          - deprecated: true
         subjectDN:
-          $ref: '#/components/schemas/Principal'
+          allOf:
+          - $ref: '#/components/schemas/Principal'
+          - deprecated: true
         notBefore:
           format: date
           type: string
@@ -2740,39 +3160,3 @@ components:
           authorizationUrl: https://iam.efatura.cv/auth/realms/taxpayers/protocol/openid-connect/auth
           tokenUrl: https://iam.efatura.cv/auth/realms/taxpayers/protocol/openid-connect/token/introspect
           refreshUrl: https://iam.efatura.cv/auth/realms/taxpayers/protocol/openid-connect/token
-          scopes:
-            cv_ef_led_create: PLEASE_CHANGE_DESC
-            cv_ef_led_read: PLEASE_CHANGE_DESC
-            cv_ef_led_update: PLEASE_CHANGE_DESC
-            cv_ef_led_delete: PLEASE_CHANGE_DESC
-            cv_ef_event_read: PLEASE_CHANGE_DESC
-            cv_ef_dfe_create: PLEASE_CHANGE_DESC
-            cv_ef_dfe_read_list: PLEASE_CHANGE_DESC
-            cv_ef_dfe_read_iud: PLEASE_CHANGE_DESC
-            cv_ef_dfe_read_stats: PLEASE_CHANGE_DESC
-            cv_ef_tp_search: PLEASE_CHANGE_DESC
-            cv_ef_tp_ui_read: PLEASE_CHANGE_DESC
-            cv_ef_event_all: PLEASE_CHANGE_DESC
-            cv_ef_dfe_all: PLEASE_CHANGE_DESC
-            cv_ef_led_all: PLEASE_CHANGE_DESC
-            cv_ef_tp_all: PLEASE_CHANGE_DESC
-            cv_ef_event_create: PLEASE_CHANGE_DESC
-            cv_ef_cert_all: PLEASE_CHANGE_DESC
-            cv_ef_cert_read: PLEASE_CHANGE_DESC
-            cv_ef_sw_read_list: PLEASE_CHANGE_DESC
-            cv_ef_sw_gm_create: PLEASE_CHANGE_DESC
-            cv_ef_sw_gm_read: PLEASE_CHANGE_DESC
-            cv_ef_sw_gm_update: PLEASE_CHANGE_DESC
-            cv_ef_sw_gm_delete: PLEASE_CHANGE_DESC
-            cv_ef_sw_gm_all: PLEASE_CHANGE_DESC
-            cv_ef_sw_tmt_create: PLEASE_CHANGE_DESC
-            cv_ef_sw_tmt_read: PLEASE_CHANGE_DESC
-            cv_ef_sw_tmt_update: PLEASE_CHANGE_DESC
-            cv_ef_sw_tmt_delete: PLEASE_CHANGE_DESC
-            cv_ef_sw_tmt_all: PLEASE_CHANGE_DESC
-            cv_ef_sw_ctm_create: PLEASE_CHANGE_DESC
-            cv_ef_sw_ctm_read: PLEASE_CHANGE_DESC
-            cv_ef_sw_ctm_update: PLEASE_CHANGE_DESC
-            cv_ef_sw_ctm_delete: PLEASE_CHANGE_DESC
-            cv_ef_sw_ctm_all: PLEASE_CHANGE_DESC
-            cv_ef_sw_all: PLEASE_CHANGE_DESC
