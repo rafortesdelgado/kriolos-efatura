@@ -1360,8 +1360,6 @@ components:
           type: string
         StreetDetail:
           type: string
-        formattedAddress:
-          type: string
     Contacts:
       type: object
       properties:
@@ -1374,8 +1372,6 @@ components:
         Telephone:
           type: string
         Website:
-          type: string
-        formattedContacts:
           type: string
     Dfe:
       type: object
@@ -1455,53 +1451,6 @@ components:
           type: string
         CanceledDateTime:
           type: string
-        _calcPriceExtensionTotalAmount:
-          format: double
-          type: number
-        _calcChargeTotalAmount:
-          format: double
-          type: number
-        _calcDiscountTotalAmount:
-          format: double
-          type: number
-        _calcNetTotalAmount:
-          format: double
-          type: number
-        _calcTaxTotalAmount:
-          format: double
-          type: number
-        _calcTaxTotalAmountRoundedByLine:
-          format: double
-          type: number
-        _calcWithholdingTaxTotalAmount:
-          format: double
-          type: number
-        _calcWithholdingTaxTotalAmountRoundedByLine:
-          format: double
-          type: number
-        _calcPayableAmount:
-          format: double
-          type: number
-        emitterTaxId:
-          format: int32
-          type: integer
-        idMaxLength:
-          format: int32
-          type: integer
-        idRegex:
-          type: string
-        idRegexMessage:
-          type: string
-        receipt:
-          type: boolean
-        creditOrDebitOrReturn:
-          type: boolean
-        returnNote:
-          type: boolean
-        transport:
-          type: boolean
-        issueDateTime:
-          $ref: '#/components/schemas/EfValidationContext'
     DfeDiscount:
       type: object
       properties:
@@ -1606,13 +1555,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -1635,13 +1577,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -1862,10 +1797,6 @@ components:
     EfEntriesProcessingResponse:
       type: object
       properties:
-        _responses:
-          type: array
-          items:
-            $ref: '#/components/schemas/EfEntryProcessingResponse'
         responses:
           type: array
           items:
@@ -1884,13 +1815,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -1956,96 +1880,6 @@ components:
           $ref: '#/components/schemas/EfSoftware'
         Contingency:
           $ref: '#/components/schemas/EfContingency'
-    EfValidationContext:
-      type: object
-      properties:
-        _LogEnabled:
-          type: boolean
-        _contextDateTime:
-          format: date
-          type: string
-        _requiredFields:
-          type: array
-          items:
-            type: string
-        aheadDateMaxSeconds:
-          format: int64
-          type: integer
-        parentCode:
-          type: string
-        parentName:
-          type: string
-        contextDateTime:
-          format: date
-          type: string
-        contextTime:
-          format: int64
-          type: integer
-        logEnabled:
-          type: boolean
-        environment:
-          $ref: '#/components/schemas/Environment'
-        authenticatedUserTaxId:
-          format: int32
-          type: integer
-        repositoryCode:
-          format: int32
-          type: integer
-        xmlType:
-          $ref: '#/components/schemas/EfXmlType'
-        issueMode:
-          format: int32
-          type: integer
-        issueDateTime:
-          format: date
-          type: string
-        softwareCode:
-          type: string
-        efTransitionEndDate:
-          format: date
-          type: string
-        ledRepository:
-          $ref: '#/components/schemas/ILedRepository'
-        dfeRepository:
-          $ref: '#/components/schemas/IDfeRepository'
-        eventRepository:
-          $ref: '#/components/schemas/IEventRepository'
-        softwareRepository:
-          $ref: '#/components/schemas/ISoftwareRepository'
-        cvTaxPayerRepository:
-          $ref: '#/components/schemas/ICvTaxPayerRepository'
-        authenticatedUserKeyStore:
-          $ref: '#/components/schemas/KeyStore'
-        chainX509Certificates:
-          type: array
-          items:
-            $ref: '#/components/schemas/X509Certificate'
-        ignoreXmlSignatureRequirement:
-          type: boolean
-        prodEnvironment:
-          type: boolean
-        repositoryPrincipal:
-          type: boolean
-        effectiveEnvironment:
-          type: boolean
-        peFront:
-          type: boolean
-        transitionDateEnded:
-          type: boolean
-    EfXmlType:
-      enum:
-      - DFE
-      - EVENT
-      type: string
-    Environment:
-      enum:
-      - DEV
-      - LOCAL
-      - NONE
-      - PROD
-      - STG
-      - TST
-      type: string
     Event:
       type: object
       properties:
@@ -2089,16 +1923,6 @@ components:
         DocumentNumberEnd:
           format: int32
           type: integer
-        emitterTaxId:
-          format: int32
-          type: integer
-        idMaxLength:
-          format: int32
-          type: integer
-        idRegex:
-          type: string
-        idRegexMessage:
-          type: string
     EventListPaginationResponse:
       type: object
       properties:
@@ -2109,13 +1933,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2138,13 +1955,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2174,19 +1984,6 @@ components:
         AuthorizedDate:
           format: date
           type: string
-    ICvTaxPayerRepository:
-      type: object
-      properties:
-        repositoryName:
-          type: string
-    IDfeRepository:
-      type: object
-    IEventRepository:
-      type: object
-    ILedRepository:
-      type: object
-    ISoftwareRepository:
-      type: object
     ItemsPaginationItemsPaginationObject:
       type: object
       properties:
@@ -2229,21 +2026,6 @@ components:
           type: integer
           xml:
             name: PageCount
-    KeyStore:
-      type: object
-      properties:
-        type:
-          type: string
-        provider:
-          $ref: '#/components/schemas/Provider'
-        keyStoreSpi:
-          $ref: '#/components/schemas/KeyStoreSpi'
-        initialized:
-          type: boolean
-        providerName:
-          type: string
-    KeyStoreSpi:
-      type: object
     LedEntity:
       type: object
       properties:
@@ -2325,13 +2107,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2353,13 +2128,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2382,13 +2150,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2411,13 +2172,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2440,13 +2194,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2470,13 +2217,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2500,13 +2240,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2530,13 +2263,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2560,13 +2286,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2590,13 +2309,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2620,13 +2332,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2649,13 +2354,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2678,13 +2376,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2707,13 +2398,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2736,13 +2420,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2765,13 +2442,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2794,13 +2464,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2823,13 +2486,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2841,21 +2497,6 @@ components:
             name: Payload
       xml:
         name: Response
-    Principal:
-      type: object
-      properties:
-        name:
-          type: string
-    PublicKey:
-      type: object
-      properties:
-        algorithm:
-          type: string
-        format:
-          type: string
-        encoded:
-          format: binary
-          type: string
     SoftwareCustomerDto:
       type: object
       properties:
@@ -3065,92 +2706,6 @@ components:
         TaxId:
           format: int32
           type: integer
-    X509Certificate:
-      type: object
-      properties:
-        criticalExtensionOIDs:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        nonCriticalExtensionOIDs:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        type:
-          type: string
-        hash:
-          format: int32
-          type: integer
-        encoded:
-          format: binary
-          type: string
-        publicKey:
-          $ref: '#/components/schemas/PublicKey'
-        version:
-          format: int32
-          type: integer
-        serialNumber:
-          type: integer
-        issuerDN:
-          allOf:
-          - $ref: '#/components/schemas/Principal'
-          - deprecated: true
-        subjectDN:
-          allOf:
-          - $ref: '#/components/schemas/Principal'
-          - deprecated: true
-        notBefore:
-          format: date
-          type: string
-        notAfter:
-          format: date
-          type: string
-        tBSCertificate:
-          format: binary
-          type: string
-        signature:
-          format: binary
-          type: string
-        sigAlgName:
-          type: string
-        sigAlgOID:
-          type: string
-        sigAlgParams:
-          format: binary
-          type: string
-        issuerUniqueID:
-          type: array
-          items:
-            type: boolean
-        subjectUniqueID:
-          type: array
-          items:
-            type: boolean
-        keyUsage:
-          type: array
-          items:
-            type: boolean
-        extendedKeyUsage:
-          type: array
-          items:
-            type: string
-        basicConstraints:
-          format: int32
-          type: integer
-        subjectAlternativeNames:
-          type: array
-          items:
-            type: array
-            items:
-              type: object
-        issuerAlternativeNames:
-          type: array
-          items:
-            type: array
-            items:
-              type: object
   securitySchemes:
     SecurityScheme:
       type: oauth2
