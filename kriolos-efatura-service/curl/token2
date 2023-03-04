@@ -1,0 +1,27 @@
+curl 'https://iam.efatura.cv/auth/realms/taxpayers/protocol/openid-connect/token' \
+  -H 'authority: iam.efatura.cv' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-GB,en;q=0.9,pt-PT;q=0.8,pt;q=0.7,en-US;q=0.6' \
+  -H 'content-type: application/x-www-form-urlencoded' \
+  -H 'cookie: AUTH_SESSION_ID=b9db7498-a74b-49c1-ba5d-e01532761d36.sso-keycloak-prod; AUTH_SESSION_ID_LEGACY=b9db7498-a74b-49c1-ba5d-e01532761d36.sso-keycloak-prod; KEYCLOAK_IDENTITY=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlOWRhOTE1Zi1hNTU2LTRhMTMtYWJlOC0zNTM5ODQ2MTRiZjYifQ.eyJleHAiOjE2NzcyMzAxNjEsImlhdCI6MTY3NzE4MzM2MSwianRpIjoiNTdlNDVkZGYtNmUzMS00MmU2LWFhZWItNjYzMWVlMzZiZTRlIiwiaXNzIjoiaHR0cHM6Ly9pYW0uZWZhdHVyYS5jdi9hdXRoL3JlYWxtcy90YXhwYXllcnMiLCJzdWIiOiI4NzNhOWFlMi1hZjM1LTQ0ZjEtYjY1MS02MjZiOWIyMDI3YzUiLCJ0eXAiOiJTZXJpYWxpemVkLUlEIiwic2Vzc2lvbl9zdGF0ZSI6ImI5ZGI3NDk4LWE3NGItNDljMS1iYTVkLWUwMTUzMjc2MWQzNiIsInN0YXRlX2NoZWNrZXIiOiIzN25xZTBNd1hOYkZkUlAzNElGb0ZiMzRZTHk4NEg0NWhsYUQ3X0JwTDFrIn0.KKTm43cCuUiHG8oy1Z5iqtT9AxQyJE0oN7o7_072s78; KEYCLOAK_IDENTITY_LEGACY=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlOWRhOTE1Zi1hNTU2LTRhMTMtYWJlOC0zNTM5ODQ2MTRiZjYifQ.eyJleHAiOjE2NzcyMzAxNjEsImlhdCI6MTY3NzE4MzM2MSwianRpIjoiNTdlNDVkZGYtNmUzMS00MmU2LWFhZWItNjYzMWVlMzZiZTRlIiwiaXNzIjoiaHR0cHM6Ly9pYW0uZWZhdHVyYS5jdi9hdXRoL3JlYWxtcy90YXhwYXllcnMiLCJzdWIiOiI4NzNhOWFlMi1hZjM1LTQ0ZjEtYjY1MS02MjZiOWIyMDI3YzUiLCJ0eXAiOiJTZXJpYWxpemVkLUlEIiwic2Vzc2lvbl9zdGF0ZSI6ImI5ZGI3NDk4LWE3NGItNDljMS1iYTVkLWUwMTUzMjc2MWQzNiIsInN0YXRlX2NoZWNrZXIiOiIzN25xZTBNd1hOYkZkUlAzNElGb0ZiMzRZTHk4NEg0NWhsYUQ3X0JwTDFrIn0.KKTm43cCuUiHG8oy1Z5iqtT9AxQyJE0oN7o7_072s78; KEYCLOAK_SESSION=taxpayers/873a9ae2-af35-44f1-b651-626b9b2027c5/b9db7498-a74b-49c1-ba5d-e01532761d36; KEYCLOAK_SESSION_LEGACY=taxpayers/873a9ae2-af35-44f1-b651-626b9b2027c5/b9db7498-a74b-49c1-ba5d-e01532761d36' \
+  -H 'dnt: 1' \
+  -H 'origin: https://pe.efatura.cv' \
+  -H 'referer: https://pe.efatura.cv/' \
+  -H 'sec-ch-ua: "Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-site' \
+  -H 'sec-gpc: 1' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36' \
+  --data-raw '
+  code=d08266c9-8c76-479b-80f4-ba628fb6a025.b9db7498-a74b-49c1-ba5d-e01532761d36.2869280f-a3ce-4a1d-b707-81b8ddb5524b
+  grant_type=authorization_code
+  client_id=efatura-frontend
+  redirect_uri=https%3A%2F%2Fpe.efatura.cv
+  code_verifier=AjbIauWcUd0xTgtYTanDYvC947leKSYDLDRrmnUp9ScUVqc1xq0ouy7VR0qoWLEGRrCEN1IBc9w1LjV7GjqvkKuwDq7jxncq
+  
+  --compressed
+  
+  iguais = .2869280f-a3ce-4a1d-b707-81b8ddb5524b&grant_type=authorization_code&client_id=efatura-frontend&redirect_uri=https%3A%2F%2Fpe.efatura.cv&

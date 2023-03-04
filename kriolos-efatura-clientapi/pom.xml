@@ -20,24 +20,40 @@
         <plugins>
             <plugin>
                 <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>6.0.0</version>
+			    <artifactId>openapi-generator-maven-plugin</artifactId>
+			    <version>6.3.0</version>
                 <executions>
                     <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
+                        <phase>generate-sources</phase>
+					    <goals>
+					        <goal>generate</goal>
+					    </goals>
                         <configuration>
                             <skipValidateSpec>true</skipValidateSpec>
+                            <withXml>true</withXml>
+                            <removeOperationIdPrefix></removeOperationIdPrefix>
                             
-                            <!-- <verbose>true</verbose> -->
+<!--                            <typeMappings>-->
+<!--						         convert Double to BigDecimal -->
+<!--						        <typeMapping>Double=java.math.BigDecimal</typeMapping>-->
+<!--						    </typeMappings>-->
+                            
+<!--                            <verbose>true</verbose>-->
 
                             <configOptions>
-                                <identifierNamingConvention>snake_case</identifierNamingConvention>
-                                <allowUnicodeIdentifiers></allowUnicodeIdentifiers>
-                                <legacyDiscriminatorBehavior>true</legacyDiscriminatorBehavior>
-                                <serializationLibrary>gson</serializationLibrary>
-                                <withXml>true</withXml>
+								<library>jersey3</library>
+<!--                                <identifierNamingConvention>snake_case</identifierNamingConvention>-->
+<!--                                <legacyDiscriminatorBehavior>false</legacyDiscriminatorBehavior>-->
+<!--                                <allowUnicodeIdentifiers>true</allowUnicodeIdentifiers>-->
+                                <useOneOfDiscriminatorLookup>false</useOneOfDiscriminatorLookup> 
+                                <disallowAdditionalPropertiesIfNotPresent>true</disallowAdditionalPropertiesIfNotPresent>
+                                <!-- <usePlayWS>true</usePlayWS> -->
+<!--                                <useSingleRequestParameter>true</useSingleRequestParameter>-->
+<!--								<useOneOfDiscriminatorLookup>true</useOneOfDiscriminatorLookup>-->
+<!--                                <dynamicOperations>true</dynamicOperations>-->
+<!--                                <serializationLibrary>gson</serializationLibrary>-->
+<!--                                <dateLibrary>joda</dateLibrary>-->
+<!--                                <annotationLibrary>swagger1</annotationLibrary>-->
                             </configOptions>
                             
 
@@ -56,7 +72,7 @@
                             <gitRepoId>kriolos-efatura</gitRepoId>
                             
                             <!-- -->
-                            <output>${project.build.directory}/openapi</output>
+                            <output>${project.build.directory}/../../kriolos-efactura-clientapi-generated</output>
                         </configuration>
                     </execution>
                 </executions>
