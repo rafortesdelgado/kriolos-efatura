@@ -92,7 +92,7 @@ public class ExportToCsv {
 						n.iva_suportado = taxa_iva * g.getValue().stream().mapToDouble(line -> line.getNetTotal()).sum();
 //						n.iva_suportado = IfNullReturnEmpty(d.getTotals().getTaxTotalAmount());
 
-						n.direito_dedutivel = 0d; // Em branco
+						n.direito_dedutivel = n.iva_suportado; // Em branco
 						n.iva_dedutivel = n.iva_suportado;
 					}
 

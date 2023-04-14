@@ -3,12 +3,14 @@ package io.github.kriolos.efatura.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import io.github.kriolos.efatura.clientapi.generated.ApiClient;
 import io.github.kriolos.efatura.clientapi.generated.ApiException;
 import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
 import io.github.kriolos.efatura.clientapi.generated.model.DfeListPaginationResponse;
 import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseDfePayload;
+import io.github.kriolos.efatura.service.enums.DfeDocumentTypeEnum;
 import io.github.kriolos.efatura.service.enums.IssueDirection;
 
 
@@ -16,7 +18,7 @@ public class Program {
 	
 	public static void main (String[] args) 
 	{
-		
+		System.out.println(getFilterByDocTypeForMod106());	
 		TokenManager tm = new TokenManager();
 //		tm.initToken("289308496", "lausdeo156@@!");
 				
@@ -38,7 +40,7 @@ public class Program {
 					null,// data de fim de autorizacao,
 					null,// data de inicio de autorizacao,
 					null,
-					"1,2,3,5", // DocumentTypeCode
+					getFilterByDocTypeForMod106(), //"1,2,3,5", // DocumentTypeCode
 					null,
 					null,
 					null,
@@ -53,9 +55,15 @@ public class Program {
 				);
 			
 			List<String> list = result.getPayload().getItems().stream()
-					.map(d -> {
-						return ((HashMap<String,String>)d).get("Id");
-					}).collect(Collectors.toList());
+					.map( (Object d)  -> {
+						if(d instanceof  HashMap<?,?> ){
+							@SuppressWarnings("unchecked")
+							HashMap<String,String> map = (HashMap<String,String>) d;
+							return map.get("Id");
+						}
+						return null;
+					})
+					.collect(Collectors.toList());
 			
 			List<PayloadProcessingResponseDfePayload> dfes = list.stream()
 				.parallel()
@@ -83,6 +91,18 @@ public class Program {
 			
 			e.printStackTrace();
 		}
+	}
+
+	private static String getFilterByDocTypeForMod106 () {
+
+		return Stream.of(
+			DfeDocumentTypeEnum.FTE,
+			DfeDocumentTypeEnum.FRE,
+			DfeDocumentTypeEnum.TVE,
+			DfeDocumentTypeEnum.NCE
+		)
+		.map(t -> t.getValue() + "")
+		.collect(Collectors.joining(","));
 	}
 	
 }
