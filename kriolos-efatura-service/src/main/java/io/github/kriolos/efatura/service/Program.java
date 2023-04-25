@@ -1,26 +1,19 @@
 package io.github.kriolos.efatura.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Scanner;
 
 import io.github.kriolos.efatura.clientapi.generated.ApiClient;
-import io.github.kriolos.efatura.clientapi.generated.ApiException;
 import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
-import io.github.kriolos.efatura.clientapi.generated.model.DfeListPaginationResponse;
-import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseDfePayload;
-import io.github.kriolos.efatura.service.enums.DfeDocumentTypeEnum;
-import io.github.kriolos.efatura.service.enums.IssueDirection;
 
 
 public class Program {
 	
 	public static void main (String[] args) 
 	{
-		System.out.println(getFilterByDocTypeForMod106());	
+		Scanner input = new Scanner(System.in);
+        int selection = printMenu(input);
+
 		TokenManager tm = new TokenManager();
-//		tm.initToken("289308496", "lausdeo156@@!");
 				
 		String token = tm.getToken(289308496);
 		
@@ -28,81 +21,24 @@ public class Program {
 		apiCli.setBasePath("https://services.efatura.cv/");
 		apiCli.setAccessToken(token);
 		
-//
-//		apiCli.setUsername("289308496");
-//		apiCli.setPassword("lausdeo156@@!");
-		
 		DfeApi dfeApi = new DfeApi(apiCli);
-		
-		try {
-			
-			DfeListPaginationResponse result = dfeApi.dfeResourceGetDfeSummaryListV2(
-					null,// data de fim de autorizacao,
-					null,// data de inicio de autorizacao,
-					null,
-					getFilterByDocTypeForMod106(), //"1,2,3,5", // DocumentTypeCode
-					null,
-					null,
-					null,
-					IssueDirection.Recepcao, // direcao
-					"2023",
-					"1000", // itens por page
-					null, // led code
-					null, 
-					null,
-					null,
-					"1"
-				);
-			
-			List<String> list = result.getPayload().getItems().stream()
-					.map( (Object d)  -> {
-						if(d instanceof  HashMap<?,?> ){
-							@SuppressWarnings("unchecked")
-							HashMap<String,String> map = (HashMap<String,String>) d;
-							return map.get("Id");
-						}
-						return null;
-					})
-					.collect(Collectors.toList());
-			
-			List<PayloadProcessingResponseDfePayload> dfes = list.stream()
-				.parallel()
-				.map( ds -> {
-					try {
-						return dfeApi.dfeResourceGetDfeById(ds, "1").getPayload();
-					} catch (ApiException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					return null;
-				})
-				.filter( l -> l != null)
-				.collect(Collectors.toList());
-			
-			ExportToCsv.ExportDfeSummary(dfes);
-			
-			
-			
-		} catch (ApiException e) {
-			System.out.println(e.getCode());
-			System.out.println(e.getCause());
-			System.out.println(e.getMessage());
-			System.out.println(e.getLocalizedMessage());
-			
-			e.printStackTrace();
+		FiscalReportService frs = new FiscalReportService(dfeApi);
+
+		switch (selection){
+			case 1 : frs.getMod106("2023"); break;
+			case 2 : frs.getMod107("2023"); break;
 		}
 	}
 
-	private static String getFilterByDocTypeForMod106 () {
+	public static int printMenu( Scanner input ) {
 
-		return Stream.of(
-			DfeDocumentTypeEnum.FTE,
-			DfeDocumentTypeEnum.FRE,
-			DfeDocumentTypeEnum.TVE,
-			DfeDocumentTypeEnum.NCE
-		)
-		.map(t -> t.getValue() + "")
-		.collect(Collectors.joining(","));
-	}
+        System.out.println("Choose from these choices");
+        System.out.println("-------------------------\n");
+        System.out.println("1 - Mod106");
+        System.out.println("2 - Mod107");
+        System.out.println("other - Quit"); 
+
+		return input.nextInt();
+    }
 	
 }

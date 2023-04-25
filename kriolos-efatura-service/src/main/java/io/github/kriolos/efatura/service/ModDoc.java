@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Mod106 {
+public class ModDoc {
 	private final static String [] headers = new String [] {
 		"Origem",
 		"NIF da Entidade",
@@ -27,17 +27,17 @@ public class Mod106 {
 		"Número de Ordem"
 	};
 
-	ArrayList<Mod106Line> lines;
+	ArrayList<ModLine> lines;
 
-	public Mod106() {
+	public ModDoc() {
 		this(10);
 	}
 
-	public Mod106(int capacity) {
+	public ModDoc(int capacity) {
 		lines = new ArrayList<>(capacity);
 	}
 
-	public void addLine(Mod106Line line) {
+	public void addLine(ModLine line) {
 		lines.add(line);
 	}
 

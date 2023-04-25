@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Mod106Line implements ModLine {
+public class Mod107Line implements ModLine {
 //	Origem
 //	NIF da Entidade
 //	Designação da Entidade
