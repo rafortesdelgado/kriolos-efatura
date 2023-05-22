@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import io.github.kriolos.efatura.clientapi.generated.model.DfeLine;
+import io.github.kriolos.efatura.clientapi.generated.model.EfParty;
 import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseDfePayload;
 import io.github.kriolos.efatura.service.enums.DfeDocumentTypeEnum;
 
@@ -22,9 +23,17 @@ public class Mod107LineMapper implements ModLineIMapper{
 
 				Mod107Line n = new Mod107Line();
 				
-				n.origem = d.getReceiverParty().getTaxId().getCountryCode();
-				n.nif = d.getReceiverParty().getTaxId().getValue();
-				n.designacao_entidade = d.getReceiverParty().getName();
+				EfParty receiver = d.getReceiverParty();
+				if(receiver != null) {
+					n.origem = receiver.getTaxId().getCountryCode();
+					n.nif = receiver.getTaxId().getValue();
+					n.designacao_entidade = receiver.getName();
+				}
+				else {
+					n.origem = "cv";
+					n.nif ="000000000";
+				}
+				
 
 				n.tipo_doc = DfeDocumentTypeEnum.convert(d.getDocumentTypeCode()).name();
 				n.num_doc = d.getDocumentNumber().toString();

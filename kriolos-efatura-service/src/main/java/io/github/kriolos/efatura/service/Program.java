@@ -27,6 +27,7 @@ public class Program {
 		switch (selection){
 			case 1 : frs.getMod106("2023"); break;
 			case 2 : frs.getMod107("2023"); break;
+			case 3 : frs.getMod106("2023");  frs.getMod107("2023");
 		}
 	}
 
@@ -36,6 +37,7 @@ public class Program {
         System.out.println("-------------------------\n");
         System.out.println("1 - Mod106");
         System.out.println("2 - Mod107");
+        System.out.println("3 - Todos");
         System.out.println("other - Quit"); 
 
 		return input.nextInt();

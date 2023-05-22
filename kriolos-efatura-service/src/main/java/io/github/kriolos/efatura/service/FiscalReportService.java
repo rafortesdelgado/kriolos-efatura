@@ -33,7 +33,7 @@ public class FiscalReportService {
                     null,
                     IssueDirection.Recepcao, // direcao
                     year,
-                    "2000", // itens por page
+                    "10000", // itens por page
                     null, // led code
                     null,
                     null,
@@ -102,7 +102,7 @@ public class FiscalReportService {
                     null,
                     IssueDirection.Emissao, // direcao
                     year,
-                    "2000", // itens por page
+                    "10000", // itens por page
                     null, // led code
                     null,
                     null,
@@ -134,7 +134,7 @@ public class FiscalReportService {
                     .filter(l -> l != null)
                     .collect(Collectors.toList());
 
-            ExportToCsv.ExportDfeSummary(dfes,new Mod106LineMapper()::addLineToModDoc);
+            ExportToCsv.ExportDfeSummary(dfes,new Mod107LineMapper()::addLineToModDoc);
 
         } catch (ApiException e) {
             System.out.println(e.getCode());

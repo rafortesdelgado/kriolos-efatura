@@ -16,7 +16,7 @@ public class Mod106LineMapper implements ModLineIMapper{
 	{
 		try {				
 			Map<Double, List<DfeLine>> lines = d.getLines().stream().collect(
-					Collectors.groupingBy(l -> Optional.ofNullable(l.getTaxes().get(0).getTaxPercentage()).orElse(0d)));
+					Collectors.groupingBy(l -> Optional.ofNullable(getPercentageTaxes(l)).orElse(0d)));
 
 			for (Map.Entry<Double, List<DfeLine>> g : lines.entrySet()) {
 
@@ -74,5 +74,11 @@ public class Mod106LineMapper implements ModLineIMapper{
 		}
 
 		return i ;
+	}
+
+	private Double getPercentageTaxes(DfeLine l) {
+		if(l.getTaxes() == null ) return null;
+		
+		return l.getTaxes().get(0).getTaxPercentage();
 	}
 }
