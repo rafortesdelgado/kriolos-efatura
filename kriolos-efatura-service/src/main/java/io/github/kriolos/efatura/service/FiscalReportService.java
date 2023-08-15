@@ -82,10 +82,12 @@ public class FiscalReportService {
     private static String getFilterByDocTypeForMod106() {
 
         return Stream.of(
-                DfeDocumentTypeEnum.FTE,
-                DfeDocumentTypeEnum.FRE,
-                DfeDocumentTypeEnum.TVE,
-                DfeDocumentTypeEnum.NCE)
+                DfeDocumentTypeEnum.FTE
+                ,DfeDocumentTypeEnum.FRE
+                ,DfeDocumentTypeEnum.TVE
+                ,DfeDocumentTypeEnum.NCE
+                ,DfeDocumentTypeEnum.NDE
+            )
                 .map(t -> t.getValue() + "")
                 .collect(Collectors.joining(","));
     }
@@ -95,8 +97,8 @@ public class FiscalReportService {
         try {
 
             DfeListPaginationResponse result = dfeApi.dfeResourceGetDfeSummaryListV2(
-                    null, // data de fim de autorizacao,
-                    null, // data de inicio de autorizacao,
+                    null,//"2023-06-30", // data de fim de autorizacao,
+                    null,//"2023-06-01", // data de inicio de autorizacao,
                     null,
                     getFilterByDocTypeForMod106(), // "1,2,3,5", // DocumentTypeCode
                     null,
@@ -106,7 +108,7 @@ public class FiscalReportService {
                     year,
                     "10000", // itens por page
                     null, // led code
-                    null,
+                    "1",
                     null,
                     null,
                     "1");

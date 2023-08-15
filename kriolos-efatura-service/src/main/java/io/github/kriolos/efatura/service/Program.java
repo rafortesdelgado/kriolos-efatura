@@ -2,20 +2,36 @@ package io.github.kriolos.efatura.service;
 
 import java.util.Scanner;
 
+import javax.swing.filechooser.FileSystemView;
+
 import io.github.kriolos.efatura.clientapi.generated.ApiClient;
 import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
 
 
 public class Program {
-	
+
+	public static String cliName;	
+	public static String path = FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath();
 	public static void main (String[] args) 
 	{
+		// GetTokenHelper.init("200505181","505216");
+		// return ;
+		
 		Scanner input = new Scanner(System.in);
+
+		System.out.println("Client name");
+
+		Program.cliName = input.nextLine();
+
+		System.out.println("Client token");
+
+
+		String token = input.nextLine();
         int selection = printMenu(input);
 
 		TokenManager tm = new TokenManager();
 				
-		String token = tm.getToken(289308496);
+		// String token = tm.getToken(289308496);
 		
 		ApiClient apiCli = new ApiClient();
 		apiCli.setBasePath("https://services.efatura.cv/");

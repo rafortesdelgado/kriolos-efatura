@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileSystemView;
+
 import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseDfePayload;
 import io.github.kriolos.efatura.models.ModDoc;
 import io.github.kriolos.efatura.models.ModLineIMapper;
@@ -66,10 +68,13 @@ public class ExportToCsv {
 	} 
 
 	public static String getPath() {
+
 		final Frame f = new Frame("Java AWT Examples");
-		JFileChooser j = new JFileChooser();
+		JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath());
 		j.setDialogType(JFileChooser.SAVE_DIALOG);
 		Integer opt = j.showSaveDialog(f);
+		f.setVisible(true);
+		
 		String path = j.getSelectedFile().getAbsolutePath();
 		System.out.println(path);
 
