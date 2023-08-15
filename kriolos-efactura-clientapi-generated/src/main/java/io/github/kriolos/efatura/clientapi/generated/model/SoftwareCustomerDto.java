@@ -45,7 +45,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   SoftwareCustomerDto.JSON_PROPERTY_CUSTOMER_NAME,
   SoftwareCustomerDto.JSON_PROPERTY_USE_EXCLUSIVE_O_AUTH_PARAMS
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-14T23:31:50.801935300Z[Europe/Lisbon]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
 public class SoftwareCustomerDto {
   public static final String JSON_PROPERTY_ID = "id";
   private String id;

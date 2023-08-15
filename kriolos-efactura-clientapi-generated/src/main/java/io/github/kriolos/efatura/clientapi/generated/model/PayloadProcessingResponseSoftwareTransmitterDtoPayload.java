@@ -43,7 +43,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   PayloadProcessingResponseSoftwareTransmitterDtoPayload.JSON_PROPERTY_IS_ENABLED
 })
 @JsonTypeName("PayloadProcessingResponseSoftwareTransmitterDto_payload")
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-14T23:31:50.801935300Z[Europe/Lisbon]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
 public class PayloadProcessingResponseSoftwareTransmitterDtoPayload {
   public static final String JSON_PROPERTY_ID = "id";
   private String id;

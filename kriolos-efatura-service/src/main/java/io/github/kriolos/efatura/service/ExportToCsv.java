@@ -1,22 +1,14 @@
 package io.github.kriolos.efatura.service;
 
-import java.awt.FileDialog;
 import java.awt.Frame;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
-
-import io.github.kriolos.efatura.clientapi.generated.model.DfeLine;
 import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseDfePayload;
-import io.github.kriolos.efatura.service.enums.DfeDocumentTypeEnum;
+import io.github.kriolos.efatura.models.ModDoc;
+import io.github.kriolos.efatura.models.ModLineIMapper;
 
 public class ExportToCsv {
 

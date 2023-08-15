@@ -38,7 +38,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   DfeRentReceipt.JSON_PROPERTY_REFERENCE_PERIOD,
   DfeRentReceipt.JSON_PROPERTY_ADDRESS
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-14T23:31:50.801935300Z[Europe/Lisbon]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
 public class DfeRentReceipt {
   public static final String JSON_PROPERTY_ASSET_ID = "AssetId";
   private String assetId;

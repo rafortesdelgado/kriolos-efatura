@@ -43,7 +43,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   DfeLineItem.JSON_PROPERTY_HAZARDOUS_RISK_INDICATOR,
   DfeLineItem.JSON_PROPERTY_ADDITIONAL_PROPERTIES
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-14T23:31:50.801935300Z[Europe/Lisbon]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
 public class DfeLineItem {
   public static final String JSON_PROPERTY_DESCRIPTION = "Description";
   private String description;

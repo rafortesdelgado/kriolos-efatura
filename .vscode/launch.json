@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "KriolosEfaturaServiceApplication",
+            "request": "launch",
+            "mainClass": "io.github.kriolos.efatura.kriolosefaturaservice.KriolosEfaturaServiceApplication",
+            "projectName": "kriolos-efatura-service"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

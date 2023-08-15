@@ -9,8 +9,10 @@ import io.github.kriolos.efatura.clientapi.generated.ApiException;
 import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
 import io.github.kriolos.efatura.clientapi.generated.model.DfeListPaginationResponse;
 import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseDfePayload;
-import io.github.kriolos.efatura.service.enums.DfeDocumentTypeEnum;
-import io.github.kriolos.efatura.service.enums.IssueDirection;
+import io.github.kriolos.efatura.enums.DfeDocumentTypeEnum;
+import io.github.kriolos.efatura.enums.IssueDirection;
+import io.github.kriolos.efatura.models.Mod106LineMapper;
+import io.github.kriolos.efatura.models.Mod107LineMapper;
 
 public class FiscalReportService {
 
@@ -20,7 +22,7 @@ public class FiscalReportService {
         this.dfeApi = dfeApi;
     }
 
-    public void getMod106(String year) {
+    public void getMod106Suppliers(String year) {
         try {
 
             DfeListPaginationResponse result = dfeApi.dfeResourceGetDfeSummaryListV2(
@@ -89,7 +91,7 @@ public class FiscalReportService {
     }
 
 
-    public void getMod107(String year) {
+    public void getMod106Clients(String year) {
         try {
 
             DfeListPaginationResponse result = dfeApi.dfeResourceGetDfeSummaryListV2(

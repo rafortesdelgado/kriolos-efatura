@@ -36,7 +36,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   ItemsPaginationObject.JSON_PROPERTY_ITEMS,
   ItemsPaginationObject.JSON_PROPERTY_PAGE_COUNT
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-14T23:31:50.801935300Z[Europe/Lisbon]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
 public class ItemsPaginationObject {
   public static final String JSON_PROPERTY_ALL_PAGES_ITEM_COUNT = "allPagesItemCount";
   private Long allPagesItemCount;

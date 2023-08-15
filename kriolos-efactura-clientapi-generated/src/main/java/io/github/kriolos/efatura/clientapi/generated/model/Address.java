@@ -43,7 +43,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   Address.JSON_PROPERTY_STREET,
   Address.JSON_PROPERTY_STREET_DETAIL
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-14T23:31:50.801935300Z[Europe/Lisbon]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
 public class Address {
   public static final String JSON_PROPERTY_ADDRESS_CODE = "AddressCode";
   private String addressCode;

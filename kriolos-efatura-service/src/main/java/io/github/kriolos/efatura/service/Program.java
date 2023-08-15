@@ -25,9 +25,9 @@ public class Program {
 		FiscalReportService frs = new FiscalReportService(dfeApi);
 
 		switch (selection){
-			case 1 : frs.getMod106("2023"); break;
-			case 2 : frs.getMod107("2023"); break;
-			case 3 : frs.getMod106("2023");  frs.getMod107("2023");
+			case 1 : frs.getMod106Suppliers("2023"); break;
+			case 2 : frs.getMod106Clients("2023"); break;
+			case 3 : frs.getMod106Suppliers("2023");  frs.getMod106Clients("2023");
 		}
 	}
 
@@ -35,8 +35,8 @@ public class Program {
 
         System.out.println("Choose from these choices");
         System.out.println("-------------------------\n");
-        System.out.println("1 - Mod106");
-        System.out.println("2 - Mod107");
+        System.out.println("1 - Mod106 - Fornecedores");
+        System.out.println("2 - Mod106 - Clientes");
         System.out.println("3 - Todos");
         System.out.println("other - Quit"); 
 
