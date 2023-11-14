@@ -30,17 +30,18 @@ public class ExportToCsv {
 //	Campo Destino Modelo
 //	Número de Ordem
 
-	public static void ExportDfeSummary(List<PayloadProcessingResponseDfePayload> data, ModLineIMapper mapper) {
+	public static void ExportDfeSummary(List<PayloadProcessingResponseDfePayload> data, String label, ModLineIMapper mapper) {
 		System.out.println("Export dfe");
 
-		final ModDoc doc = new ModDoc(data.size());
+		final ModDoc doc = new ModDoc(label,data.size());
 		int i = 0;
 		Collections.sort(data, (o1, o2) -> DfePayloadComparator(o1,o2));
 		for (PayloadProcessingResponseDfePayload d : data) {
 			i = mapper.addLineToModDoc(i, doc, d);
 		}
 
-		String path = getPath();
+		String path = "C:\\Users\\Rafael Delgado\\Desktop\\Orconta\\" + label + ".csv";
+		// path = getPath();
 		try {
 			doc.toCsv(path);
 		} catch (IOException e) {

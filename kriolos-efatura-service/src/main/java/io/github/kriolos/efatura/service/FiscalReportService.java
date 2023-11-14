@@ -22,12 +22,17 @@ public class FiscalReportService {
         this.dfeApi = dfeApi;
     }
 
+    private static String startDate = "2023-10-01";    
+    // private static String endDate = "2023-10-01";
+    private static String endDate = null;
+
+
+
     public void getMod106Suppliers(String year) {
         try {
-
             DfeListPaginationResponse result = dfeApi.dfeResourceGetDfeSummaryListV2(
-                    null, // data de fim de autorizacao,
-                    null, // data de inicio de autorizacao,
+                    endDate, // data de fim de autorizacao,
+                    startDate, // data de inicio de autorizacao,
                     null,
                     getFilterByDocTypeForMod106(), // "1,2,3,5", // DocumentTypeCode
                     null,
@@ -67,7 +72,7 @@ public class FiscalReportService {
                     .filter(l -> l != null)
                     .collect(Collectors.toList());
 
-            ExportToCsv.ExportDfeSummary(dfes, new Mod106LineMapper()::addLineToModDoc);
+            ExportToCsv.ExportDfeSummary(dfes, Program.cliName +"_forn_", new Mod106LineMapper()::addLineToModDoc);
 
         } catch (ApiException e) {
             System.out.println(e.getCode());
@@ -87,6 +92,7 @@ public class FiscalReportService {
                 ,DfeDocumentTypeEnum.TVE
                 ,DfeDocumentTypeEnum.NCE
                 ,DfeDocumentTypeEnum.NDE
+                ,DfeDocumentTypeEnum.DVE
             )
                 .map(t -> t.getValue() + "")
                 .collect(Collectors.joining(","));
@@ -97,8 +103,8 @@ public class FiscalReportService {
         try {
 
             DfeListPaginationResponse result = dfeApi.dfeResourceGetDfeSummaryListV2(
-                    null,//"2023-06-30", // data de fim de autorizacao,
-                    null,//"2023-06-01", // data de inicio de autorizacao,
+                    endDate, // data de fim de autorizacao,
+                    startDate, // data de inicio de autorizacao,
                     null,
                     getFilterByDocTypeForMod106(), // "1,2,3,5", // DocumentTypeCode
                     null,
@@ -138,7 +144,7 @@ public class FiscalReportService {
                     .filter(l -> l != null)
                     .collect(Collectors.toList());
 
-            ExportToCsv.ExportDfeSummary(dfes,new Mod107LineMapper()::addLineToModDoc);
+            ExportToCsv.ExportDfeSummary(dfes,Program.cliName + "_cli_",new Mod107LineMapper()::addLineToModDoc);
 
         } catch (ApiException e) {
             System.out.println(e.getCode());

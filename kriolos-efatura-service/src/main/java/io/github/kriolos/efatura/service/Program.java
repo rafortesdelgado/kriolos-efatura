@@ -14,20 +14,25 @@ public class Program {
 	public static String path = FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath();
 	public static void main (String[] args) 
 	{
-		// GetTokenHelper.init("200505181","505216");
-		// return ;
-		
-		Scanner input = new Scanner(System.in);
+		// String jwt = GetTokenHelper.init("200505181","505216");
+		// Program.cliName = "steel";
+		String jwt = GetTokenHelper.init("289308496","lausdeo156@@!");
+		Program.cliName = "syncit";
+        String token = jwt;
+		int selection = 3;
 
-		System.out.println("Client name");
+		// Scanner input = new Scanner(System.in);
 
-		Program.cliName = input.nextLine();
+		// System.out.println("Client name");
 
-		System.out.println("Client token");
+		// Program.cliName = input.nextLine();		
 
 
-		String token = input.nextLine();
-        int selection = printMenu(input);
+		// System.out.println("Client token");
+
+
+		// String token = input.nextLine();
+        // int selection = printMenu(input);
 
 		TokenManager tm = new TokenManager();
 				
@@ -39,6 +44,8 @@ public class Program {
 		
 		DfeApi dfeApi = new DfeApi(apiCli);
 		FiscalReportService frs = new FiscalReportService(dfeApi);
+		
+		
 
 		switch (selection){
 			case 1 : frs.getMod106Suppliers("2023"); break;

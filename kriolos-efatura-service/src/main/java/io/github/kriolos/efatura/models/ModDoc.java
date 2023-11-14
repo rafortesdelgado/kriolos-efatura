@@ -29,12 +29,15 @@ public class ModDoc {
 
 	ArrayList<ModLine> lines;
 
-	public ModDoc() {
-		this(10);
+	private String label;
+
+	public ModDoc(String label) {
+		this(label, 100);
 	}
 
-	public ModDoc(int capacity) {
-		lines = new ArrayList<>(capacity);
+	public ModDoc(String label , int capacity) {
+		this.lines = new ArrayList<>(capacity);
+		this.label = label;
 	}
 
 	public void addLine(ModLine line) {

@@ -1,59 +1,72 @@
 package io.github.kriolos.efatura.service;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.time.Duration;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.v119.network.Network;
+import io.github.kriolos.efatura.processes.components.LoginProcess;
 
 public class GetTokenHelper {
-    public static void init(String nif, String password) {
+
+    public static String init(String nif, String password) {
         
         ChromeDriver driver = new ChromeDriver();
         // driver.manage().window().maximize();
+        
+        //Set Dev-Tools and create a session
+        DevTools tool = driver.getDevTools();
+        tool.createSessionIfThereIsNotOne();
+        
+        final Object o = new Object();
+        
+        tool.send(Network.enable(Optional.empty(), Optional.empty(),Optional.empty()));
+
+        final ConcurrentLinkedQueue<String> l = new ConcurrentLinkedQueue<>();
+
+        //add listener to intercept request and continue
+        tool.addListener(Network.requestWillBeSent(),
+        r -> 
+        {
+                Object authorization = r.getRequest().getHeaders().get("Authorization");
+                if(r.getRequest().getUrl().endsWith("/software") && authorization != null) 
+                {
+                        String jwt = ((String)authorization).split(" ")[1];
+                        synchronized (o) 
+                        {
+                                l.add(jwt);
+                                o.notify();
+                        }
+                }
+        });
 
         driver.get("https://pe.efatura.cv/");
-        WebElement loginButton = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(By.xpath("//button")));
+        
+        LoginProcess.run(driver, nif, password);
 
-        loginButton.click();
-
-        WebElement nifInput = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(By.name("username")));
-
-        WebElement passwordInput = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(By.name("password")));
-
-        nifInput.sendKeys(nif);
-        passwordInput.sendKeys(password);
-
-        loginButton = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(By.id("kc-login")));
-
-        loginButton.click();
-
-        HttpURLConnection cn;
-        try {
-            cn = (HttpURLConnection)new URL("https://iam.efatura.cv/auth/realms/taxpayers/protocol/openid-connect/token")
-                .openConnection();
-            cn.setRequestMethod("POST");
-            cn.connect();
-            
-            int res = cn.getResponseCode();
-            System.out.println("Http response code: " + res);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        int i = 0 ;
+        while (i < 6) {
+                try {
+                        synchronized (o) 
+                        {
+                                o.wait(10000);
+                                if(l.size() > 0  ) 
+                                {
+                                        break;
+                                }
+                        }
+                } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                }
+                i++;
         }
 
-
+        tool.disconnectSession();
+        tool.close();
         driver.quit();
 
-        
-
+        return l.remove();
     }
 }
