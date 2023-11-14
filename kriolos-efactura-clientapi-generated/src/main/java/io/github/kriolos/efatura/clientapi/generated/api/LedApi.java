@@ -8,17 +8,17 @@ import io.github.kriolos.efatura.clientapi.generated.Pair;
 
 import jakarta.ws.rs.core.GenericType;
 
-import io.github.kriolos.efatura.clientapi.generated.model.LedEntity;
 import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseBoolean;
-import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseLedEntity;
-import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseListLedEntity;
+import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseLedDto;
+import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseListLedDto;
+import io.github.kriolos.efatura.clientapi.generated.model.SaveLedDto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:43:35.596432800-01:00[Atlantic/Cape_Verde]")
 public class LedApi {
   private ApiClient apiClient;
 
@@ -51,8 +51,8 @@ public class LedApi {
   /**
    * Regista um novo LED.
    * 
-   * @param ledEntity  (optional)
-   * @return PayloadProcessingResponseLedEntity
+   * @param saveLedDto  (optional)
+   * @return PayloadProcessingResponseLedDto
    * @throws ApiException if fails to make API call
    * @http.response.details
      <table summary="Response Details" border="1">
@@ -62,15 +62,15 @@ public class LedApi {
        <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
      </table>
    */
-  public PayloadProcessingResponseLedEntity ledResourceCreate(LedEntity ledEntity) throws ApiException {
-    return ledResourceCreateWithHttpInfo(ledEntity).getData();
+  public PayloadProcessingResponseLedDto ledResourceCreateLed(SaveLedDto saveLedDto) throws ApiException {
+    return ledResourceCreateLedWithHttpInfo(saveLedDto).getData();
   }
 
   /**
    * Regista um novo LED.
    * 
-   * @param ledEntity  (optional)
-   * @return ApiResponse&lt;PayloadProcessingResponseLedEntity&gt;
+   * @param saveLedDto  (optional)
+   * @return ApiResponse&lt;PayloadProcessingResponseLedDto&gt;
    * @throws ApiException if fails to make API call
    * @http.response.details
      <table summary="Response Details" border="1">
@@ -80,8 +80,8 @@ public class LedApi {
        <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
      </table>
    */
-  public ApiResponse<PayloadProcessingResponseLedEntity> ledResourceCreateWithHttpInfo(LedEntity ledEntity) throws ApiException {
-    Object localVarPostBody = ledEntity;
+  public ApiResponse<PayloadProcessingResponseLedDto> ledResourceCreateLedWithHttpInfo(SaveLedDto saveLedDto) throws ApiException {
+    Object localVarPostBody = saveLedDto;
     
     // create path and map variables
     String localVarPath = "/v1/led";
@@ -108,9 +108,9 @@ public class LedApi {
 
     String[] localVarAuthNames = new String[] { "SecurityScheme" };
 
-    GenericType<PayloadProcessingResponseLedEntity> localVarReturnType = new GenericType<PayloadProcessingResponseLedEntity>() {};
+    GenericType<PayloadProcessingResponseLedDto> localVarReturnType = new GenericType<PayloadProcessingResponseLedDto>() {};
 
-    return apiClient.invokeAPI("LedApi.ledResourceCreate", localVarPath, "POST", localVarQueryParams, localVarPostBody,
+    return apiClient.invokeAPI("LedApi.ledResourceCreateLed", localVarPath, "POST", localVarQueryParams, localVarPostBody,
                                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
                                localVarAuthNames, localVarReturnType, false);
   }
@@ -128,8 +128,8 @@ public class LedApi {
        <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
      </table>
    */
-  public PayloadProcessingResponseBoolean ledResourceDelete(String ledCode) throws ApiException {
-    return ledResourceDeleteWithHttpInfo(ledCode).getData();
+  public PayloadProcessingResponseBoolean ledResourceDeleteLed(String ledCode) throws ApiException {
+    return ledResourceDeleteLedWithHttpInfo(ledCode).getData();
   }
 
   /**
@@ -146,12 +146,12 @@ public class LedApi {
        <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
      </table>
    */
-  public ApiResponse<PayloadProcessingResponseBoolean> ledResourceDeleteWithHttpInfo(String ledCode) throws ApiException {
+  public ApiResponse<PayloadProcessingResponseBoolean> ledResourceDeleteLedWithHttpInfo(String ledCode) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'ledCode' is set
     if (ledCode == null) {
-      throw new ApiException(400, "Missing the required parameter 'ledCode' when calling ledResourceDelete");
+      throw new ApiException(400, "Missing the required parameter 'ledCode' when calling ledResourceDeleteLed");
     }
     
     // create path and map variables
@@ -182,86 +182,14 @@ public class LedApi {
 
     GenericType<PayloadProcessingResponseBoolean> localVarReturnType = new GenericType<PayloadProcessingResponseBoolean>() {};
 
-    return apiClient.invokeAPI("LedApi.ledResourceDelete", localVarPath, "DELETE", localVarQueryParams, localVarPostBody,
-                               localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
-                               localVarAuthNames, localVarReturnType, false);
-  }
-  /**
-   * Consulta de LED com código.
-   * 
-   * @param ledCode  (required)
-   * @return PayloadProcessingResponseLedEntity
-   * @throws ApiException if fails to make API call
-   * @http.response.details
-     <table summary="Response Details" border="1">
-       <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-       <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-       <tr><td> 401 </td><td> Not Authorized </td><td>  -  </td></tr>
-       <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
-     </table>
-   */
-  public PayloadProcessingResponseLedEntity ledResourceReadByCode(String ledCode) throws ApiException {
-    return ledResourceReadByCodeWithHttpInfo(ledCode).getData();
-  }
-
-  /**
-   * Consulta de LED com código.
-   * 
-   * @param ledCode  (required)
-   * @return ApiResponse&lt;PayloadProcessingResponseLedEntity&gt;
-   * @throws ApiException if fails to make API call
-   * @http.response.details
-     <table summary="Response Details" border="1">
-       <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-       <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-       <tr><td> 401 </td><td> Not Authorized </td><td>  -  </td></tr>
-       <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
-     </table>
-   */
-  public ApiResponse<PayloadProcessingResponseLedEntity> ledResourceReadByCodeWithHttpInfo(String ledCode) throws ApiException {
-    Object localVarPostBody = null;
-    
-    // verify the required parameter 'ledCode' is set
-    if (ledCode == null) {
-      throw new ApiException(400, "Missing the required parameter 'ledCode' when calling ledResourceReadByCode");
-    }
-    
-    // create path and map variables
-    String localVarPath = "/v1/led/{LedCode}"
-      .replaceAll("\\{" + "LedCode" + "\\}", apiClient.escapeString(ledCode.toString()));
-
-    // query params
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-    Map<String, String> localVarCookieParams = new HashMap<String, String>();
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-
-    
-    
-    
-    final String[] localVarAccepts = {
-      "application/json"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-
-    final String[] localVarContentTypes = {
-      
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-
-    String[] localVarAuthNames = new String[] { "SecurityScheme" };
-
-    GenericType<PayloadProcessingResponseLedEntity> localVarReturnType = new GenericType<PayloadProcessingResponseLedEntity>() {};
-
-    return apiClient.invokeAPI("LedApi.ledResourceReadByCode", localVarPath, "GET", localVarQueryParams, localVarPostBody,
+    return apiClient.invokeAPI("LedApi.ledResourceDeleteLed", localVarPath, "DELETE", localVarQueryParams, localVarPostBody,
                                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
                                localVarAuthNames, localVarReturnType, false);
   }
   /**
    * Lista de LEDs.
    * 
-   * @return PayloadProcessingResponseListLedEntity
+   * @return PayloadProcessingResponseListLedDto
    * @throws ApiException if fails to make API call
    * @http.response.details
      <table summary="Response Details" border="1">
@@ -271,14 +199,14 @@ public class LedApi {
        <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
      </table>
    */
-  public PayloadProcessingResponseListLedEntity ledResourceReadList() throws ApiException {
-    return ledResourceReadListWithHttpInfo().getData();
+  public PayloadProcessingResponseListLedDto ledResourceGetAllLeds() throws ApiException {
+    return ledResourceGetAllLedsWithHttpInfo().getData();
   }
 
   /**
    * Lista de LEDs.
    * 
-   * @return ApiResponse&lt;PayloadProcessingResponseListLedEntity&gt;
+   * @return ApiResponse&lt;PayloadProcessingResponseListLedDto&gt;
    * @throws ApiException if fails to make API call
    * @http.response.details
      <table summary="Response Details" border="1">
@@ -288,7 +216,7 @@ public class LedApi {
        <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
      </table>
    */
-  public ApiResponse<PayloadProcessingResponseListLedEntity> ledResourceReadListWithHttpInfo() throws ApiException {
+  public ApiResponse<PayloadProcessingResponseListLedDto> ledResourceGetAllLedsWithHttpInfo() throws ApiException {
     Object localVarPostBody = null;
     
     // create path and map variables
@@ -305,6 +233,78 @@ public class LedApi {
     
     
     final String[] localVarAccepts = {
+      "application/json", "application/xml"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] { "SecurityScheme" };
+
+    GenericType<PayloadProcessingResponseListLedDto> localVarReturnType = new GenericType<PayloadProcessingResponseListLedDto>() {};
+
+    return apiClient.invokeAPI("LedApi.ledResourceGetAllLeds", localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                               localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                               localVarAuthNames, localVarReturnType, false);
+  }
+  /**
+   * Consulta de LED com código.
+   * 
+   * @param ledCode  (required)
+   * @return PayloadProcessingResponseLedDto
+   * @throws ApiException if fails to make API call
+   * @http.response.details
+     <table summary="Response Details" border="1">
+       <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+       <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+       <tr><td> 401 </td><td> Not Authorized </td><td>  -  </td></tr>
+       <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
+     </table>
+   */
+  public PayloadProcessingResponseLedDto ledResourceGetLedByCode(String ledCode) throws ApiException {
+    return ledResourceGetLedByCodeWithHttpInfo(ledCode).getData();
+  }
+
+  /**
+   * Consulta de LED com código.
+   * 
+   * @param ledCode  (required)
+   * @return ApiResponse&lt;PayloadProcessingResponseLedDto&gt;
+   * @throws ApiException if fails to make API call
+   * @http.response.details
+     <table summary="Response Details" border="1">
+       <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+       <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+       <tr><td> 401 </td><td> Not Authorized </td><td>  -  </td></tr>
+       <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
+     </table>
+   */
+  public ApiResponse<PayloadProcessingResponseLedDto> ledResourceGetLedByCodeWithHttpInfo(String ledCode) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'ledCode' is set
+    if (ledCode == null) {
+      throw new ApiException(400, "Missing the required parameter 'ledCode' when calling ledResourceGetLedByCode");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/v1/led/{LedCode}"
+      .replaceAll("\\{" + "LedCode" + "\\}", apiClient.escapeString(ledCode.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    
+    final String[] localVarAccepts = {
       "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
@@ -316,9 +316,9 @@ public class LedApi {
 
     String[] localVarAuthNames = new String[] { "SecurityScheme" };
 
-    GenericType<PayloadProcessingResponseListLedEntity> localVarReturnType = new GenericType<PayloadProcessingResponseListLedEntity>() {};
+    GenericType<PayloadProcessingResponseLedDto> localVarReturnType = new GenericType<PayloadProcessingResponseLedDto>() {};
 
-    return apiClient.invokeAPI("LedApi.ledResourceReadList", localVarPath, "GET", localVarQueryParams, localVarPostBody,
+    return apiClient.invokeAPI("LedApi.ledResourceGetLedByCode", localVarPath, "GET", localVarQueryParams, localVarPostBody,
                                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
                                localVarAuthNames, localVarReturnType, false);
   }
@@ -326,8 +326,8 @@ public class LedApi {
    * Atualiza um LED.
    * 
    * @param ledCode  (required)
-   * @param ledEntity  (optional)
-   * @return PayloadProcessingResponseLedEntity
+   * @param saveLedDto  (optional)
+   * @return PayloadProcessingResponseLedDto
    * @throws ApiException if fails to make API call
    * @http.response.details
      <table summary="Response Details" border="1">
@@ -337,16 +337,16 @@ public class LedApi {
        <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
      </table>
    */
-  public PayloadProcessingResponseLedEntity ledResourceUpdate(String ledCode, LedEntity ledEntity) throws ApiException {
-    return ledResourceUpdateWithHttpInfo(ledCode, ledEntity).getData();
+  public PayloadProcessingResponseLedDto ledResourceUpdateLed(String ledCode, SaveLedDto saveLedDto) throws ApiException {
+    return ledResourceUpdateLedWithHttpInfo(ledCode, saveLedDto).getData();
   }
 
   /**
    * Atualiza um LED.
    * 
    * @param ledCode  (required)
-   * @param ledEntity  (optional)
-   * @return ApiResponse&lt;PayloadProcessingResponseLedEntity&gt;
+   * @param saveLedDto  (optional)
+   * @return ApiResponse&lt;PayloadProcessingResponseLedDto&gt;
    * @throws ApiException if fails to make API call
    * @http.response.details
      <table summary="Response Details" border="1">
@@ -356,12 +356,12 @@ public class LedApi {
        <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
      </table>
    */
-  public ApiResponse<PayloadProcessingResponseLedEntity> ledResourceUpdateWithHttpInfo(String ledCode, LedEntity ledEntity) throws ApiException {
-    Object localVarPostBody = ledEntity;
+  public ApiResponse<PayloadProcessingResponseLedDto> ledResourceUpdateLedWithHttpInfo(String ledCode, SaveLedDto saveLedDto) throws ApiException {
+    Object localVarPostBody = saveLedDto;
     
     // verify the required parameter 'ledCode' is set
     if (ledCode == null) {
-      throw new ApiException(400, "Missing the required parameter 'ledCode' when calling ledResourceUpdate");
+      throw new ApiException(400, "Missing the required parameter 'ledCode' when calling ledResourceUpdateLed");
     }
     
     // create path and map variables
@@ -390,9 +390,9 @@ public class LedApi {
 
     String[] localVarAuthNames = new String[] { "SecurityScheme" };
 
-    GenericType<PayloadProcessingResponseLedEntity> localVarReturnType = new GenericType<PayloadProcessingResponseLedEntity>() {};
+    GenericType<PayloadProcessingResponseLedDto> localVarReturnType = new GenericType<PayloadProcessingResponseLedDto>() {};
 
-    return apiClient.invokeAPI("LedApi.ledResourceUpdate", localVarPath, "PUT", localVarQueryParams, localVarPostBody,
+    return apiClient.invokeAPI("LedApi.ledResourceUpdateLed", localVarPath, "PUT", localVarQueryParams, localVarPostBody,
                                localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
                                localVarAuthNames, localVarReturnType, false);
   }

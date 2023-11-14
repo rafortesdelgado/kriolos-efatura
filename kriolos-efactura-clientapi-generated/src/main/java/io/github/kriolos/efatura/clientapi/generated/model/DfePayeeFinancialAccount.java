@@ -34,7 +34,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   DfePayeeFinancialAccount.JSON_PROPERTY_N_I_B,
   DfePayeeFinancialAccount.JSON_PROPERTY_NAME
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:43:35.596432800-01:00[Atlantic/Cape_Verde]")
 public class DfePayeeFinancialAccount {
   public static final String JSON_PROPERTY_ACCOUNT_NUMBER = "AccountNumber";
   private String accountNumber;

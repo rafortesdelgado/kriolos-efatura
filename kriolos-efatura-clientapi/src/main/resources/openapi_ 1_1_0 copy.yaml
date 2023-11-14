@@ -77,10 +77,10 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            application/xml:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseString'
-            application/xml:
+            application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseString'
   /v1/dfe:
@@ -513,17 +513,14 @@ paths:
       tags:
       - LED
       summary: Lista de LEDs.
-      operationId: LedResource_getAllLeds
+      operationId: LedResource_readList
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseListLedDto'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseListLedDto'
+                $ref: '#/components/schemas/PayloadProcessingResponseListLedEntity'
         "401":
           description: Not Authorized
         "403":
@@ -536,19 +533,19 @@ paths:
       tags:
       - LED
       summary: Regista um novo LED.
-      operationId: LedResource_createLed
+      operationId: LedResource_create
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SaveLedDto'
+              $ref: '#/components/schemas/LedEntity'
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseLedDto'
+                $ref: '#/components/schemas/PayloadProcessingResponseLedEntity'
         "401":
           description: Not Authorized
         "403":
@@ -562,7 +559,7 @@ paths:
       tags:
       - LED
       summary: Consulta de LED com código.
-      operationId: LedResource_getLedByCode
+      operationId: LedResource_readByCode
       parameters:
       - name: LedCode
         in: path
@@ -575,7 +572,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseLedDto'
+                $ref: '#/components/schemas/PayloadProcessingResponseLedEntity'
         "401":
           description: Not Authorized
         "403":
@@ -588,7 +585,7 @@ paths:
       tags:
       - LED
       summary: Atualiza um LED.
-      operationId: LedResource_updateLed
+      operationId: LedResource_update
       parameters:
       - name: LedCode
         in: path
@@ -599,14 +596,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SaveLedDto'
+              $ref: '#/components/schemas/LedEntity'
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseLedDto'
+                $ref: '#/components/schemas/PayloadProcessingResponseLedEntity'
         "401":
           description: Not Authorized
         "403":
@@ -619,7 +616,7 @@ paths:
       tags:
       - LED
       summary: Elimina um LED sem DFEs associados.
-      operationId: LedResource_deleteLed
+      operationId: LedResource_delete
       parameters:
       - name: LedCode
         in: path
@@ -1163,7 +1160,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseListSearchTaxPayerResponseDto'
+                $ref: '#/components/schemas/PayloadProcessingResponseListTaxPayerCv'
         "401":
           description: Not Authorized
         "403":
@@ -1562,17 +1559,23 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
-          type: object
           allOf:
           - $ref: '#/components/schemas/ItemsPaginationObject'
-          xml:
-            name: Payload
+          - xml:
+              name: Payload
       xml:
         name: Response
     DfeListProcessingResponse:
@@ -1585,6 +1588,13 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -1710,29 +1720,17 @@ components:
       properties:
         Id:
           type: string
+        EmitterTaxId:
+          format: int32
+          type: integer
+        ReceiverTaxId:
+          type: string
         DocumentTypeCode:
           format: int32
           type: integer
         LedCode:
           format: int32
           type: integer
-        EmitterTaxId:
-          format: int32
-          type: integer
-        EmitterName:
-          type: string
-        ReceiverTaxIdCountryCode:
-          type: string
-        ReceiverTaxId:
-          type: string
-        ReceiverName:
-          type: string
-        PayableAmount:
-          format: double
-          type: number
-        TaxTotalAmount:
-          format: double
-          type: number
         AuthorizedDateTime:
           $ref: '#/components/schemas/Date'
         CanceledDateTime:
@@ -1833,6 +1831,13 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -1843,11 +1848,10 @@ components:
           xml:
             name: EntryName
         authorizedDateTime:
-          type: string
           allOf:
           - $ref: '#/components/schemas/Date'
-          xml:
-            name: AuthorizedDateTime
+          - xml:
+              name: AuthorizedDateTime
         signatureTimeStamp:
           type: string
           xml:
@@ -1952,17 +1956,23 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
-          type: object
           allOf:
           - $ref: '#/components/schemas/ItemsPaginationObject'
-          xml:
-            name: Payload
+          - xml:
+              name: Payload
       xml:
         name: Response
     EventListProcessingResponse:
@@ -1975,6 +1985,13 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2044,21 +2061,40 @@ components:
           type: integer
           xml:
             name: PageCount
-    LedDto:
+    LedEntity:
       type: object
       properties:
+        id:
+          type: string
+        taxId:
+          format: int32
+          maximum: 999999999
+          minimum: 100000000
+          type: integer
         code:
           format: int32
+          maximum: 99999
+          minimum: 1
           type: integer
         description:
+          maxLength: 200
+          minLength: 5
           type: string
         serie:
+          maxLength: 20
+          minLength: 1
           type: string
         addressCode:
+          maxLength: 20
+          minLength: 20
           type: string
         addressDetail:
+          maxLength: 200
+          minLength: 10
           type: string
         softwareCode:
+          maxLength: 10
+          minLength: 3
           type: string
         created:
           $ref: '#/components/schemas/Date'
@@ -2070,11 +2106,10 @@ components:
           xml:
             name: Code
         dateTime:
-          type: string
           allOf:
           - $ref: '#/components/schemas/Date'
-          xml:
-            name: DateTime
+          - xml:
+              name: DateTime
         description:
           type: string
           xml:
@@ -2106,6 +2141,13 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2127,17 +2169,23 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
-          type: object
           allOf:
           - $ref: '#/components/schemas/Dfe'
-          xml:
-            name: Payload
+          - xml:
+              name: Payload
       xml:
         name: Response
     PayloadProcessingResponseEvent:
@@ -2150,20 +2198,26 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
-          type: object
           allOf:
           - $ref: '#/components/schemas/Event'
-          xml:
-            name: Payload
+          - xml:
+              name: Payload
       xml:
         name: Response
-    PayloadProcessingResponseLedDto:
+    PayloadProcessingResponseLedEntity:
       type: object
       properties:
         messages:
@@ -2173,20 +2227,26 @@ components:
           xml:
             name: Messages
             wrapped: true
-        succeeded:
-          type: boolean
-          xml:
-            name: Succeeded
-            attribute: true
-        payload:
+        processedObject:
           type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
+        payload:
           allOf:
-          - $ref: '#/components/schemas/LedDto'
-          xml:
-            name: Payload
+          - $ref: '#/components/schemas/LedEntity'
+          - xml:
+              name: Payload
       xml:
         name: Response
-    PayloadProcessingResponseListLedDto:
+    PayloadProcessingResponseListLedEntity:
       type: object
       properties:
         messages:
@@ -2196,6 +2256,13 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2204,30 +2271,7 @@ components:
         payload:
           type: array
           items:
-            $ref: '#/components/schemas/LedDto'
-          xml:
-            name: Payload
-      xml:
-        name: Response
-    PayloadProcessingResponseListSearchTaxPayerResponseDto:
-      type: object
-      properties:
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
-          xml:
-            name: Messages
-            wrapped: true
-        succeeded:
-          type: boolean
-          xml:
-            name: Succeeded
-            attribute: true
-        payload:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchTaxPayerResponseDto'
+            $ref: '#/components/schemas/LedEntity'
           xml:
             name: Payload
       xml:
@@ -2242,6 +2286,13 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2265,6 +2316,13 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2288,6 +2346,13 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2311,6 +2376,13 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2320,6 +2392,36 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SoftwareTransmitterDto'
+          xml:
+            name: Payload
+      xml:
+        name: Response
+    PayloadProcessingResponseListTaxPayerCv:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          xml:
+            name: Messages
+            wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
+        payload:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxPayerCv'
           xml:
             name: Payload
       xml:
@@ -2334,6 +2436,13 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2356,17 +2465,23 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
-          type: object
           allOf:
           - $ref: '#/components/schemas/SoftwareCustomerDto'
-          xml:
-            name: Payload
+          - xml:
+              name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareCustomerEntity:
@@ -2379,17 +2494,23 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
-          type: object
           allOf:
           - $ref: '#/components/schemas/SoftwareCustomerEntity'
-          xml:
-            name: Payload
+          - xml:
+              name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareGroupMemberDto:
@@ -2402,17 +2523,23 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
-          type: object
           allOf:
           - $ref: '#/components/schemas/SoftwareGroupMemberDto'
-          xml:
-            name: Payload
+          - xml:
+              name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareGroupMemberEntity:
@@ -2425,17 +2552,23 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
-          type: object
           allOf:
           - $ref: '#/components/schemas/SoftwareGroupMemberEntity'
-          xml:
-            name: Payload
+          - xml:
+              name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareTransmitterDto:
@@ -2448,17 +2581,23 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
-          type: object
           allOf:
           - $ref: '#/components/schemas/SoftwareTransmitterDto'
-          xml:
-            name: Payload
+          - xml:
+              name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareTransmitterEntity:
@@ -2471,17 +2610,23 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
-          type: object
           allOf:
           - $ref: '#/components/schemas/SoftwareTransmitterEntity'
-          xml:
-            name: Payload
+          - xml:
+              name: Payload
       xml:
         name: Response
     PayloadProcessingResponseString:
@@ -2494,6 +2639,13 @@ components:
           xml:
             name: Messages
             wrapped: true
+        processedObject:
+          type: object
+          writeOnly: true
+        processingElapsedMilliseconds:
+          format: int64
+          type: integer
+          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2505,45 +2657,6 @@ components:
             name: Payload
       xml:
         name: Response
-    SaveLedDto:
-      type: object
-      properties:
-        description:
-          type: string
-        serie:
-          type: string
-        addressCode:
-          type: string
-        addressDetail:
-          type: string
-        softwareCode:
-          type: string
-    SearchTaxPayerResponseDto:
-      type: object
-      properties:
-        TaxId:
-          format: int32
-          type: integer
-        Name:
-          type: string
-        NormalizedName:
-          type: string
-        TypeCode:
-          type: string
-        TypeDescription:
-          type: string
-        TaxAreaCode:
-          format: int32
-          type: integer
-        BI:
-          format: int32
-          type: integer
-        NicLast5Chars:
-          type: string
-        TaxRegimeCode:
-          type: string
-        TaxRegimeDescription:
-          type: string
     SoftwareCustomerDto:
       type: object
       properties:
@@ -2723,6 +2836,38 @@ components:
           $ref: '#/components/schemas/Date'
         updated:
           $ref: '#/components/schemas/Date'
+    TaxPayerCv:
+      type: object
+      properties:
+        Name:
+          type: string
+        NormalizedName:
+          type: string
+        TypeCode:
+          type: string
+        TypeDescription:
+          type: string
+        Email:
+          type: string
+        Mobile:
+          type: string
+        BI:
+          format: int32
+          type: integer
+        IsTaxable:
+          type: boolean
+        NicLast5Chars:
+          type: string
+        TaxAreaCode:
+          format: int32
+          type: integer
+        TaxId:
+          format: int32
+          type: integer
+        TaxRegimeCode:
+          type: string
+        TaxRegimeDescription:
+          type: string
   securitySchemes:
     SecurityScheme:
       type: oauth2

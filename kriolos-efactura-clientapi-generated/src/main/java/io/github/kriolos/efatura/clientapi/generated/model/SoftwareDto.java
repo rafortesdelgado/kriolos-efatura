@@ -45,7 +45,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   SoftwareDto.JSON_PROPERTY_TRANSMIT_LEVEL_DATE,
   SoftwareDto.JSON_PROPERTY_RECEIVE_LEVEL_DATE
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:43:35.596432800-01:00[Atlantic/Cape_Verde]")
 public class SoftwareDto {
   public static final String JSON_PROPERTY_CODE = "code";
   private String code;

@@ -32,30 +32,50 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
  */
 @JsonPropertyOrder({
   DfeSummary.JSON_PROPERTY_ID,
-  DfeSummary.JSON_PROPERTY_EMITTER_TAX_ID,
-  DfeSummary.JSON_PROPERTY_RECEIVER_TAX_ID,
   DfeSummary.JSON_PROPERTY_DOCUMENT_TYPE_CODE,
   DfeSummary.JSON_PROPERTY_LED_CODE,
+  DfeSummary.JSON_PROPERTY_EMITTER_TAX_ID,
+  DfeSummary.JSON_PROPERTY_EMITTER_NAME,
+  DfeSummary.JSON_PROPERTY_RECEIVER_TAX_ID_COUNTRY_CODE,
+  DfeSummary.JSON_PROPERTY_RECEIVER_TAX_ID,
+  DfeSummary.JSON_PROPERTY_RECEIVER_NAME,
+  DfeSummary.JSON_PROPERTY_PAYABLE_AMOUNT,
+  DfeSummary.JSON_PROPERTY_TAX_TOTAL_AMOUNT,
   DfeSummary.JSON_PROPERTY_AUTHORIZED_DATE_TIME,
   DfeSummary.JSON_PROPERTY_CANCELED_DATE_TIME,
   DfeSummary.JSON_PROPERTY_ISSUE_DIRECTION
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:43:35.596432800-01:00[Atlantic/Cape_Verde]")
 public class DfeSummary {
   public static final String JSON_PROPERTY_ID = "Id";
   private String id;
-
-  public static final String JSON_PROPERTY_EMITTER_TAX_ID = "EmitterTaxId";
-  private Integer emitterTaxId;
-
-  public static final String JSON_PROPERTY_RECEIVER_TAX_ID = "ReceiverTaxId";
-  private String receiverTaxId;
 
   public static final String JSON_PROPERTY_DOCUMENT_TYPE_CODE = "DocumentTypeCode";
   private Integer documentTypeCode;
 
   public static final String JSON_PROPERTY_LED_CODE = "LedCode";
   private Integer ledCode;
+
+  public static final String JSON_PROPERTY_EMITTER_TAX_ID = "EmitterTaxId";
+  private Integer emitterTaxId;
+
+  public static final String JSON_PROPERTY_EMITTER_NAME = "EmitterName";
+  private String emitterName;
+
+  public static final String JSON_PROPERTY_RECEIVER_TAX_ID_COUNTRY_CODE = "ReceiverTaxIdCountryCode";
+  private String receiverTaxIdCountryCode;
+
+  public static final String JSON_PROPERTY_RECEIVER_TAX_ID = "ReceiverTaxId";
+  private String receiverTaxId;
+
+  public static final String JSON_PROPERTY_RECEIVER_NAME = "ReceiverName";
+  private String receiverName;
+
+  public static final String JSON_PROPERTY_PAYABLE_AMOUNT = "PayableAmount";
+  private Double payableAmount;
+
+  public static final String JSON_PROPERTY_TAX_TOTAL_AMOUNT = "TaxTotalAmount";
+  private Double taxTotalAmount;
 
   public static final String JSON_PROPERTY_AUTHORIZED_DATE_TIME = "AuthorizedDateTime";
   private LocalDate authorizedDateTime;
@@ -91,56 +111,6 @@ public class DfeSummary {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setId(String id) {
     this.id = id;
-  }
-
-
-  public DfeSummary emitterTaxId(Integer emitterTaxId) {
-    this.emitterTaxId = emitterTaxId;
-    return this;
-  }
-
-   /**
-   * Get emitterTaxId
-   * @return emitterTaxId
-  **/
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_EMITTER_TAX_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public Integer getEmitterTaxId() {
-    return emitterTaxId;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_EMITTER_TAX_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setEmitterTaxId(Integer emitterTaxId) {
-    this.emitterTaxId = emitterTaxId;
-  }
-
-
-  public DfeSummary receiverTaxId(String receiverTaxId) {
-    this.receiverTaxId = receiverTaxId;
-    return this;
-  }
-
-   /**
-   * Get receiverTaxId
-   * @return receiverTaxId
-  **/
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_RECEIVER_TAX_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public String getReceiverTaxId() {
-    return receiverTaxId;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_RECEIVER_TAX_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setReceiverTaxId(String receiverTaxId) {
-    this.receiverTaxId = receiverTaxId;
   }
 
 
@@ -191,6 +161,181 @@ public class DfeSummary {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setLedCode(Integer ledCode) {
     this.ledCode = ledCode;
+  }
+
+
+  public DfeSummary emitterTaxId(Integer emitterTaxId) {
+    this.emitterTaxId = emitterTaxId;
+    return this;
+  }
+
+   /**
+   * Get emitterTaxId
+   * @return emitterTaxId
+  **/
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_EMITTER_TAX_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public Integer getEmitterTaxId() {
+    return emitterTaxId;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_EMITTER_TAX_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setEmitterTaxId(Integer emitterTaxId) {
+    this.emitterTaxId = emitterTaxId;
+  }
+
+
+  public DfeSummary emitterName(String emitterName) {
+    this.emitterName = emitterName;
+    return this;
+  }
+
+   /**
+   * Get emitterName
+   * @return emitterName
+  **/
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_EMITTER_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public String getEmitterName() {
+    return emitterName;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_EMITTER_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setEmitterName(String emitterName) {
+    this.emitterName = emitterName;
+  }
+
+
+  public DfeSummary receiverTaxIdCountryCode(String receiverTaxIdCountryCode) {
+    this.receiverTaxIdCountryCode = receiverTaxIdCountryCode;
+    return this;
+  }
+
+   /**
+   * Get receiverTaxIdCountryCode
+   * @return receiverTaxIdCountryCode
+  **/
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_RECEIVER_TAX_ID_COUNTRY_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public String getReceiverTaxIdCountryCode() {
+    return receiverTaxIdCountryCode;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_RECEIVER_TAX_ID_COUNTRY_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setReceiverTaxIdCountryCode(String receiverTaxIdCountryCode) {
+    this.receiverTaxIdCountryCode = receiverTaxIdCountryCode;
+  }
+
+
+  public DfeSummary receiverTaxId(String receiverTaxId) {
+    this.receiverTaxId = receiverTaxId;
+    return this;
+  }
+
+   /**
+   * Get receiverTaxId
+   * @return receiverTaxId
+  **/
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_RECEIVER_TAX_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public String getReceiverTaxId() {
+    return receiverTaxId;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_RECEIVER_TAX_ID)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setReceiverTaxId(String receiverTaxId) {
+    this.receiverTaxId = receiverTaxId;
+  }
+
+
+  public DfeSummary receiverName(String receiverName) {
+    this.receiverName = receiverName;
+    return this;
+  }
+
+   /**
+   * Get receiverName
+   * @return receiverName
+  **/
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_RECEIVER_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public String getReceiverName() {
+    return receiverName;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_RECEIVER_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setReceiverName(String receiverName) {
+    this.receiverName = receiverName;
+  }
+
+
+  public DfeSummary payableAmount(Double payableAmount) {
+    this.payableAmount = payableAmount;
+    return this;
+  }
+
+   /**
+   * Get payableAmount
+   * @return payableAmount
+  **/
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_PAYABLE_AMOUNT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public Double getPayableAmount() {
+    return payableAmount;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_PAYABLE_AMOUNT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setPayableAmount(Double payableAmount) {
+    this.payableAmount = payableAmount;
+  }
+
+
+  public DfeSummary taxTotalAmount(Double taxTotalAmount) {
+    this.taxTotalAmount = taxTotalAmount;
+    return this;
+  }
+
+   /**
+   * Get taxTotalAmount
+   * @return taxTotalAmount
+  **/
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_TAX_TOTAL_AMOUNT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public Double getTaxTotalAmount() {
+    return taxTotalAmount;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_TAX_TOTAL_AMOUNT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setTaxTotalAmount(Double taxTotalAmount) {
+    this.taxTotalAmount = taxTotalAmount;
   }
 
 
@@ -282,10 +427,15 @@ public class DfeSummary {
     }
     DfeSummary dfeSummary = (DfeSummary) o;
     return Objects.equals(this.id, dfeSummary.id) &&
-        Objects.equals(this.emitterTaxId, dfeSummary.emitterTaxId) &&
-        Objects.equals(this.receiverTaxId, dfeSummary.receiverTaxId) &&
         Objects.equals(this.documentTypeCode, dfeSummary.documentTypeCode) &&
         Objects.equals(this.ledCode, dfeSummary.ledCode) &&
+        Objects.equals(this.emitterTaxId, dfeSummary.emitterTaxId) &&
+        Objects.equals(this.emitterName, dfeSummary.emitterName) &&
+        Objects.equals(this.receiverTaxIdCountryCode, dfeSummary.receiverTaxIdCountryCode) &&
+        Objects.equals(this.receiverTaxId, dfeSummary.receiverTaxId) &&
+        Objects.equals(this.receiverName, dfeSummary.receiverName) &&
+        Objects.equals(this.payableAmount, dfeSummary.payableAmount) &&
+        Objects.equals(this.taxTotalAmount, dfeSummary.taxTotalAmount) &&
         Objects.equals(this.authorizedDateTime, dfeSummary.authorizedDateTime) &&
         Objects.equals(this.canceledDateTime, dfeSummary.canceledDateTime) &&
         Objects.equals(this.issueDirection, dfeSummary.issueDirection);
@@ -293,7 +443,7 @@ public class DfeSummary {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, emitterTaxId, receiverTaxId, documentTypeCode, ledCode, authorizedDateTime, canceledDateTime, issueDirection);
+    return Objects.hash(id, documentTypeCode, ledCode, emitterTaxId, emitterName, receiverTaxIdCountryCode, receiverTaxId, receiverName, payableAmount, taxTotalAmount, authorizedDateTime, canceledDateTime, issueDirection);
   }
 
   @Override
@@ -301,10 +451,15 @@ public class DfeSummary {
     StringBuilder sb = new StringBuilder();
     sb.append("class DfeSummary {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    emitterTaxId: ").append(toIndentedString(emitterTaxId)).append("\n");
-    sb.append("    receiverTaxId: ").append(toIndentedString(receiverTaxId)).append("\n");
     sb.append("    documentTypeCode: ").append(toIndentedString(documentTypeCode)).append("\n");
     sb.append("    ledCode: ").append(toIndentedString(ledCode)).append("\n");
+    sb.append("    emitterTaxId: ").append(toIndentedString(emitterTaxId)).append("\n");
+    sb.append("    emitterName: ").append(toIndentedString(emitterName)).append("\n");
+    sb.append("    receiverTaxIdCountryCode: ").append(toIndentedString(receiverTaxIdCountryCode)).append("\n");
+    sb.append("    receiverTaxId: ").append(toIndentedString(receiverTaxId)).append("\n");
+    sb.append("    receiverName: ").append(toIndentedString(receiverName)).append("\n");
+    sb.append("    payableAmount: ").append(toIndentedString(payableAmount)).append("\n");
+    sb.append("    taxTotalAmount: ").append(toIndentedString(taxTotalAmount)).append("\n");
     sb.append("    authorizedDateTime: ").append(toIndentedString(authorizedDateTime)).append("\n");
     sb.append("    canceledDateTime: ").append(toIndentedString(canceledDateTime)).append("\n");
     sb.append("    issueDirection: ").append(toIndentedString(issueDirection)).append("\n");

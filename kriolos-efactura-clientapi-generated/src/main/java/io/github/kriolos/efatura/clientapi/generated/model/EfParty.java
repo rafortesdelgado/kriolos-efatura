@@ -39,7 +39,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   EfParty.JSON_PROPERTY_CONTACTS,
   EfParty.JSON_PROPERTY_REFERENCE
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:43:35.596432800-01:00[Atlantic/Cape_Verde]")
 public class EfParty {
   public static final String JSON_PROPERTY_TAX_ID = "TaxId";
   private EfTaxId taxId;

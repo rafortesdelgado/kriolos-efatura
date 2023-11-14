@@ -46,7 +46,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   PayloadProcessingResponseSoftwareCustomerDtoPayload.JSON_PROPERTY_USE_EXCLUSIVE_O_AUTH_PARAMS
 })
 @JsonTypeName("PayloadProcessingResponseSoftwareCustomerDto_payload")
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:43:35.596432800-01:00[Atlantic/Cape_Verde]")
 public class PayloadProcessingResponseSoftwareCustomerDtoPayload {
   public static final String JSON_PROPERTY_ID = "id";
   private String id;

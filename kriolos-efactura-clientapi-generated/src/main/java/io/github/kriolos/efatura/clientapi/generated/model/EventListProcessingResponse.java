@@ -35,21 +35,13 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
  */
 @JsonPropertyOrder({
   EventListProcessingResponse.JSON_PROPERTY_MESSAGES,
-  EventListProcessingResponse.JSON_PROPERTY_PROCESSED_OBJECT,
-  EventListProcessingResponse.JSON_PROPERTY_PROCESSING_ELAPSED_MILLISECONDS,
   EventListProcessingResponse.JSON_PROPERTY_SUCCEEDED,
   EventListProcessingResponse.JSON_PROPERTY_PAYLOAD
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:43:35.596432800-01:00[Atlantic/Cape_Verde]")
 public class EventListProcessingResponse {
   public static final String JSON_PROPERTY_MESSAGES = "messages";
   private List<Message> messages = null;
-
-  public static final String JSON_PROPERTY_PROCESSED_OBJECT = "processedObject";
-  private Object processedObject;
-
-  public static final String JSON_PROPERTY_PROCESSING_ELAPSED_MILLISECONDS = "processingElapsedMilliseconds";
-  private Long processingElapsedMilliseconds;
 
   public static final String JSON_PROPERTY_SUCCEEDED = "succeeded";
   private Boolean succeeded;
@@ -90,56 +82,6 @@ public class EventListProcessingResponse {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setMessages(List<Message> messages) {
     this.messages = messages;
-  }
-
-
-  public EventListProcessingResponse processedObject(Object processedObject) {
-    this.processedObject = processedObject;
-    return this;
-  }
-
-   /**
-   * Get processedObject
-   * @return processedObject
-  **/
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_PROCESSED_OBJECT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public Object getProcessedObject() {
-    return processedObject;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_PROCESSED_OBJECT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setProcessedObject(Object processedObject) {
-    this.processedObject = processedObject;
-  }
-
-
-  public EventListProcessingResponse processingElapsedMilliseconds(Long processingElapsedMilliseconds) {
-    this.processingElapsedMilliseconds = processingElapsedMilliseconds;
-    return this;
-  }
-
-   /**
-   * Get processingElapsedMilliseconds
-   * @return processingElapsedMilliseconds
-  **/
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_PROCESSING_ELAPSED_MILLISECONDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public Long getProcessingElapsedMilliseconds() {
-    return processingElapsedMilliseconds;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_PROCESSING_ELAPSED_MILLISECONDS)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setProcessingElapsedMilliseconds(Long processingElapsedMilliseconds) {
-    this.processingElapsedMilliseconds = processingElapsedMilliseconds;
   }
 
 
@@ -214,15 +156,13 @@ public class EventListProcessingResponse {
     }
     EventListProcessingResponse eventListProcessingResponse = (EventListProcessingResponse) o;
     return Objects.equals(this.messages, eventListProcessingResponse.messages) &&
-        Objects.equals(this.processedObject, eventListProcessingResponse.processedObject) &&
-        Objects.equals(this.processingElapsedMilliseconds, eventListProcessingResponse.processingElapsedMilliseconds) &&
         Objects.equals(this.succeeded, eventListProcessingResponse.succeeded) &&
         Objects.equals(this.payload, eventListProcessingResponse.payload);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(messages, processedObject, processingElapsedMilliseconds, succeeded, payload);
+    return Objects.hash(messages, succeeded, payload);
   }
 
   @Override
@@ -230,8 +170,6 @@ public class EventListProcessingResponse {
     StringBuilder sb = new StringBuilder();
     sb.append("class EventListProcessingResponse {\n");
     sb.append("    messages: ").append(toIndentedString(messages)).append("\n");
-    sb.append("    processedObject: ").append(toIndentedString(processedObject)).append("\n");
-    sb.append("    processingElapsedMilliseconds: ").append(toIndentedString(processingElapsedMilliseconds)).append("\n");
     sb.append("    succeeded: ").append(toIndentedString(succeeded)).append("\n");
     sb.append("    payload: ").append(toIndentedString(payload)).append("\n");
     sb.append("}");

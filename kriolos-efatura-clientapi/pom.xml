@@ -65,7 +65,7 @@
                             
                             <groupId>io.github.kriolos.efatura</groupId>
                             <artifactId>kriolos-efatura-clientapi-generated</artifactId>
-                            <artifactVersion>1.1.0</artifactVersion>
+                            <artifactVersion>1.1.10</artifactVersion>
                             
                             <gitHost>https://github.com</gitHost>
                             <gitUserId>kriolos</gitUserId>

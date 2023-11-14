@@ -68,7 +68,7 @@ import io.github.kriolos.efatura.clientapi.generated.auth.OAuth;
 /**
  * <p>ApiClient class.</p>
  */
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:43:35.596432800-01:00[Atlantic/Cape_Verde]")
 public class ApiClient extends JavaTimeFormatter {
   protected Map<String, String> defaultHeaderMap = new HashMap<String, String>();
   protected Map<String, String> defaultCookieMap = new HashMap<String, String>();
@@ -122,7 +122,7 @@ public class ApiClient extends JavaTimeFormatter {
     this.dateFormat = new RFC3339DateFormat();
 
     // Set default User-Agent.
-    setUserAgent("OpenAPI-Generator/1.1.0/java");
+    setUserAgent("OpenAPI-Generator/1.1.10/java");
 
     // Setup authentications (key: authentication name, value: authentication).
     authentications = new HashMap<String, Authentication>();

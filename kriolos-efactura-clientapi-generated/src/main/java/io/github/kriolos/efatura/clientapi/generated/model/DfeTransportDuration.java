@@ -35,7 +35,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   DfeTransportDuration.JSON_PROPERTY_END_DATE,
   DfeTransportDuration.JSON_PROPERTY_END_TIME
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:43:35.596432800-01:00[Atlantic/Cape_Verde]")
 public class DfeTransportDuration {
   public static final String JSON_PROPERTY_START_DATE = "StartDate";
   private String startDate;

@@ -79,10 +79,10 @@ paths:
       responses:
         "200":
           content:
-            application/xml:
+            application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseString'
-            application/json:
+            application/xml:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseString'
           description: OK
@@ -629,13 +629,16 @@ paths:
       x-accepts: application/json
   /v1/led:
     get:
-      operationId: LedResource_readList
+      operationId: LedResource_getAllLeds
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseListLedEntity'
+                $ref: '#/components/schemas/PayloadProcessingResponseListLedDto'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseListLedDto'
           description: OK
         "401":
           description: Not Authorized
@@ -650,18 +653,18 @@ paths:
       - LED
       x-accepts: application/json
     post:
-      operationId: LedResource_create
+      operationId: LedResource_createLed
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LedEntity'
+              $ref: '#/components/schemas/SaveLedDto'
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseLedEntity'
+                $ref: '#/components/schemas/PayloadProcessingResponseLedDto'
           description: OK
         "401":
           description: Not Authorized
@@ -678,7 +681,7 @@ paths:
       x-accepts: application/json
   /v1/led/{LedCode}:
     delete:
-      operationId: LedResource_delete
+      operationId: LedResource_deleteLed
       parameters:
       - explode: false
         in: path
@@ -707,7 +710,7 @@ paths:
       - LED
       x-accepts: application/json
     get:
-      operationId: LedResource_readByCode
+      operationId: LedResource_getLedByCode
       parameters:
       - explode: false
         in: path
@@ -721,7 +724,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseLedEntity'
+                $ref: '#/components/schemas/PayloadProcessingResponseLedDto'
           description: OK
         "401":
           description: Not Authorized
@@ -736,7 +739,7 @@ paths:
       - LED
       x-accepts: application/json
     put:
-      operationId: LedResource_update
+      operationId: LedResource_updateLed
       parameters:
       - explode: false
         in: path
@@ -749,13 +752,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LedEntity'
+              $ref: '#/components/schemas/SaveLedDto'
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseLedEntity'
+                $ref: '#/components/schemas/PayloadProcessingResponseLedDto'
           description: OK
         "401":
           description: Not Authorized
@@ -1345,7 +1348,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseListTaxPayerCv'
+                $ref: '#/components/schemas/PayloadProcessingResponseListSearchTaxPayerResponseDto'
           description: OK
         "401":
           description: Not Authorized
@@ -1827,24 +1830,22 @@ components:
       type: object
     DfeListPaginationResponse:
       example:
-        processingElapsedMilliseconds: 0
         payload: null
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -1854,13 +1855,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -1873,40 +1867,48 @@ components:
         name: Response
     DfeListProcessingResponse:
       example:
-        processingElapsedMilliseconds: 0
         payload:
-        - CanceledDateTime: 2022-03-10T00:00:00.000+00:00
+        - EmitterName: EmitterName
           AuthorizedDateTime: 2022-03-10T00:00:00.000+00:00
+          LedCode: 6
+          PayableAmount: 5.962133916683182
+          EmitterTaxId: 1
+          CanceledDateTime: 2022-03-10T00:00:00.000+00:00
           ReceiverTaxId: ReceiverTaxId
-          DocumentTypeCode: 1
+          DocumentTypeCode: 0
+          ReceiverTaxIdCountryCode: ReceiverTaxIdCountryCode
+          TaxTotalAmount: 5.637376656633329
           Id: Id
-          LedCode: 5
-          EmitterTaxId: 6
+          ReceiverName: ReceiverName
           IssueDirection: IssueDirection
-        - CanceledDateTime: 2022-03-10T00:00:00.000+00:00
+        - EmitterName: EmitterName
           AuthorizedDateTime: 2022-03-10T00:00:00.000+00:00
+          LedCode: 6
+          PayableAmount: 5.962133916683182
+          EmitterTaxId: 1
+          CanceledDateTime: 2022-03-10T00:00:00.000+00:00
           ReceiverTaxId: ReceiverTaxId
-          DocumentTypeCode: 1
+          DocumentTypeCode: 0
+          ReceiverTaxIdCountryCode: ReceiverTaxIdCountryCode
+          TaxTotalAmount: 5.637376656633329
           Id: Id
-          LedCode: 5
-          EmitterTaxId: 6
+          ReceiverName: ReceiverName
           IssueDirection: IssueDirection
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -1916,13 +1918,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2046,21 +2041,21 @@ components:
       type: object
     DfeSummary:
       example:
-        CanceledDateTime: 2022-03-10T00:00:00.000+00:00
+        EmitterName: EmitterName
         AuthorizedDateTime: 2022-03-10T00:00:00.000+00:00
+        LedCode: 6
+        PayableAmount: 5.962133916683182
+        EmitterTaxId: 1
+        CanceledDateTime: 2022-03-10T00:00:00.000+00:00
         ReceiverTaxId: ReceiverTaxId
-        DocumentTypeCode: 1
+        DocumentTypeCode: 0
+        ReceiverTaxIdCountryCode: ReceiverTaxIdCountryCode
+        TaxTotalAmount: 5.637376656633329
         Id: Id
-        LedCode: 5
-        EmitterTaxId: 6
+        ReceiverName: ReceiverName
         IssueDirection: IssueDirection
       properties:
         Id:
-          type: string
-        EmitterTaxId:
-          format: int32
-          type: integer
-        ReceiverTaxId:
           type: string
         DocumentTypeCode:
           format: int32
@@ -2068,6 +2063,23 @@ components:
         LedCode:
           format: int32
           type: integer
+        EmitterTaxId:
+          format: int32
+          type: integer
+        EmitterName:
+          type: string
+        ReceiverTaxIdCountryCode:
+          type: string
+        ReceiverTaxId:
+          type: string
+        ReceiverName:
+          type: string
+        PayableAmount:
+          format: double
+          type: number
+        TaxTotalAmount:
+          format: double
+          type: number
         AuthorizedDateTime:
           example: 2022-03-10
           format: date
@@ -2157,47 +2169,43 @@ components:
         responses:
         - pendingSignatureId: pendingSignatureId
           signatureTimeStamp: signatureTimeStamp
-          processingElapsedMilliseconds: 0
           entryName: entryName
           messages:
-          - dateTime: ""
+          - dateTime: dateTime
             code: code
             description: description
             index: 0
             location: location
             source: source
             type: type
-          - dateTime: ""
+          - dateTime: dateTime
             code: code
             description: description
             index: 0
             location: location
             source: source
             type: type
-          authorizedDateTime: ""
-          processedObject: "{}"
+          authorizedDateTime: authorizedDateTime
           succeeded: true
         - pendingSignatureId: pendingSignatureId
           signatureTimeStamp: signatureTimeStamp
-          processingElapsedMilliseconds: 0
           entryName: entryName
           messages:
-          - dateTime: ""
+          - dateTime: dateTime
             code: code
             description: description
             index: 0
             location: location
             source: source
             type: type
-          - dateTime: ""
+          - dateTime: dateTime
             code: code
             description: description
             index: 0
             location: location
             source: source
             type: type
-          authorizedDateTime: ""
-          processedObject: "{}"
+          authorizedDateTime: authorizedDateTime
           succeeded: true
       properties:
         responses:
@@ -2213,25 +2221,23 @@ components:
       example:
         pendingSignatureId: pendingSignatureId
         signatureTimeStamp: signatureTimeStamp
-        processingElapsedMilliseconds: 0
         entryName: entryName
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        authorizedDateTime: ""
-        processedObject: "{}"
+        authorizedDateTime: authorizedDateTime
         succeeded: true
       properties:
         messages:
@@ -2241,13 +2247,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2260,8 +2259,9 @@ components:
         authorizedDateTime:
           allOf:
           - $ref: '#/components/schemas/Date'
-          - xml:
-              name: AuthorizedDateTime
+          type: string
+          xml:
+            name: AuthorizedDateTime
         signatureTimeStamp:
           type: string
           xml:
@@ -2359,24 +2359,22 @@ components:
       type: object
     EventListPaginationResponse:
       example:
-        processingElapsedMilliseconds: 0
         payload: null
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -2386,13 +2384,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2405,7 +2396,6 @@ components:
         name: Response
     EventListProcessingResponse:
       example:
-        processingElapsedMilliseconds: 0
         payload:
         - EventTypeCode: EventTypeCode
           AuthorizedDate: 2022-03-10T00:00:00.000+00:00
@@ -2418,21 +2408,20 @@ components:
           IssueReasonDescription: IssueReasonDescription
           Id: Id
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -2442,13 +2431,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2529,49 +2511,28 @@ components:
           xml:
             name: PageCount
       type: object
-    LedEntity:
+    LedDto:
       example:
         addressCode: addressCode
-        code: 14658
+        code: 0
         addressDetail: addressDetail
-        taxId: 642471055
         created: 2022-03-10T00:00:00.000+00:00
         serie: serie
         softwareCode: softwareCode
         description: description
-        id: id
       properties:
-        id:
-          type: string
-        taxId:
-          format: int32
-          maximum: 999999999
-          minimum: 100000000
-          type: integer
         code:
           format: int32
-          maximum: 99999
-          minimum: 1
           type: integer
         description:
-          maxLength: 200
-          minLength: 5
           type: string
         serie:
-          maxLength: 20
-          minLength: 1
           type: string
         addressCode:
-          maxLength: 20
-          minLength: 20
           type: string
         addressDetail:
-          maxLength: 200
-          minLength: 10
           type: string
         softwareCode:
-          maxLength: 10
-          minLength: 3
           type: string
         created:
           example: 2022-03-10
@@ -2580,7 +2541,7 @@ components:
       type: object
     Message:
       example:
-        dateTime: ""
+        dateTime: dateTime
         code: code
         description: description
         index: 0
@@ -2595,8 +2556,9 @@ components:
         dateTime:
           allOf:
           - $ref: '#/components/schemas/Date'
-          - xml:
-              name: DateTime
+          type: string
+          xml:
+            name: DateTime
         description:
           type: string
           xml:
@@ -2621,24 +2583,22 @@ components:
       type: object
     PayloadProcessingResponseBoolean:
       example:
-        processingElapsedMilliseconds: 0
         payload: true
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -2648,13 +2608,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2669,24 +2622,22 @@ components:
         name: Response
     PayloadProcessingResponseDfe:
       example:
-        processingElapsedMilliseconds: 0
         payload: null
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -2696,13 +2647,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2715,24 +2659,22 @@ components:
         name: Response
     PayloadProcessingResponseEvent:
       example:
-        processingElapsedMilliseconds: 0
         payload: null
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -2742,13 +2684,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2759,26 +2694,24 @@ components:
       type: object
       xml:
         name: Response
-    PayloadProcessingResponseLedEntity:
+    PayloadProcessingResponseLedDto:
       example:
-        processingElapsedMilliseconds: 0
         payload: null
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -2788,61 +2721,48 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
             attribute: true
             name: Succeeded
         payload:
-          $ref: '#/components/schemas/PayloadProcessingResponseLedEntity_payload'
+          $ref: '#/components/schemas/PayloadProcessingResponseLedDto_payload'
       type: object
       xml:
         name: Response
-    PayloadProcessingResponseListLedEntity:
+    PayloadProcessingResponseListLedDto:
       example:
-        processingElapsedMilliseconds: 0
         payload:
         - addressCode: addressCode
-          code: 14658
+          code: 0
           addressDetail: addressDetail
-          taxId: 642471055
           created: 2022-03-10T00:00:00.000+00:00
           serie: serie
           softwareCode: softwareCode
           description: description
-          id: id
         - addressCode: addressCode
-          code: 14658
+          code: 0
           addressDetail: addressDetail
-          taxId: 642471055
           created: 2022-03-10T00:00:00.000+00:00
           serie: serie
           softwareCode: softwareCode
           description: description
-          id: id
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -2852,13 +2772,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2866,7 +2779,68 @@ components:
             name: Succeeded
         payload:
           items:
-            $ref: '#/components/schemas/LedEntity'
+            $ref: '#/components/schemas/LedDto'
+          type: array
+          xml:
+            name: Payload
+      type: object
+      xml:
+        name: Response
+    PayloadProcessingResponseListSearchTaxPayerResponseDto:
+      example:
+        payload:
+        - TaxAreaCode: 6
+          TypeCode: TypeCode
+          NormalizedName: NormalizedName
+          BI: 1
+          NicLast5Chars: NicLast5Chars
+          TypeDescription: TypeDescription
+          TaxId: 0
+          TaxRegimeCode: TaxRegimeCode
+          TaxRegimeDescription: TaxRegimeDescription
+          Name: Name
+        - TaxAreaCode: 6
+          TypeCode: TypeCode
+          NormalizedName: NormalizedName
+          BI: 1
+          NicLast5Chars: NicLast5Chars
+          TypeDescription: TypeDescription
+          TaxId: 0
+          TaxRegimeCode: TaxRegimeCode
+          TaxRegimeDescription: TaxRegimeDescription
+          Name: Name
+        messages:
+        - dateTime: dateTime
+          code: code
+          description: description
+          index: 0
+          location: location
+          source: source
+          type: type
+        - dateTime: dateTime
+          code: code
+          description: description
+          index: 0
+          location: location
+          source: source
+          type: type
+        succeeded: true
+      properties:
+        messages:
+          items:
+            $ref: '#/components/schemas/Message'
+          type: array
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            attribute: true
+            name: Succeeded
+        payload:
+          items:
+            $ref: '#/components/schemas/SearchTaxPayerResponseDto'
           type: array
           xml:
             name: Payload
@@ -2875,14 +2849,13 @@ components:
         name: Response
     PayloadProcessingResponseListSoftwareCustomerDto:
       example:
-        processingElapsedMilliseconds: 0
         payload:
         - transmitterName: transmitterName
           oAuthRedirectUris:
           - oAuthRedirectUris
           - oAuthRedirectUris
           softwareName: softwareName
-          transmitterTaxId: 6
+          transmitterTaxId: 0
           useExclusiveOAuthParams: true
           isEnabled: true
           softwareCode: softwareCode
@@ -2890,13 +2863,13 @@ components:
           id: id
           oAuthClientSecret: oAuthClientSecret
           customerName: customerName
-          customerTaxId: 1
+          customerTaxId: 6
         - transmitterName: transmitterName
           oAuthRedirectUris:
           - oAuthRedirectUris
           - oAuthRedirectUris
           softwareName: softwareName
-          transmitterTaxId: 6
+          transmitterTaxId: 0
           useExclusiveOAuthParams: true
           isEnabled: true
           softwareCode: softwareCode
@@ -2904,23 +2877,22 @@ components:
           id: id
           oAuthClientSecret: oAuthClientSecret
           customerName: customerName
-          customerTaxId: 1
+          customerTaxId: 6
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -2930,13 +2902,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2953,50 +2918,48 @@ components:
         name: Response
     PayloadProcessingResponseListSoftwareDto:
       example:
-        processingElapsedMilliseconds: 0
         payload:
         - groupMembers:
-          - 1
-          - 1
+          - 6
+          - 6
           receiveLevelDate: 2022-03-10T00:00:00.000+00:00
           transmitLevelDate: 2022-03-10T00:00:00.000+00:00
           internal: true
           code: code
           integratedWithPe: true
-          taxId: 6
+          taxId: 0
           created: 2022-03-10T00:00:00.000+00:00
           name: name
           type: type
           userJoinedPe: true
         - groupMembers:
-          - 1
-          - 1
+          - 6
+          - 6
           receiveLevelDate: 2022-03-10T00:00:00.000+00:00
           transmitLevelDate: 2022-03-10T00:00:00.000+00:00
           internal: true
           code: code
           integratedWithPe: true
-          taxId: 6
+          taxId: 0
           created: 2022-03-10T00:00:00.000+00:00
           name: name
           type: type
           userJoinedPe: true
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -3006,13 +2969,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -3029,34 +2985,32 @@ components:
         name: Response
     PayloadProcessingResponseListSoftwareGroupMemberDto:
       example:
-        processingElapsedMilliseconds: 0
         payload:
-        - groupMemberTaxId: 6
+        - groupMemberTaxId: 0
           softwareName: softwareName
           softwareCode: softwareCode
           id: id
           groupMemberName: groupMemberName
-        - groupMemberTaxId: 6
+        - groupMemberTaxId: 0
           softwareName: softwareName
           softwareCode: softwareCode
           id: id
           groupMemberName: groupMemberName
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -3066,13 +3020,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -3089,14 +3036,13 @@ components:
         name: Response
     PayloadProcessingResponseListSoftwareTransmitterDto:
       example:
-        processingElapsedMilliseconds: 0
         payload:
         - transmitterName: transmitterName
           oAuthRedirectUris:
           - oAuthRedirectUris
           - oAuthRedirectUris
           softwareName: softwareName
-          transmitterTaxId: 6
+          transmitterTaxId: 0
           isEnabled: true
           softwareCode: softwareCode
           oAuthClientId: oAuthClientId
@@ -3107,28 +3053,27 @@ components:
           - oAuthRedirectUris
           - oAuthRedirectUris
           softwareName: softwareName
-          transmitterTaxId: 6
+          transmitterTaxId: 0
           isEnabled: true
           softwareCode: softwareCode
           oAuthClientId: oAuthClientId
           id: id
           oAuthClientSecret: oAuthClientSecret
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -3138,13 +3083,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -3159,102 +3097,24 @@ components:
       type: object
       xml:
         name: Response
-    PayloadProcessingResponseListTaxPayerCv:
-      example:
-        processingElapsedMilliseconds: 0
-        payload:
-        - Email: Email
-          TypeCode: TypeCode
-          NormalizedName: NormalizedName
-          BI: 6
-          NicLast5Chars: NicLast5Chars
-          TaxId: 5
-          Mobile: Mobile
-          Name: Name
-          TaxAreaCode: 1
-          TypeDescription: TypeDescription
-          TaxRegimeCode: TaxRegimeCode
-          TaxRegimeDescription: TaxRegimeDescription
-          IsTaxable: true
-        - Email: Email
-          TypeCode: TypeCode
-          NormalizedName: NormalizedName
-          BI: 6
-          NicLast5Chars: NicLast5Chars
-          TaxId: 5
-          Mobile: Mobile
-          Name: Name
-          TaxAreaCode: 1
-          TypeDescription: TypeDescription
-          TaxRegimeCode: TaxRegimeCode
-          TaxRegimeDescription: TaxRegimeDescription
-          IsTaxable: true
-        messages:
-        - dateTime: ""
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: ""
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        processedObject: "{}"
-        succeeded: true
-      properties:
-        messages:
-          items:
-            $ref: '#/components/schemas/Message'
-          type: array
-          xml:
-            name: Messages
-            wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
-        succeeded:
-          type: boolean
-          xml:
-            attribute: true
-            name: Succeeded
-        payload:
-          items:
-            $ref: '#/components/schemas/TaxPayerCv'
-          type: array
-          xml:
-            name: Payload
-      type: object
-      xml:
-        name: Response
     PayloadProcessingResponseLong:
       example:
-        processingElapsedMilliseconds: 0
-        payload: 6
+        payload: 0
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -3264,13 +3124,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -3286,24 +3139,22 @@ components:
         name: Response
     PayloadProcessingResponseSoftwareCustomerDto:
       example:
-        processingElapsedMilliseconds: 0
         payload: null
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -3313,13 +3164,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -3332,24 +3176,22 @@ components:
         name: Response
     PayloadProcessingResponseSoftwareCustomerEntity:
       example:
-        processingElapsedMilliseconds: 0
         payload: null
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -3359,13 +3201,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -3378,24 +3213,22 @@ components:
         name: Response
     PayloadProcessingResponseSoftwareGroupMemberDto:
       example:
-        processingElapsedMilliseconds: 0
         payload: null
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -3405,13 +3238,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -3424,24 +3250,22 @@ components:
         name: Response
     PayloadProcessingResponseSoftwareGroupMemberEntity:
       example:
-        processingElapsedMilliseconds: 0
         payload: null
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -3451,13 +3275,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -3470,24 +3287,22 @@ components:
         name: Response
     PayloadProcessingResponseSoftwareTransmitterDto:
       example:
-        processingElapsedMilliseconds: 0
         payload: null
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -3497,13 +3312,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -3516,24 +3324,22 @@ components:
         name: Response
     PayloadProcessingResponseSoftwareTransmitterEntity:
       example:
-        processingElapsedMilliseconds: 0
         payload: null
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -3543,13 +3349,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -3562,24 +3361,22 @@ components:
         name: Response
     PayloadProcessingResponseString:
       example:
-        processingElapsedMilliseconds: 6
         payload: payload
         messages:
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        - dateTime: ""
+        - dateTime: dateTime
           code: code
           description: description
           index: 0
           location: location
           source: source
           type: type
-        processedObject: "{}"
         succeeded: true
       properties:
         messages:
@@ -3589,13 +3386,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -3608,6 +3398,62 @@ components:
       type: object
       xml:
         name: Response
+    SaveLedDto:
+      example:
+        addressCode: addressCode
+        addressDetail: addressDetail
+        serie: serie
+        softwareCode: softwareCode
+        description: description
+      properties:
+        description:
+          type: string
+        serie:
+          type: string
+        addressCode:
+          type: string
+        addressDetail:
+          type: string
+        softwareCode:
+          type: string
+      type: object
+    SearchTaxPayerResponseDto:
+      example:
+        TaxAreaCode: 6
+        TypeCode: TypeCode
+        NormalizedName: NormalizedName
+        BI: 1
+        NicLast5Chars: NicLast5Chars
+        TypeDescription: TypeDescription
+        TaxId: 0
+        TaxRegimeCode: TaxRegimeCode
+        TaxRegimeDescription: TaxRegimeDescription
+        Name: Name
+      properties:
+        TaxId:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        NormalizedName:
+          type: string
+        TypeCode:
+          type: string
+        TypeDescription:
+          type: string
+        TaxAreaCode:
+          format: int32
+          type: integer
+        BI:
+          format: int32
+          type: integer
+        NicLast5Chars:
+          type: string
+        TaxRegimeCode:
+          type: string
+        TaxRegimeDescription:
+          type: string
+      type: object
     SoftwareCustomerDto:
       example:
         transmitterName: transmitterName
@@ -3615,7 +3461,7 @@ components:
         - oAuthRedirectUris
         - oAuthRedirectUris
         softwareName: softwareName
-        transmitterTaxId: 6
+        transmitterTaxId: 0
         useExclusiveOAuthParams: true
         isEnabled: true
         softwareCode: softwareCode
@@ -3623,7 +3469,7 @@ components:
         id: id
         oAuthClientSecret: oAuthClientSecret
         customerName: customerName
-        customerTaxId: 1
+        customerTaxId: 6
       properties:
         id:
           type: string
@@ -3710,14 +3556,14 @@ components:
     SoftwareDto:
       example:
         groupMembers:
-        - 1
-        - 1
+        - 6
+        - 6
         receiveLevelDate: 2022-03-10T00:00:00.000+00:00
         transmitLevelDate: 2022-03-10T00:00:00.000+00:00
         internal: true
         code: code
         integratedWithPe: true
-        taxId: 6
+        taxId: 0
         created: 2022-03-10T00:00:00.000+00:00
         name: name
         type: type
@@ -3758,7 +3604,7 @@ components:
       type: object
     SoftwareGroupMemberDto:
       example:
-        groupMemberTaxId: 6
+        groupMemberTaxId: 0
         softwareName: softwareName
         softwareCode: softwareCode
         id: id
@@ -3811,7 +3657,7 @@ components:
         - oAuthRedirectUris
         - oAuthRedirectUris
         softwareName: softwareName
-        transmitterTaxId: 6
+        transmitterTaxId: 0
         isEnabled: true
         softwareCode: softwareCode
         oAuthClientId: oAuthClientId
@@ -3884,52 +3730,6 @@ components:
           format: date
           type: string
       type: object
-    TaxPayerCv:
-      example:
-        Email: Email
-        TypeCode: TypeCode
-        NormalizedName: NormalizedName
-        BI: 6
-        NicLast5Chars: NicLast5Chars
-        TaxId: 5
-        Mobile: Mobile
-        Name: Name
-        TaxAreaCode: 1
-        TypeDescription: TypeDescription
-        TaxRegimeCode: TaxRegimeCode
-        TaxRegimeDescription: TaxRegimeDescription
-        IsTaxable: true
-      properties:
-        Name:
-          type: string
-        NormalizedName:
-          type: string
-        TypeCode:
-          type: string
-        TypeDescription:
-          type: string
-        Email:
-          type: string
-        Mobile:
-          type: string
-        BI:
-          format: int32
-          type: integer
-        IsTaxable:
-          type: boolean
-        NicLast5Chars:
-          type: string
-        TaxAreaCode:
-          format: int32
-          type: integer
-        TaxId:
-          format: int32
-          type: integer
-        TaxRegimeCode:
-          type: string
-        TaxRegimeDescription:
-          type: string
-      type: object
     DfeResource_createDfe_request:
       properties:
         file:
@@ -3939,53 +3739,63 @@ components:
     DfeListPaginationResponse_payload:
       allOf:
       - $ref: '#/components/schemas/ItemsPaginationObject'
-      - xml:
-          name: Payload
+      type: object
+      xml:
+        name: Payload
     PayloadProcessingResponseDfe_payload:
       allOf:
       - $ref: '#/components/schemas/Dfe'
-      - xml:
-          name: Payload
+      type: object
+      xml:
+        name: Payload
     PayloadProcessingResponseEvent_payload:
       allOf:
       - $ref: '#/components/schemas/Event'
-      - xml:
-          name: Payload
-    PayloadProcessingResponseLedEntity_payload:
+      type: object
+      xml:
+        name: Payload
+    PayloadProcessingResponseLedDto_payload:
       allOf:
-      - $ref: '#/components/schemas/LedEntity'
-      - xml:
-          name: Payload
+      - $ref: '#/components/schemas/LedDto'
+      type: object
+      xml:
+        name: Payload
     PayloadProcessingResponseSoftwareCustomerDto_payload:
       allOf:
       - $ref: '#/components/schemas/SoftwareCustomerDto'
-      - xml:
-          name: Payload
+      type: object
+      xml:
+        name: Payload
     PayloadProcessingResponseSoftwareCustomerEntity_payload:
       allOf:
       - $ref: '#/components/schemas/SoftwareCustomerEntity'
-      - xml:
-          name: Payload
+      type: object
+      xml:
+        name: Payload
     PayloadProcessingResponseSoftwareGroupMemberDto_payload:
       allOf:
       - $ref: '#/components/schemas/SoftwareGroupMemberDto'
-      - xml:
-          name: Payload
+      type: object
+      xml:
+        name: Payload
     PayloadProcessingResponseSoftwareGroupMemberEntity_payload:
       allOf:
       - $ref: '#/components/schemas/SoftwareGroupMemberEntity'
-      - xml:
-          name: Payload
+      type: object
+      xml:
+        name: Payload
     PayloadProcessingResponseSoftwareTransmitterDto_payload:
       allOf:
       - $ref: '#/components/schemas/SoftwareTransmitterDto'
-      - xml:
-          name: Payload
+      type: object
+      xml:
+        name: Payload
     PayloadProcessingResponseSoftwareTransmitterEntity_payload:
       allOf:
       - $ref: '#/components/schemas/SoftwareTransmitterEntity'
-      - xml:
-          name: Payload
+      type: object
+      xml:
+        name: Payload
   securitySchemes:
     SecurityScheme:
       description: Authentication

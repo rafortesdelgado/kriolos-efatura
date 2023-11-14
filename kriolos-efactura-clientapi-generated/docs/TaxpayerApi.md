@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 
 ## taxPayerResourceSearch
 
-> PayloadProcessingResponseListTaxPayerCv taxPayerResourceSearch(name, taxId, type)
+> PayloadProcessingResponseListSearchTaxPayerResponseDto taxPayerResourceSearch(name, taxId, type)
 
 Pesquisa contribuintes por NIF e/ou Nome.
 
@@ -39,7 +39,7 @@ public class Example {
         String taxId = "taxId_example"; // String | NIF CV de contribuinte. 9 dígitos.
         String type = "type_example"; // String | Tipo de contribuinte: S=Singular; C=Coletivo; N=Entidade Nacional; E=Entidade Estrangeira; F=Fundo de Investimento; H=Herança; O=Outra Entidade.
         try {
-            PayloadProcessingResponseListTaxPayerCv result = apiInstance.taxPayerResourceSearch(name, taxId, type);
+            PayloadProcessingResponseListSearchTaxPayerResponseDto result = apiInstance.taxPayerResourceSearch(name, taxId, type);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling TaxpayerApi#taxPayerResourceSearch");
@@ -63,7 +63,7 @@ public class Example {
 
 ### Return type
 
-[**PayloadProcessingResponseListTaxPayerCv**](PayloadProcessingResponseListTaxPayerCv.md)
+[**PayloadProcessingResponseListSearchTaxPayerResponseDto**](PayloadProcessingResponseListSearchTaxPayerResponseDto.md)
 
 ### Authorization
 

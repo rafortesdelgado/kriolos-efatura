@@ -44,7 +44,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   TaxPayerCv.JSON_PROPERTY_TAX_REGIME_CODE,
   TaxPayerCv.JSON_PROPERTY_TAX_REGIME_DESCRIPTION
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-06-13T10:03:03.079208700-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-10-27T10:42:05.368685500-01:00[Atlantic/Cape_Verde]")
 public class TaxPayerCv {
   public static final String JSON_PROPERTY_NAME = "Name";
   private String name;
