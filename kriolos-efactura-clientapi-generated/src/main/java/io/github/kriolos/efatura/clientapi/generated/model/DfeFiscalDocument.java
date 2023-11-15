@@ -33,7 +33,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   DfeFiscalDocument.JSON_PROPERTY_VALUE,
   DfeFiscalDocument.JSON_PROPERTY_IS_OLD_DOCUMENT
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:43:35.596432800-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:59:08.260554600-01:00[Atlantic/Cape_Verde]")
 public class DfeFiscalDocument {
   public static final String JSON_PROPERTY_VALUE = "Value";
   private String value;

@@ -23,8 +23,8 @@ public class FiscalReportService {
     }
 
     private static String startDate = "2023-10-01";    
-    private static String endDate = "2023-11-01";
-    //private static String endDate = null;
+    //private static String endDate = "2023-11-01";
+    private static String endDate = null;
 
 
 

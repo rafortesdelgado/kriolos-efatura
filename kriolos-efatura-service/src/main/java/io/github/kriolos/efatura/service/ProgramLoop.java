@@ -3,8 +3,6 @@ package io.github.kriolos.efatura.service;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.filechooser.FileSystemView;
-
 import io.github.kriolos.efatura.clientapi.generated.ApiClient;
 import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
 
@@ -40,7 +38,7 @@ public class ProgramLoop {
 			DfeApi dfeApi = new DfeApi(apiCli);
 
 			FiscalReportService frs = new FiscalReportService(dfeApi);
-			frs.getMod106Suppliers("2023");  
+			//frs.getMod106Suppliers("2023");  
 			frs.getMod106Clients("2023");
 		}
 	}

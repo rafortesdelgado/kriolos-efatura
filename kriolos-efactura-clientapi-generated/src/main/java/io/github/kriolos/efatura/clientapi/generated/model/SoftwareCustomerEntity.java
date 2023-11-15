@@ -45,7 +45,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   SoftwareCustomerEntity.JSON_PROPERTY_CREATED,
   SoftwareCustomerEntity.JSON_PROPERTY_UPDATED
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:43:35.596432800-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:59:08.260554600-01:00[Atlantic/Cape_Verde]")
 public class SoftwareCustomerEntity {
   public static final String JSON_PROPERTY_ID = "id";
   private String id;
