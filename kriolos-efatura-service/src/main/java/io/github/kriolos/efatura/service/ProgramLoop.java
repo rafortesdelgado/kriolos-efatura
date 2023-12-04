@@ -38,8 +38,8 @@ public class ProgramLoop {
 			DfeApi dfeApi = new DfeApi(apiCli);
 
 			FiscalReportService frs = new FiscalReportService(dfeApi);
-			//frs.getMod106Suppliers("2023");  
-			frs.getMod106Clients("2023");
+			frs.getMod106Suppliers("2023");  
+			//frs.getMod106Clients("2023");
 		}
 	}
 }
