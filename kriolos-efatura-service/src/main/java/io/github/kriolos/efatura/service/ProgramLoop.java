@@ -23,23 +23,36 @@ public class ProgramLoop {
 
 		input.close();
 
+		ApiClient apiCli = new ApiClient();
+		apiCli.setDebugging(false);
+		DfeApi dfeApi = new DfeApi(apiCli);
+
 		for( String [] d : list) 
 		{
-			String jwt = GetTokenHelper.init(d[1],d[2]);
-			Program.cliName = d[0].replace(' ', '_');
-			String token = jwt;
-			int selection = 3;
-
-			ApiClient apiCli = new ApiClient();
-			apiCli.setBasePath("https://services.efatura.cv/");
-			apiCli.setAccessToken(token);
-
 			
-			DfeApi dfeApi = new DfeApi(apiCli);
+			try
+			{
 
-			FiscalReportService frs = new FiscalReportService(dfeApi);
-			frs.getMod106Suppliers("2023");  
-			//frs.getMod106Clients("2023");
+				String jwt = GetTokenHelper.init(d[1],d[2]);
+				Program.cliName = d[0].replace(' ', '_');
+				String token = jwt;
+				int selection = 3;
+				apiCli.setBasePath("https://services.efatura.cv/");
+				apiCli.setAccessToken(token);
+				FiscalReportService frs = new FiscalReportService(dfeApi);
+				frs.getMod106Suppliers("2023");  
+				frs.getMod106Clients("2023");
+
+			}
+			catch(Exception e ) 
+			{
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}
+			finally 
+			{
+			}
+			
 		}
 	}
 }

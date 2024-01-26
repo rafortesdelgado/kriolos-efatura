@@ -46,19 +46,18 @@ public class GetTokenHelper {
         LoginProcess.run(driver, nif, password);
 
         int i = 0 ;
-        while (i < 6) {
+        while (i < 3) {
                 try {
                         synchronized (o) 
                         {
-                                o.wait(10000);
+                                o.wait(5000);
                                 if(l.size() > 0  ) 
                                 {
                                         break;
                                 }
                         }
                 } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        System.out.println( i + " timeout " + nif);
                 }
                 i++;
         }
