@@ -37,7 +37,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   EfContingency.JSON_PROPERTY_REASON_TYPE_CODE,
   EfContingency.JSON_PROPERTY_REASON_DESCRIPTION
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:59:08.260554600-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-13T18:43:44.521602200-01:00[Atlantic/Cape_Verde]")
 public class EfContingency {
   public static final String JSON_PROPERTY_LED_CODE = "LedCode";
   private Integer ledCode;

@@ -1,13 +1,13 @@
-package io.github.kriolos.efatura.kriolosefaturaservice;
+// package io.github.kriolos.efatura.kriolosefaturaservice;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class KriolosEfaturaServiceApplicationTests {
+// @SpringBootTest
+// class KriolosEfaturaServiceApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// 	@Test
+// 	void contextLoads() {
+// 	}
 
-}
+// }

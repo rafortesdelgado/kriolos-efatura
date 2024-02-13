@@ -1,10 +1,12 @@
-package io.github.kriolos.efatura.kriolosefaturaservice.services;
+package io.github.kriolos.efatura.kriolosefaturaservice;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import io.github.kriolos.efatura.clientapi.generated.ApiClient;
 import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
+import io.github.kriolos.efatura.kriolosefaturaservice.services.FiscalReportService;
+import io.github.kriolos.efatura.kriolosefaturaservice.services.GetTokenHelper;
 
 
 public class ProgramLoop {

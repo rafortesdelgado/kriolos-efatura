@@ -1,4 +1,4 @@
-package io.github.kriolos.efatura.kriolosefaturaservice.services;
+package io.github.kriolos.efatura.kriolosefaturaservice;
 
 import java.util.Scanner;
 
@@ -6,6 +6,9 @@ import javax.swing.filechooser.FileSystemView;
 
 import io.github.kriolos.efatura.clientapi.generated.ApiClient;
 import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
+import io.github.kriolos.efatura.kriolosefaturaservice.services.FiscalReportService;
+import io.github.kriolos.efatura.kriolosefaturaservice.services.GetTokenHelper;
+import io.github.kriolos.efatura.kriolosefaturaservice.services.TokenManager;
 
 
 public class Program {

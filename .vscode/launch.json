@@ -6,37 +6,23 @@
     "configurations": [
         {
             "type": "java",
-            "name": "KriolosEfaturaServiceApplication",
+            "name": "ProgramLoop",
+            "request": "launch",
+            "mainClass": "io.github.kriolos.efatura.kriolosefaturaservice.ProgramLoop",
+            "projectName": "kriolos-efatura-service-web"
+        },
+        {
+            "type": "java",
+            "name": "KriolosEfaturaServiceApplicationWeb",
             "request": "launch",
             "mainClass": "io.github.kriolos.efatura.kriolosefaturaservice.KriolosEfaturaServiceApplication",
             "projectName": "kriolos-efatura-service-web"
         },
         {
             "type": "java",
-            "name": "ProgramLoop",
-            "request": "launch",
-            "mainClass": "io.github.kriolos.efatura.service.ProgramLoop",
-            "projectName": "kriolos-efatura-service"
-        },
-        {
-            "type": "java",
-            "name": "KriolosEfaturaServiceApplication",
-            "request": "launch",
-            "mainClass": "io.github.kriolos.efatura.kriolosefaturaservice.KriolosEfaturaServiceApplication",
-            "projectName": "kriolos-efatura-service"
-        },
-        {
-            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "Program",
-            "request": "launch",
-            "mainClass": "io.github.kriolos.efatura.service.Program",
-            "projectName": "kriolos-efatura-service"
         }
     ]
 }

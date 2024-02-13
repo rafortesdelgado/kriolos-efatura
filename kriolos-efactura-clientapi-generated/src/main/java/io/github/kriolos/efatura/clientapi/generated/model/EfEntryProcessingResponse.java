@@ -41,7 +41,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   EfEntryProcessingResponse.JSON_PROPERTY_SIGNATURE_TIME_STAMP,
   EfEntryProcessingResponse.JSON_PROPERTY_PENDING_SIGNATURE_ID
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-14T16:59:08.260554600-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-13T18:43:44.521602200-01:00[Atlantic/Cape_Verde]")
 public class EfEntryProcessingResponse {
   public static final String JSON_PROPERTY_MESSAGES = "messages";
   private List<Message> messages = null;

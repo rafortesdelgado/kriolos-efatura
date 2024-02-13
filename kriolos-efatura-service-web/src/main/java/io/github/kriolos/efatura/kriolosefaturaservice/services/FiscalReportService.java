@@ -9,6 +9,7 @@ import io.github.kriolos.efatura.clientapi.generated.ApiException;
 import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
 import io.github.kriolos.efatura.clientapi.generated.model.DfeListPaginationResponse;
 import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseDfePayload;
+import io.github.kriolos.efatura.kriolosefaturaservice.Program;
 import io.github.kriolos.efatura.kriolosefaturaservice.enums.DfeDocumentTypeEnum;
 import io.github.kriolos.efatura.kriolosefaturaservice.enums.IssueDirection;
 import io.github.kriolos.efatura.models.Mod106LineMapper;
