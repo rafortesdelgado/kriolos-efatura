@@ -118,12 +118,8 @@
             
     <module>kriolos-efatura-clientapi</module>
             
-    <module>kriolos-efatura-service</module>
-            
     <module>kriolos-efatura-service-web</module>
-          
-    <module>demo</module>
-      
+                
   </modules>
   
 </project>
