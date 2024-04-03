@@ -14,7 +14,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.PermitAll;
 
 @PermitAll
-@Route(layout = MainLayout.class) 
+@Route(value = "" , layout = MainLayout.class) 
 public class HomeView extends HorizontalLayout { 
 
     public HomeView() {

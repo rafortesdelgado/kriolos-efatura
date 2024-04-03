@@ -4,7 +4,7 @@ import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
-import io.github.kriolos.efatura.models.Client;
+import io.github.kriolos.efatura.kriolosefaturaservice.models.Client;
 
 @Service
 public class ClientService  { 

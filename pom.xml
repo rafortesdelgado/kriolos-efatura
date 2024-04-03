@@ -119,6 +119,9 @@
     <module>kriolos-efatura-clientapi</module>
             
     <module>kriolos-efatura-service-web</module>
+    <module>kriolos-efatura-service</module>
+
+    
                 
   </modules>
   

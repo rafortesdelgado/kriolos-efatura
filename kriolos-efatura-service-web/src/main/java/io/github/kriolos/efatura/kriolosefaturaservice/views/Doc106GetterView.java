@@ -18,8 +18,8 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
+import io.github.kriolos.efatura.kriolosefaturaservice.models.Client;
 import io.github.kriolos.efatura.kriolosefaturaservice.services.ClientService;
-import io.github.kriolos.efatura.models.Client;
 // import io.github.kriolos.efatura.services.FiscalReportService;
 import jakarta.annotation.security.PermitAll;
 

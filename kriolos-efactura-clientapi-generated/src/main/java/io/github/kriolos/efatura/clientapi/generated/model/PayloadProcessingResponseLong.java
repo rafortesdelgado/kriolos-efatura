@@ -37,7 +37,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   PayloadProcessingResponseLong.JSON_PROPERTY_SUCCEEDED,
   PayloadProcessingResponseLong.JSON_PROPERTY_PAYLOAD
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-13T18:43:44.521602200-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-13T22:35:54.857427200-01:00[Atlantic/Cape_Verde]")
 public class PayloadProcessingResponseLong {
   public static final String JSON_PROPERTY_MESSAGES = "messages";
   private List<Message> messages = null;
