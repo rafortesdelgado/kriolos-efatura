@@ -46,7 +46,7 @@
 <!--                                <legacyDiscriminatorBehavior>false</legacyDiscriminatorBehavior>-->
 <!--                                <allowUnicodeIdentifiers>true</allowUnicodeIdentifiers>-->
                                 <useOneOfDiscriminatorLookup>false</useOneOfDiscriminatorLookup> 
-                                <disallowAdditionalPropertiesIfNotPresent>true</disallowAdditionalPropertiesIfNotPresent>
+                                <disallowAdditionalPropertiesIfNotPresent>false</disallowAdditionalPropertiesIfNotPresent>
                                 <!-- <usePlayWS>true</usePlayWS> -->
 <!--                                <useSingleRequestParameter>true</useSingleRequestParameter>-->
 <!--								<useOneOfDiscriminatorLookup>true</useOneOfDiscriminatorLookup>-->
@@ -57,7 +57,7 @@
                             </configOptions>
                             
 
-                            <inputSpec>${project.basedir}/src/main/resources/openapi_ 1_1_0.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi_1_2_0.yaml</inputSpec>
                             <generatorName>java</generatorName>
                             <packageName>io.github.kriolos.efatura.clientapi.generated</packageName>
                             <apiPackage>io.github.kriolos.efatura.clientapi.generated.api</apiPackage>
@@ -65,7 +65,7 @@
                             
                             <groupId>io.github.kriolos.efatura</groupId>
                             <artifactId>kriolos-efatura-clientapi-generated</artifactId>
-                            <artifactVersion>1.1.10</artifactVersion>
+                            <artifactVersion>1.2.0</artifactVersion>
                             
                             <gitHost>https://github.com</gitHost>
                             <gitUserId>kriolos</gitUserId>

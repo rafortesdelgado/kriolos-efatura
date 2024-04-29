@@ -13,10 +13,12 @@
 |**repositoryCode** | **Integer** |  |  [optional] |
 |**documentTypeCode** | **Integer** |  |  [optional] |
 |**isSpecimen** | **Boolean** |  |  [optional] |
+|**selfBilling** | [**DfeSelfBilling**](DfeSelfBilling.md) |  |  [optional] |
 |**ledCode** | **Integer** |  |  [optional] |
 |**ledDescription** | **String** |  |  [optional] |
 |**serie** | **String** |  |  [optional] |
 |**documentNumber** | **Integer** |  |  [optional] |
+|**innerDocumentNumber** | **String** |  |  [optional] |
 |**issueDate** | **String** |  |  [optional] |
 |**issueTime** | **String** |  |  [optional] |
 |**dueDate** | **String** |  |  [optional] |

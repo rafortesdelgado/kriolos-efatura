@@ -1,58 +1,57 @@
+---
 openapi: 3.0.3
 info:
+  title: e-Fatura API
   contact:
-    email: helpdesk@efatura.cv
     name: e-Fatura
     url: https://efatura.cv
+    email: helpdesk@efatura.cv
   license:
     name: Termos de Uso
     url: https://efatura.cv
-  title: e-Fatura API
   version: 1.2.0
 externalDocs:
   description: Manual Técnico
   url: https://efatura.cv/docs/manual
-servers:
-- url: /
 tags:
-- description: Recurso para interagir com Certificados Digitais.
-  name: CERTIFICATE
-- description: Recurso para obter informações básicas da Plataforma Eletrónica.
-  name: DATA
-- description: Recurso para interagir com DFEs.
-  name: DFE
-- description: Recurso para interagir com eventos.
-  name: EVENT
-- description: Recurso para interagir com LEDs.
-  name: LED
-- description: Recurso para interagir com software.
-  name: SOFTWARE
-- description: Recurso para interagir com contribuintes.
-  name: TAXPAYER
+- name: CERTIFICATE
+  description: Recurso para interagir com Certificados Digitais.
+- name: DATA
+  description: Recurso para obter informações básicas da Plataforma Eletrónica.
+- name: DFE
+  description: Recurso para interagir com DFEs.
+- name: EVENT
+  description: Recurso para interagir com eventos.
+- name: LED
+  description: Recurso para interagir com LEDs.
+- name: SOFTWARE
+  description: Recurso para interagir com software.
+- name: TAXPAYER
+  description: Recurso para interagir com contribuintes.
 paths:
   /v1/certificate/keystore:
     get:
+      tags:
+      - CERTIFICATE
+      summary: Consulta de keystore.
       operationId: CertificateResource_getKeystore
       parameters:
-      - description: "Tipo de Uso de Certificado: SIGN=Assinatura Qualificada; TLS=Autenticaç\
-          ão TLS Mútua."
-        explode: true
+      - name: UseType
         in: query
-        name: UseType
+        description: "Tipo de Uso de Certificado: SIGN=Assinatura Qualificada; TLS=Autenticaç\
+          ão TLS Mútua."
         required: true
         schema:
           type: string
-        style: form
-      - description: "Código de Repositório: 1-Principal; 2-Homologação; 3-Teste."
-        explode: false
+      - name: cv-ef-repository-code
         in: header
-        name: cv-ef-repository-code
+        description: "Código de Repositório: 1-Principal; 2-Homologação; 3-Teste."
         required: true
         schema:
           type: string
-        style: simple
       responses:
         "200":
+          description: OK
           content:
             application/xml:
               schema:
@@ -60,7 +59,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseString'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -69,15 +67,15 @@ paths:
       - SecurityScheme:
         - cv_ef_cert_read
         - cv_ef_cert_all
-      summary: Consulta de keystore.
-      tags:
-      - CERTIFICATE
-      x-accepts: application/json
   /v1/data/pe-date-time:
     get:
+      tags:
+      - DATA
+      summary: Devolve a data/hora atual da Plataforma Eletrónica.
       operationId: PublicDataResource_getPeDateTime
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
@@ -85,140 +83,68 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseString'
-          description: OK
-      summary: Devolve a data/hora atual da Plataforma Eletrónica.
-      tags:
-      - DATA
-      x-accepts: application/json
   /v1/dfe:
-    delete:
-      operationId: DfeResource_deleteDfeEvent
-      parameters:
-      - explode: false
-        in: header
-        name: cv-ef-repository-code
-        required: false
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseLong'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseLong'
-          description: OK
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - SecurityScheme:
-        - cv_ef_dfe_delete
-        - cv_ef_dfe_all
-      summary: Elimina todos os DFEs e os respetivos eventos no repositório de Homologação/Teste.
+    get:
       tags:
       - DFE
-      x-accepts: application/json
-    get:
+      summary: Lista de DFEs limitada em 10000 DFEs.
       operationId: DfeResource_getDfeSummaryListV1
       parameters:
-      - explode: true
+      - name: AuthorizedDateEnd
         in: query
-        name: AuthorizedDateEnd
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: AuthorizedDateStart
         in: query
-        name: AuthorizedDateStart
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: DocumentNumber
         in: query
-        name: DocumentNumber
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: DocumentTypeCodes
         in: query
-        name: DocumentTypeCodes
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: EmitterTaxId
         in: query
-        name: EmitterTaxId
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: IUD
         in: query
-        name: IUD
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: IsCanceled
         in: query
-        name: IsCanceled
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: IssueDirection
         in: query
-        name: IssueDirection
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: IssueYear
         in: query
-        name: IssueYear
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: LedCode
         in: query
-        name: LedCode
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: ReceiverTaxId
         in: query
-        name: ReceiverTaxId
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: ReceiverTaxIdCountryCode
         in: query
-        name: ReceiverTaxIdCountryCode
-        required: false
         schema:
           type: string
-        style: form
-      - explode: false
+      - name: cv-ef-repository-code
         in: header
-        name: cv-ef-repository-code
-        required: false
         schema:
           type: string
-        style: simple
       responses:
         "200":
+          description: OK
           content:
             application/xml:
               schema:
@@ -226,7 +152,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DfeListProcessingResponse'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -235,31 +160,31 @@ paths:
       - SecurityScheme:
         - cv_ef_dfe_read_list
         - cv_ef_dfe_all
-      summary: Lista de DFEs limitada em 10000 DFEs.
+    post:
       tags:
       - DFE
-      x-accepts: application/json
-    post:
+      summary: Comunicação de novos DFEs.
       operationId: DfeResource_createDfe
       parameters:
-      - explode: false
+      - name: cv-ef-repository-code
         in: header
-        name: cv-ef-repository-code
-        required: false
         schema:
           type: string
-        style: simple
       requestBody:
         content:
           multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  format: binary
+                  type: string
             encoding:
               file:
                 contentType: application/octet-stream
-                style: form
-            schema:
-              $ref: '#/components/schemas/DfeResource_createDfe_request'
       responses:
         "200":
+          description: OK
           content:
             application/xml:
               schema:
@@ -267,7 +192,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EfEntriesProcessingResponse'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -276,31 +200,53 @@ paths:
       - SecurityScheme:
         - cv_ef_dfe_create
         - cv_ef_dfe_all
-      summary: Comunicação de novos DFEs.
+    delete:
       tags:
       - DFE
-      x-content-type: multipart/form-data
-      x-accepts: application/json
+      summary: Elimina todos os DFEs e os respetivos eventos no repositório de Homologação/Teste.
+      operationId: DfeResource_deleteDfeEvent
+      parameters:
+      - name: cv-ef-repository-code
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseLong'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseLong'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_dfe_delete
+        - cv_ef_dfe_all
   /v1/dfe/pdf/{Id}:
     get:
+      tags:
+      - DFE
+      summary: Consulta de PDF de um DFE com IUD.
       operationId: DfeResource_getDfePdfById
       parameters:
-      - explode: false
+      - name: Id
         in: path
-        name: Id
         required: true
         schema:
           type: string
-        style: simple
-      - explode: false
+      - name: cv-ef-repository-code
         in: header
-        name: cv-ef-repository-code
-        required: false
         schema:
           type: string
-        style: simple
       responses:
         "200":
+          description: OK
           content:
             application/xml:
               schema:
@@ -308,7 +254,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseString'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -317,21 +262,17 @@ paths:
       - SecurityScheme:
         - cv_ef_dfe_read_iud
         - cv_ef_dfe_all
-      summary: Consulta de PDF de um DFE com IUD.
-      tags:
-      - DFE
-      x-accepts: application/json
   /v1/dfe/self-billing/authorize:
     post:
+      tags:
+      - DFE
+      summary: Pedido de autorização para autofaturação.
       operationId: DfeResource_authorizeSelfBilling
       parameters:
-      - explode: false
+      - name: cv-ef-repository-code
         in: header
-        name: cv-ef-repository-code
-        required: false
         schema:
           type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -339,11 +280,11 @@ paths:
               $ref: '#/components/schemas/DfeSelfBillingAuthorizeRequest'
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseDfeSelfBillingAuthorizeResponse'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -352,80 +293,33 @@ paths:
       - SecurityScheme:
         - cv_ef_dfe_self_billing_authorize
         - cv_ef_dfe_all
-      summary: Pedido de autorização para autofaturação.
-      tags:
-      - DFE
-      x-content-type: application/json
-      x-accepts: application/json
   /v1/dfe/xml/{Id}:
     get:
-      operationId: DfeResource_getDfeXmlById
-      parameters:
-      - explode: false
-        in: path
-        name: Id
-        required: true
-        schema:
-          type: string
-        style: simple
-      - explode: false
-        in: header
-        name: cv-ef-repository-code
-        required: false
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseString'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseString'
-          description: OK
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - SecurityScheme:
-        - cv_ef_dfe_read_iud
-        - cv_ef_dfe_all
+      tags:
+      - DFE
       summary: Consulta de XML com IUD exatamente como foi gerado e assinado pelo
         contribuinte e com aposição de timestamp.
-      tags:
-      - DFE
-      x-accepts: application/json
-  /v1/dfe/{Id}:
-    get:
-      operationId: DfeResource_getDfeById
+      operationId: DfeResource_getDfeXmlById
       parameters:
-      - explode: false
+      - name: Id
         in: path
-        name: Id
         required: true
         schema:
           type: string
-        style: simple
-      - explode: false
+      - name: cv-ef-repository-code
         in: header
-        name: cv-ef-repository-code
-        required: false
         schema:
           type: string
-        style: simple
       responses:
         "200":
+          description: OK
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseDfe'
+                $ref: '#/components/schemas/PayloadProcessingResponseString'
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseDfe'
-          description: OK
+                $ref: '#/components/schemas/PayloadProcessingResponseString'
         "401":
           description: Not Authorized
         "403":
@@ -434,93 +328,94 @@ paths:
       - SecurityScheme:
         - cv_ef_dfe_read_iud
         - cv_ef_dfe_all
-      summary: Consulta de DFE com IUD.
+  /v1/dfe/{Id}:
+    get:
       tags:
       - DFE
-      x-accepts: application/json
-  /v1/event:
-    get:
-      operationId: EventResource_getEventListV1
+      summary: Consulta de DFE com IUD.
+      operationId: DfeResource_getDfeById
       parameters:
-      - explode: true
-        in: query
-        name: AuthorizedDateEnd
-        required: false
+      - name: Id
+        in: path
+        required: true
         schema:
           type: string
-        style: form
-      - explode: true
-        in: query
-        name: AuthorizedDateStart
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: DocumentNumberEnd
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: DocumentNumberStart
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: DocumentTypeCodes
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: EventId
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: EventTypeCodes
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: IUD
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: LedCode
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: Year
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
+      - name: cv-ef-repository-code
         in: header
-        name: cv-ef-repository-code
-        required: false
         schema:
           type: string
-        style: simple
       responses:
         "200":
+          description: OK
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseDfe'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseDfe'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_dfe_read_iud
+        - cv_ef_dfe_all
+  /v1/event:
+    get:
+      tags:
+      - EVENT
+      summary: Lista de eventos limitada em 10000 eventos.
+      operationId: EventResource_getEventListV1
+      parameters:
+      - name: AuthorizedDateEnd
+        in: query
+        schema:
+          type: string
+      - name: AuthorizedDateStart
+        in: query
+        schema:
+          type: string
+      - name: DocumentNumberEnd
+        in: query
+        schema:
+          type: string
+      - name: DocumentNumberStart
+        in: query
+        schema:
+          type: string
+      - name: DocumentTypeCodes
+        in: query
+        schema:
+          type: string
+      - name: EventId
+        in: query
+        schema:
+          type: string
+      - name: EventTypeCodes
+        in: query
+        schema:
+          type: string
+      - name: IUD
+        in: query
+        schema:
+          type: string
+      - name: LedCode
+        in: query
+        schema:
+          type: string
+      - name: Year
+        in: query
+        schema:
+          type: string
+      - name: cv-ef-repository-code
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
           content:
             application/xml:
               schema:
@@ -528,7 +423,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EventListProcessingResponse'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -537,31 +431,31 @@ paths:
       - SecurityScheme:
         - cv_ef_event_read
         - cv_ef_event_all
-      summary: Lista de eventos limitada em 10000 eventos.
+    post:
       tags:
       - EVENT
-      x-accepts: application/json
-    post:
+      summary: Comunicação de novos eventos.
       operationId: EventResource_createEvent
       parameters:
-      - explode: false
+      - name: cv-ef-repository-code
         in: header
-        name: cv-ef-repository-code
-        required: false
         schema:
           type: string
-        style: simple
       requestBody:
         content:
           multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  format: binary
+                  type: string
             encoding:
               file:
                 contentType: application/octet-stream
-                style: form
-            schema:
-              $ref: '#/components/schemas/DfeResource_createDfe_request'
       responses:
         "200":
+          description: OK
           content:
             application/xml:
               schema:
@@ -569,7 +463,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EfEntriesProcessingResponse'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -578,31 +471,25 @@ paths:
       - SecurityScheme:
         - cv_ef_event_create
         - cv_ef_event_all
-      summary: Comunicação de novos eventos.
-      tags:
-      - EVENT
-      x-content-type: multipart/form-data
-      x-accepts: application/json
   /v1/event/xml/{Id}:
     get:
+      tags:
+      - EVENT
+      summary: Consulta de evento com ID.
       operationId: EventResource_getEventXmlById
       parameters:
-      - explode: false
+      - name: Id
         in: path
-        name: Id
         required: true
         schema:
           type: string
-        style: simple
-      - explode: false
+      - name: cv-ef-repository-code
         in: header
-        name: cv-ef-repository-code
-        required: false
         schema:
           type: string
-        style: simple
       responses:
         "200":
+          description: OK
           content:
             application/xml:
               schema:
@@ -610,7 +497,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseString'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -619,30 +505,25 @@ paths:
       - SecurityScheme:
         - cv_ef_event_read
         - cv_ef_event_all
-      summary: Consulta de evento com ID.
-      tags:
-      - EVENT
-      x-accepts: application/json
   /v1/event/{Id}:
     get:
+      tags:
+      - EVENT
+      summary: Consulta de evento com ID.
       operationId: EventResource_getEventById
       parameters:
-      - explode: false
+      - name: Id
         in: path
-        name: Id
         required: true
         schema:
           type: string
-        style: simple
-      - explode: false
+      - name: cv-ef-repository-code
         in: header
-        name: cv-ef-repository-code
-        required: false
         schema:
           type: string
-        style: simple
       responses:
         "200":
+          description: OK
           content:
             application/xml:
               schema:
@@ -650,7 +531,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseEvent'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -659,15 +539,15 @@ paths:
       - SecurityScheme:
         - cv_ef_event_read
         - cv_ef_event_all
-      summary: Consulta de evento com ID.
-      tags:
-      - EVENT
-      x-accepts: application/json
   /v1/led:
     get:
+      tags:
+      - LED
+      summary: Lista de LEDs.
       operationId: LedResource_getAllLeds
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
@@ -675,7 +555,6 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseListLedDto'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -684,11 +563,10 @@ paths:
       - SecurityScheme:
         - cv_ef_led_read
         - cv_ef_led_all
-      summary: Lista de LEDs.
+    post:
       tags:
       - LED
-      x-accepts: application/json
-    post:
+      summary: Regista uma nova LED.
       operationId: LedResource_createLed
       requestBody:
         content:
@@ -697,11 +575,11 @@ paths:
               $ref: '#/components/schemas/SaveLedDto'
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseLedDto'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -710,58 +588,25 @@ paths:
       - SecurityScheme:
         - cv_ef_led_create
         - cv_ef_led_all
-      summary: Regista uma nova LED.
-      tags:
-      - LED
-      x-content-type: application/json
-      x-accepts: application/json
   /v1/led/{LedCode}:
-    delete:
-      operationId: LedResource_deleteLed
-      parameters:
-      - explode: false
-        in: path
-        name: LedCode
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseBoolean'
-          description: OK
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - SecurityScheme:
-        - cv_ef_led_delete
-        - cv_ef_led_all
-      summary: Elimina uma LED sem DFEs associados.
+    get:
       tags:
       - LED
-      x-accepts: application/json
-    get:
+      summary: Consulta de LED com código.
       operationId: LedResource_getLedByCode
       parameters:
-      - explode: false
+      - name: LedCode
         in: path
-        name: LedCode
         required: true
         schema:
           type: string
-        style: simple
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseLedDto'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -770,20 +615,17 @@ paths:
       - SecurityScheme:
         - cv_ef_led_read
         - cv_ef_led_all
-      summary: Consulta de LED com código.
+    put:
       tags:
       - LED
-      x-accepts: application/json
-    put:
+      summary: Atualiza uma LED.
       operationId: LedResource_updateLed
       parameters:
-      - explode: false
+      - name: LedCode
         in: path
-        name: LedCode
         required: true
         schema:
           type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -791,11 +633,11 @@ paths:
               $ref: '#/components/schemas/SaveLedDto'
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseLedDto'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -804,21 +646,46 @@ paths:
       - SecurityScheme:
         - cv_ef_led_update
         - cv_ef_led_all
-      summary: Atualiza uma LED.
+    delete:
       tags:
       - LED
-      x-content-type: application/json
-      x-accepts: application/json
+      summary: Elimina uma LED sem DFEs associados.
+      operationId: LedResource_deleteLed
+      parameters:
+      - name: LedCode
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseBoolean'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_led_delete
+        - cv_ef_led_all
   /v1/software:
     get:
+      tags:
+      - SOFTWARE
+      summary: Lista de aplicações (software) de faturação/transmissão registadas
+        na Plataforma Eletrónica.
       operationId: SoftwareResource_readSoftwarePublicList
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseListSoftwareDto'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -827,21 +694,19 @@ paths:
       - SecurityScheme:
         - cv_ef_sw_read_list
         - cv_ef_sw_all
-      summary: Lista de aplicações (software) de faturação/transmissão registadas
-        na Plataforma Eletrónica.
-      tags:
-      - SOFTWARE
-      x-accepts: application/json
   /v1/software/customer:
     get:
+      tags:
+      - SOFTWARE
+      summary: Lista contribuintes clientes de software.
       operationId: SoftwareResource_readSoftwareCustomerList
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseListSoftwareCustomerDto'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -851,11 +716,10 @@ paths:
         - cv_ef_sw_ctm_read
         - cv_ef_sw_ctm_all
         - cv_ef_sw_all
-      summary: Lista contribuintes clientes de software.
+    post:
       tags:
       - SOFTWARE
-      x-accepts: application/json
-    post:
+      summary: Regista um novo contribuinte cliente de software.
       operationId: SoftwareResource_createSoftwareCustomer
       requestBody:
         content:
@@ -864,11 +728,11 @@ paths:
               $ref: '#/components/schemas/SoftwareCustomerEntity'
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseSoftwareCustomerEntity'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -878,59 +742,25 @@ paths:
         - cv_ef_sw_ctm_create
         - cv_ef_sw_ctm_all
         - cv_ef_sw_all
-      summary: Regista um novo contribuinte cliente de software.
-      tags:
-      - SOFTWARE
-      x-content-type: application/json
-      x-accepts: application/json
   /v1/software/customer/{Id}:
-    delete:
-      operationId: SoftwareResource_deleteSoftwareCustomer
-      parameters:
-      - explode: false
-        in: path
-        name: Id
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseBoolean'
-          description: OK
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - SecurityScheme:
-        - cv_ef_sw_ctm_delete
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
-      summary: Elimina um contribuinte cliente de software.
+    get:
       tags:
       - SOFTWARE
-      x-accepts: application/json
-    get:
+      summary: Consulta contribuinte cliente de software com ID.
       operationId: SoftwareResource_readSoftwareCustomerById
       parameters:
-      - explode: false
+      - name: Id
         in: path
-        name: Id
         required: true
         schema:
           type: string
-        style: simple
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseSoftwareCustomerDto'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -940,20 +770,17 @@ paths:
         - cv_ef_sw_ctm_read
         - cv_ef_sw_ctm_all
         - cv_ef_sw_all
-      summary: Consulta contribuinte cliente de software com ID.
+    put:
       tags:
       - SOFTWARE
-      x-accepts: application/json
-    put:
+      summary: Atualiza um contribuinte cliente de software.
       operationId: SoftwareResource_updateSoftwareCustomer
       parameters:
-      - explode: false
+      - name: Id
         in: path
-        name: Id
         required: true
         schema:
           type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -961,11 +788,11 @@ paths:
               $ref: '#/components/schemas/SoftwareCustomerEntity'
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseSoftwareCustomerEntity'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -975,22 +802,45 @@ paths:
         - cv_ef_sw_ctm_update
         - cv_ef_sw_ctm_all
         - cv_ef_sw_all
-      summary: Atualiza um contribuinte cliente de software.
+    delete:
       tags:
       - SOFTWARE
-      x-content-type: application/json
-      x-accepts: application/json
+      summary: Elimina um contribuinte cliente de software.
+      operationId: SoftwareResource_deleteSoftwareCustomer
+      parameters:
+      - name: Id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseBoolean'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_sw_ctm_delete
+        - cv_ef_sw_ctm_all
+        - cv_ef_sw_all
   /v1/software/customer/{Id}/enabled:
     put:
+      tags:
+      - SOFTWARE
+      summary: Ativa/Desativa um contribuinte cliente de software.
       operationId: SoftwareResource_updateSoftwareCustomerEnabled
       parameters:
-      - explode: false
+      - name: Id
         in: path
-        name: Id
         required: true
         schema:
           type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -998,11 +848,11 @@ paths:
               $ref: '#/components/schemas/SoftwareCustomerEntity'
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseSoftwareCustomerEntity'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -1012,21 +862,19 @@ paths:
         - cv_ef_sw_ctm_update
         - cv_ef_sw_ctm_all
         - cv_ef_sw_all
-      summary: Ativa/Desativa um contribuinte cliente de software.
-      tags:
-      - SOFTWARE
-      x-content-type: application/json
-      x-accepts: application/json
   /v1/software/group-member:
     get:
+      tags:
+      - SOFTWARE
+      summary: Lista de membros de grupo de software.
       operationId: SoftwareResource_readSoftwareGroupMemberList
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseListSoftwareGroupMemberDto'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -1036,11 +884,10 @@ paths:
         - cv_ef_sw_gm_read
         - cv_ef_sw_gm_all
         - cv_ef_sw_all
-      summary: Lista de membros de grupo de software.
+    post:
       tags:
       - SOFTWARE
-      x-accepts: application/json
-    post:
+      summary: Regista novo membro de grupo de software.
       operationId: SoftwareResource_createSoftwareGroupMember
       requestBody:
         content:
@@ -1049,11 +896,11 @@ paths:
               $ref: '#/components/schemas/SoftwareGroupMemberEntity'
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseSoftwareGroupMemberEntity'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -1063,59 +910,25 @@ paths:
         - cv_ef_sw_gm_create
         - cv_ef_sw_gm_all
         - cv_ef_sw_all
-      summary: Regista novo membro de grupo de software.
-      tags:
-      - SOFTWARE
-      x-content-type: application/json
-      x-accepts: application/json
   /v1/software/group-member/{Id}:
-    delete:
-      operationId: SoftwareResource_deleteSoftwareGroupMember
-      parameters:
-      - explode: false
-        in: path
-        name: Id
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseBoolean'
-          description: OK
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - SecurityScheme:
-        - cv_ef_sw_gm_delete
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
-      summary: Elimina um membro de grupo de software.
+    get:
       tags:
       - SOFTWARE
-      x-accepts: application/json
-    get:
+      summary: Consulta de membro de grupo de software com ID.
       operationId: SoftwareResource_readSoftwareGroupMemberById
       parameters:
-      - explode: false
+      - name: Id
         in: path
-        name: Id
         required: true
         schema:
           type: string
-        style: simple
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseSoftwareGroupMemberDto'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -1125,20 +938,17 @@ paths:
         - cv_ef_sw_gm_read
         - cv_ef_sw_gm_all
         - cv_ef_sw_all
-      summary: Consulta de membro de grupo de software com ID.
+    put:
       tags:
       - SOFTWARE
-      x-accepts: application/json
-    put:
+      summary: Atualiza um membro de grupo de software.
       operationId: SoftwareResource_updateSoftwareGroupMember
       parameters:
-      - explode: false
+      - name: Id
         in: path
-        name: Id
         required: true
         schema:
           type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -1146,11 +956,11 @@ paths:
               $ref: '#/components/schemas/SoftwareGroupMemberEntity'
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseSoftwareGroupMemberEntity'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -1160,21 +970,46 @@ paths:
         - cv_ef_sw_gm_update
         - cv_ef_sw_gm_all
         - cv_ef_sw_all
-      summary: Atualiza um membro de grupo de software.
+    delete:
       tags:
       - SOFTWARE
-      x-content-type: application/json
-      x-accepts: application/json
+      summary: Elimina um membro de grupo de software.
+      operationId: SoftwareResource_deleteSoftwareGroupMember
+      parameters:
+      - name: Id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseBoolean'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_sw_gm_delete
+        - cv_ef_sw_gm_all
+        - cv_ef_sw_all
   /v1/software/transmitter:
     get:
+      tags:
+      - SOFTWARE
+      summary: Lista de transmissores associados a software.
       operationId: SoftwareResource_readSoftwareTransmitterList
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseListSoftwareTransmitterDto'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -1184,11 +1019,10 @@ paths:
         - cv_ef_sw_tmt_read
         - cv_ef_sw_tmt_all
         - cv_ef_sw_all
-      summary: Lista de transmissores associados a software.
+    post:
       tags:
       - SOFTWARE
-      x-accepts: application/json
-    post:
+      summary: Regista novo transmissor.
       operationId: SoftwareResource_createSoftwareTransmitter
       requestBody:
         content:
@@ -1197,11 +1031,11 @@ paths:
               $ref: '#/components/schemas/SoftwareTransmitterEntity'
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseSoftwareTransmitterEntity'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -1211,59 +1045,25 @@ paths:
         - cv_ef_sw_tmt_create
         - cv_ef_sw_tmt_all
         - cv_ef_sw_all
-      summary: Regista novo transmissor.
-      tags:
-      - SOFTWARE
-      x-content-type: application/json
-      x-accepts: application/json
   /v1/software/transmitter/{Id}:
-    delete:
-      operationId: SoftwareResource_deleteSoftwareTransmitter
-      parameters:
-      - explode: false
-        in: path
-        name: Id
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseBoolean'
-          description: OK
-        "401":
-          description: Not Authorized
-        "403":
-          description: Not Allowed
-      security:
-      - SecurityScheme:
-        - cv_ef_sw_tmt_delete
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
-      summary: Elimina um transmissor.
+    get:
       tags:
       - SOFTWARE
-      x-accepts: application/json
-    get:
+      summary: Consulta transmissor com ID.
       operationId: SoftwareResource_readSoftwareTransmitterById
       parameters:
-      - explode: false
+      - name: Id
         in: path
-        name: Id
         required: true
         schema:
           type: string
-        style: simple
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseSoftwareTransmitterDto'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -1273,20 +1073,17 @@ paths:
         - cv_ef_sw_tmt_read
         - cv_ef_sw_tmt_all
         - cv_ef_sw_all
-      summary: Consulta transmissor com ID.
+    put:
       tags:
       - SOFTWARE
-      x-accepts: application/json
-    put:
+      summary: Atualiza um transmissor.
       operationId: SoftwareResource_updateSoftwareTransmitter
       parameters:
-      - explode: false
+      - name: Id
         in: path
-        name: Id
         required: true
         schema:
           type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -1294,11 +1091,11 @@ paths:
               $ref: '#/components/schemas/SoftwareTransmitterEntity'
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseSoftwareTransmitterEntity'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -1308,22 +1105,45 @@ paths:
         - cv_ef_sw_tmt_update
         - cv_ef_sw_tmt_all
         - cv_ef_sw_all
-      summary: Atualiza um transmissor.
+    delete:
       tags:
       - SOFTWARE
-      x-content-type: application/json
-      x-accepts: application/json
+      summary: Elimina um transmissor.
+      operationId: SoftwareResource_deleteSoftwareTransmitter
+      parameters:
+      - name: Id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseBoolean'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_sw_tmt_delete
+        - cv_ef_sw_tmt_all
+        - cv_ef_sw_all
   /v1/software/transmitter/{Id}/enabled:
     put:
+      tags:
+      - SOFTWARE
+      summary: Ativa/Desativa um transmissor.
       operationId: SoftwareResource_updateSoftwareTransmitterEnabled
       parameters:
-      - explode: false
+      - name: Id
         in: path
-        name: Id
         required: true
         schema:
           type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -1331,11 +1151,11 @@ paths:
               $ref: '#/components/schemas/SoftwareTransmitterEntity'
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseSoftwareTransmitterEntity'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -1345,47 +1165,36 @@ paths:
         - cv_ef_sw_tmt_update
         - cv_ef_sw_tmt_all
         - cv_ef_sw_all
-      summary: Ativa/Desativa um transmissor.
-      tags:
-      - SOFTWARE
-      x-content-type: application/json
-      x-accepts: application/json
   /v1/taxpayer/search:
     get:
+      tags:
+      - TAXPAYER
+      summary: Pesquisa contribuintes por NIF e/ou Nome.
       operationId: TaxPayerResource_search
       parameters:
-      - description: "Nome de contribuinte. Apenas letras, números e espaços."
-        explode: true
+      - name: Name
         in: query
-        name: Name
-        required: false
+        description: "Nome de contribuinte. Apenas letras, números e espaços."
         schema:
           type: string
-        style: form
-      - description: NIF CV de contribuinte. 9 dígitos.
-        explode: true
+      - name: TaxId
         in: query
-        name: TaxId
-        required: false
+        description: NIF CV de contribuinte. 9 dígitos.
         schema:
           type: string
-        style: form
-      - description: "Tipo de contribuinte: S=Singular; C=Coletivo; N=Entidade Nacional;\
+      - name: Type
+        in: query
+        description: "Tipo de contribuinte: S=Singular; C=Coletivo; N=Entidade Nacional;\
           \ E=Entidade Estrangeira; F=Fundo de Investimento; H=Herança; O=Outra Entidade."
-        explode: true
-        in: query
-        name: Type
-        required: false
         schema:
           type: string
-        style: form
       responses:
         "200":
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseListSearchTaxPayerResponseDto'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -1394,121 +1203,76 @@ paths:
       - SecurityScheme:
         - cv_ef_tp_search
         - cv_ef_tp_all
-      summary: Pesquisa contribuintes por NIF e/ou Nome.
-      tags:
-      - TAXPAYER
-      x-accepts: application/json
   /v2/dfe:
     get:
+      tags:
+      - DFE
+      summary: Lista de DFEs que suporta paginação.
       operationId: DfeResource_getDfeSummaryListV2
       parameters:
-      - explode: true
+      - name: AuthorizedDateEnd
         in: query
-        name: AuthorizedDateEnd
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: AuthorizedDateStart
         in: query
-        name: AuthorizedDateStart
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: DocumentNumber
         in: query
-        name: DocumentNumber
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: DocumentTypeCodes
         in: query
-        name: DocumentTypeCodes
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: EmitterTaxId
         in: query
-        name: EmitterTaxId
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: IUD
         in: query
-        name: IUD
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: IsCanceled
         in: query
-        name: IsCanceled
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: IssueDirection
         in: query
-        name: IssueDirection
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: IssueYear
         in: query
-        name: IssueYear
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: ItemsPerPage
         in: query
-        name: ItemsPerPage
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: LedCode
         in: query
-        name: LedCode
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: Page
         in: query
-        name: Page
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: ReceiverTaxId
         in: query
-        name: ReceiverTaxId
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: ReceiverTaxIdCountryCode
         in: query
-        name: ReceiverTaxIdCountryCode
-        required: false
         schema:
           type: string
-        style: form
-      - explode: false
+      - name: cv-ef-repository-code
         in: header
-        name: cv-ef-repository-code
-        required: false
         schema:
           type: string
-        style: simple
       responses:
         "200":
+          description: OK
           content:
             application/xml:
               schema:
@@ -1516,7 +1280,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DfeListPaginationResponse'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -1525,107 +1288,68 @@ paths:
       - SecurityScheme:
         - cv_ef_dfe_read_list
         - cv_ef_dfe_all
-      summary: Lista de DFEs que suporta paginação.
-      tags:
-      - DFE
-      x-accepts: application/json
   /v2/event:
     get:
+      tags:
+      - EVENT
+      summary: Lista de eventos que suporta paginação.
       operationId: EventResource_getEventListV2
       parameters:
-      - explode: true
+      - name: AuthorizedDateEnd
         in: query
-        name: AuthorizedDateEnd
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: AuthorizedDateStart
         in: query
-        name: AuthorizedDateStart
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: DocumentNumberEnd
         in: query
-        name: DocumentNumberEnd
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: DocumentNumberStart
         in: query
-        name: DocumentNumberStart
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: DocumentTypeCodes
         in: query
-        name: DocumentTypeCodes
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: EventId
         in: query
-        name: EventId
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: EventTypeCodes
         in: query
-        name: EventTypeCodes
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: IUD
         in: query
-        name: IUD
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: ItemsPerPage
         in: query
-        name: ItemsPerPage
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: LedCode
         in: query
-        name: LedCode
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: Page
         in: query
-        name: Page
-        required: false
         schema:
           type: string
-        style: form
-      - explode: true
+      - name: Year
         in: query
-        name: Year
-        required: false
         schema:
           type: string
-        style: form
-      - explode: false
+      - name: cv-ef-repository-code
         in: header
-        name: cv-ef-repository-code
-        required: false
         schema:
           type: string
-        style: simple
       responses:
         "200":
+          description: OK
           content:
             application/xml:
               schema:
@@ -1633,7 +1357,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EventListPaginationResponse'
-          description: OK
         "401":
           description: Not Authorized
         "403":
@@ -1642,13 +1365,10 @@ paths:
       - SecurityScheme:
         - cv_ef_event_read
         - cv_ef_event_all
-      summary: Lista de eventos que suporta paginação.
-      tags:
-      - EVENT
-      x-accepts: application/json
 components:
   schemas:
     Address:
+      type: object
       properties:
         AddressCode:
           type: string
@@ -1674,8 +1394,8 @@ components:
           type: string
         StreetDetail:
           type: string
-      type: object
     Contacts:
+      type: object
       properties:
         Email:
           type: string
@@ -1687,12 +1407,12 @@ components:
           type: string
         Website:
           type: string
-      type: object
     Date:
-      example: 2022-03-10
       format: date
       type: string
+      example: 2022-03-10
     Dfe:
+      type: object
       properties:
         Id:
           type: string
@@ -1743,9 +1463,9 @@ components:
         TransportServiceProviderParty:
           $ref: '#/components/schemas/EfParty'
         TransportRoute:
+          type: array
           items:
             $ref: '#/components/schemas/DfeTransportLocation'
-          type: array
         ReceiptTypeCode:
           format: int32
           type: integer
@@ -1758,38 +1478,38 @@ components:
           format: int32
           type: integer
         Lines:
+          type: array
           items:
             $ref: '#/components/schemas/DfeLine'
-          type: array
         Totals:
           $ref: '#/components/schemas/DfeTotals'
         Payments:
           $ref: '#/components/schemas/DfePayments'
         References:
+          type: array
           items:
             $ref: '#/components/schemas/DfeReference'
-          type: array
         Note:
           type: string
         CanceledDateTime:
           type: string
-      type: object
     DfeDiscount:
+      type: object
       properties:
         ValueType:
           type: string
         Value:
           format: double
           type: number
-      type: object
     DfeFiscalDocument:
+      type: object
       properties:
         Value:
           type: string
         IsOldDocument:
           type: boolean
-      type: object
     DfeLine:
+      type: object
       properties:
         Id:
           type: string
@@ -1813,13 +1533,13 @@ components:
           format: double
           type: number
         Taxes:
+          type: array
           items:
             $ref: '#/components/schemas/DfeLineTax'
-          type: array
         Item:
           $ref: '#/components/schemas/DfeLineItem'
-      type: object
     DfeLineItem:
+      type: object
       properties:
         Description:
           type: string
@@ -1836,19 +1556,19 @@ components:
         HazardousRiskIndicator:
           type: boolean
         AdditionalProperties:
+          type: array
           items:
             $ref: '#/components/schemas/DfeProperty'
-          type: array
-      type: object
     DfeLineQuantity:
+      type: object
       properties:
         UnitCode:
           type: string
         Value:
           format: double
           type: number
-      type: object
     DfeLineTax:
+      type: object
       properties:
         TaxTypeCode:
           type: string
@@ -1867,118 +1587,60 @@ components:
         TaxTotal:
           format: double
           type: number
-      type: object
     DfeListPaginationResponse:
-      example:
-        payload: null
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
-          $ref: '#/components/schemas/DfeListPaginationResponse_payload'
-      type: object
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/ItemsPaginationObject'
+          xml:
+            name: Payload
       xml:
         name: Response
     DfeListProcessingResponse:
-      example:
-        payload:
-        - EmitterName: EmitterName
-          AuthorizedDateTime: 2022-03-10T00:00:00.000+00:00
-          LedCode: 6
-          PayableAmount: 5.962133916683182
-          EmitterTaxId: 1
-          CanceledDateTime: 2022-03-10T00:00:00.000+00:00
-          ReceiverTaxId: ReceiverTaxId
-          DocumentTypeCode: 0
-          ReceiverTaxIdCountryCode: ReceiverTaxIdCountryCode
-          TaxTotalAmount: 5.637376656633329
-          Id: Id
-          ReceiverName: ReceiverName
-          IssueDirection: IssueDirection
-        - EmitterName: EmitterName
-          AuthorizedDateTime: 2022-03-10T00:00:00.000+00:00
-          LedCode: 6
-          PayableAmount: 5.962133916683182
-          EmitterTaxId: 1
-          CanceledDateTime: 2022-03-10T00:00:00.000+00:00
-          ReceiverTaxId: ReceiverTaxId
-          DocumentTypeCode: 0
-          ReceiverTaxIdCountryCode: ReceiverTaxIdCountryCode
-          TaxTotalAmount: 5.637376656633329
-          Id: Id
-          ReceiverName: ReceiverName
-          IssueDirection: IssueDirection
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
+          type: array
           items:
             $ref: '#/components/schemas/DfeSummary'
-          type: array
           xml:
             name: Payload
             wrapped: true
-      type: object
       xml:
         name: Response
     DfeOrderReference:
+      type: object
       properties:
         Id:
           type: string
-      type: object
     DfePayableAlternativeAmount:
+      type: object
       properties:
         CurrencyCode:
           type: string
@@ -1988,8 +1650,8 @@ components:
         Value:
           format: double
           type: number
-      type: object
     DfePayeeFinancialAccount:
+      type: object
       properties:
         AccountNumber:
           type: string
@@ -1997,8 +1659,8 @@ components:
           type: string
         Name:
           type: string
-      type: object
     DfePayment:
+      type: object
       properties:
         PaymentMeansCode:
           format: int32
@@ -2012,35 +1674,35 @@ components:
           type: number
         PayeeFinancialAccount:
           $ref: '#/components/schemas/DfePayeeFinancialAccount'
-      type: object
     DfePaymentTerms:
+      type: object
       properties:
         Note:
           type: string
-      type: object
     DfePayments:
+      type: object
       properties:
         PaymentDueDate:
           type: string
         PaymentTerms:
           $ref: '#/components/schemas/DfePaymentTerms'
         PayeeFinancialAccounts:
+          type: array
           items:
             $ref: '#/components/schemas/DfePayeeFinancialAccount'
-          type: array
         Payments:
+          type: array
           items:
             $ref: '#/components/schemas/DfePayment'
-          type: array
-      type: object
     DfeProperty:
+      type: object
       properties:
         Name:
           type: string
         Value:
           type: string
-      type: object
     DfeReference:
+      type: object
       properties:
         FiscalDocument:
           $ref: '#/components/schemas/DfeFiscalDocument'
@@ -2050,11 +1712,11 @@ components:
           format: double
           type: number
         Taxes:
+          type: array
           items:
             $ref: '#/components/schemas/DfeLineTax'
-          type: array
-      type: object
     DfeRentReceipt:
+      type: object
       properties:
         AssetId:
           type: string
@@ -2071,20 +1733,15 @@ components:
           type: string
         Address:
           $ref: '#/components/schemas/Address'
-      type: object
     DfeSelfBilling:
+      type: object
       properties:
         AuthorizationId:
           type: string
         AuthorizationCode:
           type: string
-      type: object
     DfeSelfBillingAuthorizeRequest:
-      example:
-        mobilePhoneNumber: mobilePhoneNumber
-        totalAmount: totalAmount
-        documentTypeCode: documentTypeCode
-        taxId: taxId
+      type: object
       properties:
         taxId:
           type: string
@@ -2094,13 +1751,11 @@ components:
           type: string
         totalAmount:
           type: string
-      type: object
     DfeSelfBillingAuthorizeResponse:
+      type: object
       properties:
         authorizationId:
-          format: uuid
-          pattern: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
-          type: string
+          $ref: '#/components/schemas/UUID'
         authorizationCodeExpirationSeconds:
           format: int32
           type: integer
@@ -2114,29 +1769,15 @@ components:
         documentNumber:
           format: int32
           type: integer
-      type: object
     DfeStandardIdentification:
+      type: object
       properties:
         StandardName:
           type: string
         StandardValue:
           type: string
-      type: object
     DfeSummary:
-      example:
-        EmitterName: EmitterName
-        AuthorizedDateTime: 2022-03-10T00:00:00.000+00:00
-        LedCode: 6
-        PayableAmount: 5.962133916683182
-        EmitterTaxId: 1
-        CanceledDateTime: 2022-03-10T00:00:00.000+00:00
-        ReceiverTaxId: ReceiverTaxId
-        DocumentTypeCode: 0
-        ReceiverTaxIdCountryCode: ReceiverTaxIdCountryCode
-        TaxTotalAmount: 5.637376656633329
-        Id: Id
-        ReceiverName: ReceiverName
-        IssueDirection: IssueDirection
+      type: object
       properties:
         Id:
           type: string
@@ -2164,17 +1805,13 @@ components:
           format: double
           type: number
         AuthorizedDateTime:
-          example: 2022-03-10
-          format: date
-          type: string
+          $ref: '#/components/schemas/Date'
         CanceledDateTime:
-          example: 2022-03-10
-          format: date
-          type: string
+          $ref: '#/components/schemas/Date'
         IssueDirection:
           type: string
-      type: object
     DfeTotals:
+      type: object
       properties:
         PriceExtensionTotalAmount:
           format: double
@@ -2203,11 +1840,11 @@ components:
           format: double
           type: number
         PayableAlternativeAmounts:
+          type: array
           items:
             $ref: '#/components/schemas/DfePayableAlternativeAmount'
-          type: array
-      type: object
     DfeTransportDuration:
+      type: object
       properties:
         StartDate:
           type: string
@@ -2217,8 +1854,8 @@ components:
           type: string
         EndTime:
           type: string
-      type: object
     DfeTransportLocation:
+      type: object
       properties:
         Address:
           $ref: '#/components/schemas/Address'
@@ -2229,8 +1866,8 @@ components:
           type: integer
         VehicleRegistrationCode:
           type: string
-      type: object
     EfContingency:
+      type: object
       properties:
         LedCode:
           format: int32
@@ -2246,103 +1883,40 @@ components:
           type: integer
         ReasonDescription:
           type: string
-      type: object
     EfEntriesProcessingResponse:
-      example:
-        responses:
-        - pendingSignatureId: pendingSignatureId
-          signatureTimeStamp: signatureTimeStamp
-          entryName: entryName
-          messages:
-          - dateTime: dateTime
-            code: code
-            description: description
-            index: 0
-            location: location
-            source: source
-            type: type
-          - dateTime: dateTime
-            code: code
-            description: description
-            index: 0
-            location: location
-            source: source
-            type: type
-          authorizedDateTime: authorizedDateTime
-          succeeded: true
-        - pendingSignatureId: pendingSignatureId
-          signatureTimeStamp: signatureTimeStamp
-          entryName: entryName
-          messages:
-          - dateTime: dateTime
-            code: code
-            description: description
-            index: 0
-            location: location
-            source: source
-            type: type
-          - dateTime: dateTime
-            code: code
-            description: description
-            index: 0
-            location: location
-            source: source
-            type: type
-          authorizedDateTime: authorizedDateTime
-          succeeded: true
+      type: object
       properties:
         responses:
+          type: array
           items:
             $ref: '#/components/schemas/EfEntryProcessingResponse'
-          type: array
           xml:
             name: Response
-      type: object
       xml:
         name: Responses
     EfEntryProcessingResponse:
-      example:
-        pendingSignatureId: pendingSignatureId
-        signatureTimeStamp: signatureTimeStamp
-        entryName: entryName
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        authorizedDateTime: authorizedDateTime
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         entryName:
           type: string
           xml:
             name: EntryName
         authorizedDateTime:
+          type: string
           allOf:
           - $ref: '#/components/schemas/Date'
-          type: string
           xml:
             name: AuthorizedDateTime
         signatureTimeStamp:
@@ -2353,10 +1927,10 @@ components:
           type: string
           xml:
             name: PendingSignatureId
-      type: object
       xml:
         name: Response
     EfParty:
+      type: object
       properties:
         TaxId:
           $ref: '#/components/schemas/EfTaxId'
@@ -2368,8 +1942,8 @@ components:
           $ref: '#/components/schemas/Contacts'
         Reference:
           type: string
-      type: object
     EfSoftware:
+      type: object
       properties:
         Code:
           type: string
@@ -2377,15 +1951,15 @@ components:
           type: string
         Version:
           type: string
-      type: object
     EfTaxId:
+      type: object
       properties:
         CountryCode:
           type: string
         Value:
           type: string
-      type: object
     EfTransmission:
+      type: object
       properties:
         IssueMode:
           format: int32
@@ -2396,8 +1970,8 @@ components:
           $ref: '#/components/schemas/EfSoftware'
         Contingency:
           $ref: '#/components/schemas/EfContingency'
-      type: object
     Event:
+      type: object
       properties:
         Id:
           type: string
@@ -2417,9 +1991,9 @@ components:
         IssueReasonDescription:
           type: string
         IUDs:
+          type: array
           items:
             type: string
-          type: array
         Year:
           format: int32
           type: integer
@@ -2439,120 +2013,68 @@ components:
         DocumentNumberEnd:
           format: int32
           type: integer
-      type: object
     EventListPaginationResponse:
-      example:
-        payload: null
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
-          $ref: '#/components/schemas/DfeListPaginationResponse_payload'
-      type: object
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/ItemsPaginationObject'
+          xml:
+            name: Payload
       xml:
         name: Response
     EventListProcessingResponse:
-      example:
-        payload:
-        - EventTypeCode: EventTypeCode
-          AuthorizedDate: 2022-03-10T00:00:00.000+00:00
-          IssueDateTime: 2022-03-10T00:00:00.000+00:00
-          IssueReasonDescription: IssueReasonDescription
-          Id: Id
-        - EventTypeCode: EventTypeCode
-          AuthorizedDate: 2022-03-10T00:00:00.000+00:00
-          IssueDateTime: 2022-03-10T00:00:00.000+00:00
-          IssueReasonDescription: IssueReasonDescription
-          Id: Id
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
+          type: array
           items:
             $ref: '#/components/schemas/EventSummary'
-          type: array
           xml:
             name: Payload
             wrapped: true
-      type: object
       xml:
         name: Response
     EventSummary:
-      example:
-        EventTypeCode: EventTypeCode
-        AuthorizedDate: 2022-03-10T00:00:00.000+00:00
-        IssueDateTime: 2022-03-10T00:00:00.000+00:00
-        IssueReasonDescription: IssueReasonDescription
-        Id: Id
+      type: object
       properties:
         Id:
           type: string
         EventTypeCode:
           type: string
         IssueDateTime:
-          example: 2022-03-10
-          format: date
-          type: string
+          $ref: '#/components/schemas/Date'
         IssueReasonDescription:
           type: string
         AuthorizedDate:
-          example: 2022-03-10
-          format: date
-          type: string
-      type: object
+          $ref: '#/components/schemas/Date'
     ItemsPaginationItemsPaginationObject:
+      type: object
       properties:
         allPagesItemCount:
           format: int64
@@ -2560,9 +2082,9 @@ components:
           xml:
             name: AllPagesItemCount
         items:
+          type: array
           items:
             $ref: '#/components/schemas/ItemsPaginationObject'
-          type: array
           xml:
             name: Items
             wrapped: true
@@ -2571,8 +2093,8 @@ components:
           type: integer
           xml:
             name: PageCount
-      type: object
     ItemsPaginationObject:
+      type: object
       properties:
         allPagesItemCount:
           format: int64
@@ -2580,11 +2102,11 @@ components:
           xml:
             name: AllPagesItemCount
         items:
+          type: array
           items:
             type: object
             xml:
               name: Item
-          type: array
           xml:
             name: Items
             wrapped: true
@@ -2593,16 +2115,8 @@ components:
           type: integer
           xml:
             name: PageCount
-      type: object
     LedDto:
-      example:
-        addressCode: addressCode
-        code: 0
-        addressDetail: addressDetail
-        created: 2022-03-10T00:00:00.000+00:00
-        serie: serie
-        softwareCode: softwareCode
-        description: description
+      type: object
       properties:
         code:
           format: int32
@@ -2618,28 +2132,18 @@ components:
         softwareCode:
           type: string
         created:
-          example: 2022-03-10
-          format: date
-          type: string
-      type: object
+          $ref: '#/components/schemas/Date'
     Message:
-      example:
-        dateTime: dateTime
-        code: code
-        description: description
-        index: 0
-        location: location
-        source: source
-        type: type
+      type: object
       properties:
         code:
           type: string
           xml:
             name: Code
         dateTime:
+          type: string
           allOf:
           - $ref: '#/components/schemas/Date'
-          type: string
           xml:
             name: DateTime
         description:
@@ -2663,871 +2167,440 @@ components:
           type: string
           xml:
             name: Type
-      type: object
     PayloadProcessingResponseBoolean:
-      example:
-        payload: true
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
           type: boolean
           xml:
             name: Payload
-      type: object
       xml:
         name: Response
     PayloadProcessingResponseDfe:
-      example:
-        payload: null
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
-          $ref: '#/components/schemas/PayloadProcessingResponseDfe_payload'
-      type: object
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Dfe'
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseDfeSelfBillingAuthorizeResponse:
-      example:
-        payload: null
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
-          $ref: '#/components/schemas/PayloadProcessingResponseDfeSelfBillingAuthorizeResponse_payload'
-      type: object
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/DfeSelfBillingAuthorizeResponse'
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseEvent:
-      example:
-        payload: null
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
-          $ref: '#/components/schemas/PayloadProcessingResponseEvent_payload'
-      type: object
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Event'
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseLedDto:
-      example:
-        payload: null
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
-          $ref: '#/components/schemas/PayloadProcessingResponseLedDto_payload'
-      type: object
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/LedDto'
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseListLedDto:
-      example:
-        payload:
-        - addressCode: addressCode
-          code: 0
-          addressDetail: addressDetail
-          created: 2022-03-10T00:00:00.000+00:00
-          serie: serie
-          softwareCode: softwareCode
-          description: description
-        - addressCode: addressCode
-          code: 0
-          addressDetail: addressDetail
-          created: 2022-03-10T00:00:00.000+00:00
-          serie: serie
-          softwareCode: softwareCode
-          description: description
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
+          type: array
           items:
             $ref: '#/components/schemas/LedDto'
-          type: array
           xml:
             name: Payload
-      type: object
       xml:
         name: Response
     PayloadProcessingResponseListSearchTaxPayerResponseDto:
-      example:
-        payload:
-        - TaxAreaCode: 6
-          TypeCode: TypeCode
-          NormalizedName: NormalizedName
-          BI: 1
-          NicLast5Chars: NicLast5Chars
-          TaxPayerSize: TaxPayerSize
-          TypeDescription: TypeDescription
-          TaxId: 0
-          TaxRegimeCode: TaxRegimeCode
-          TaxRegimeDescription: TaxRegimeDescription
-          Name: Name
-        - TaxAreaCode: 6
-          TypeCode: TypeCode
-          NormalizedName: NormalizedName
-          BI: 1
-          NicLast5Chars: NicLast5Chars
-          TaxPayerSize: TaxPayerSize
-          TypeDescription: TypeDescription
-          TaxId: 0
-          TaxRegimeCode: TaxRegimeCode
-          TaxRegimeDescription: TaxRegimeDescription
-          Name: Name
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
+          type: array
           items:
             $ref: '#/components/schemas/SearchTaxPayerResponseDto'
-          type: array
           xml:
             name: Payload
-      type: object
       xml:
         name: Response
     PayloadProcessingResponseListSoftwareCustomerDto:
-      example:
-        payload:
-        - transmitterName: transmitterName
-          oAuthRedirectUris:
-          - oAuthRedirectUris
-          - oAuthRedirectUris
-          softwareName: softwareName
-          transmitterTaxId: 0
-          useExclusiveOAuthParams: true
-          isEnabled: true
-          softwareCode: softwareCode
-          oAuthClientId: oAuthClientId
-          id: id
-          oAuthClientSecret: oAuthClientSecret
-          customerName: customerName
-          customerTaxId: 6
-        - transmitterName: transmitterName
-          oAuthRedirectUris:
-          - oAuthRedirectUris
-          - oAuthRedirectUris
-          softwareName: softwareName
-          transmitterTaxId: 0
-          useExclusiveOAuthParams: true
-          isEnabled: true
-          softwareCode: softwareCode
-          oAuthClientId: oAuthClientId
-          id: id
-          oAuthClientSecret: oAuthClientSecret
-          customerName: customerName
-          customerTaxId: 6
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
+          type: array
           items:
             $ref: '#/components/schemas/SoftwareCustomerDto'
-          type: array
           xml:
             name: Payload
-      type: object
       xml:
         name: Response
     PayloadProcessingResponseListSoftwareDto:
-      example:
-        payload:
-        - groupMembers:
-          - 6
-          - 6
-          receiveLevelDate: 2022-03-10T00:00:00.000+00:00
-          transmitLevelDate: 2022-03-10T00:00:00.000+00:00
-          internal: true
-          code: code
-          integratedWithPe: true
-          taxId: 0
-          created: 2022-03-10T00:00:00.000+00:00
-          name: name
-          type: type
-          userJoinedPe: true
-        - groupMembers:
-          - 6
-          - 6
-          receiveLevelDate: 2022-03-10T00:00:00.000+00:00
-          transmitLevelDate: 2022-03-10T00:00:00.000+00:00
-          internal: true
-          code: code
-          integratedWithPe: true
-          taxId: 0
-          created: 2022-03-10T00:00:00.000+00:00
-          name: name
-          type: type
-          userJoinedPe: true
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
+          type: array
           items:
             $ref: '#/components/schemas/SoftwareDto'
-          type: array
           xml:
             name: Payload
-      type: object
       xml:
         name: Response
     PayloadProcessingResponseListSoftwareGroupMemberDto:
-      example:
-        payload:
-        - groupMemberTaxId: 0
-          softwareName: softwareName
-          softwareCode: softwareCode
-          id: id
-          groupMemberName: groupMemberName
-        - groupMemberTaxId: 0
-          softwareName: softwareName
-          softwareCode: softwareCode
-          id: id
-          groupMemberName: groupMemberName
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
+          type: array
           items:
             $ref: '#/components/schemas/SoftwareGroupMemberDto'
-          type: array
           xml:
             name: Payload
-      type: object
       xml:
         name: Response
     PayloadProcessingResponseListSoftwareTransmitterDto:
-      example:
-        payload:
-        - transmitterName: transmitterName
-          oAuthRedirectUris:
-          - oAuthRedirectUris
-          - oAuthRedirectUris
-          softwareName: softwareName
-          transmitterTaxId: 0
-          isEnabled: true
-          softwareCode: softwareCode
-          oAuthClientId: oAuthClientId
-          id: id
-          oAuthClientSecret: oAuthClientSecret
-        - transmitterName: transmitterName
-          oAuthRedirectUris:
-          - oAuthRedirectUris
-          - oAuthRedirectUris
-          softwareName: softwareName
-          transmitterTaxId: 0
-          isEnabled: true
-          softwareCode: softwareCode
-          oAuthClientId: oAuthClientId
-          id: id
-          oAuthClientSecret: oAuthClientSecret
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
+          type: array
           items:
             $ref: '#/components/schemas/SoftwareTransmitterDto'
-          type: array
           xml:
             name: Payload
-      type: object
       xml:
         name: Response
     PayloadProcessingResponseLong:
-      example:
-        payload: 0
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
           format: int64
           type: integer
           xml:
             name: Payload
-      type: object
       xml:
         name: Response
     PayloadProcessingResponseSoftwareCustomerDto:
-      example:
-        payload: null
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
-          $ref: '#/components/schemas/PayloadProcessingResponseSoftwareCustomerDto_payload'
-      type: object
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SoftwareCustomerDto'
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareCustomerEntity:
-      example:
-        payload: null
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
-          $ref: '#/components/schemas/PayloadProcessingResponseSoftwareCustomerEntity_payload'
-      type: object
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SoftwareCustomerEntity'
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareGroupMemberDto:
-      example:
-        payload: null
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
-          $ref: '#/components/schemas/PayloadProcessingResponseSoftwareGroupMemberDto_payload'
-      type: object
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SoftwareGroupMemberDto'
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareGroupMemberEntity:
-      example:
-        payload: null
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
-          $ref: '#/components/schemas/PayloadProcessingResponseSoftwareGroupMemberEntity_payload'
-      type: object
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SoftwareGroupMemberEntity'
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareTransmitterDto:
-      example:
-        payload: null
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
-          $ref: '#/components/schemas/PayloadProcessingResponseSoftwareTransmitterDto_payload'
-      type: object
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SoftwareTransmitterDto'
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareTransmitterEntity:
-      example:
-        payload: null
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
-          $ref: '#/components/schemas/PayloadProcessingResponseSoftwareTransmitterEntity_payload'
-      type: object
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SoftwareTransmitterEntity'
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseString:
-      example:
-        payload: payload
-        messages:
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        - dateTime: dateTime
-          code: code
-          description: description
-          index: 0
-          location: location
-          source: source
-          type: type
-        succeeded: true
+      type: object
       properties:
         messages:
+          type: array
           items:
             $ref: '#/components/schemas/Message'
-          type: array
           xml:
             name: Messages
             wrapped: true
         succeeded:
           type: boolean
           xml:
-            attribute: true
             name: Succeeded
+            attribute: true
         payload:
           type: string
           xml:
             name: Payload
-      type: object
       xml:
         name: Response
     SaveLedDto:
-      example:
-        addressCode: addressCode
-        code: code
-        addressDetail: addressDetail
-        serie: serie
-        softwareCode: softwareCode
-        description: description
+      type: object
       properties:
         code:
           type: string
@@ -3541,20 +2614,8 @@ components:
           type: string
         softwareCode:
           type: string
-      type: object
     SearchTaxPayerResponseDto:
-      example:
-        TaxAreaCode: 6
-        TypeCode: TypeCode
-        NormalizedName: NormalizedName
-        BI: 1
-        NicLast5Chars: NicLast5Chars
-        TaxPayerSize: TaxPayerSize
-        TypeDescription: TypeDescription
-        TaxId: 0
-        TaxRegimeCode: TaxRegimeCode
-        TaxRegimeDescription: TaxRegimeDescription
-        Name: Name
+      type: object
       properties:
         TaxId:
           format: int32
@@ -3581,23 +2642,8 @@ components:
           type: string
         TaxPayerSize:
           type: string
-      type: object
     SoftwareCustomerDto:
-      example:
-        transmitterName: transmitterName
-        oAuthRedirectUris:
-        - oAuthRedirectUris
-        - oAuthRedirectUris
-        softwareName: softwareName
-        transmitterTaxId: 0
-        useExclusiveOAuthParams: true
-        isEnabled: true
-        softwareCode: softwareCode
-        oAuthClientId: oAuthClientId
-        id: id
-        oAuthClientSecret: oAuthClientSecret
-        customerName: customerName
-        customerTaxId: 6
+      type: object
       properties:
         id:
           type: string
@@ -3615,9 +2661,9 @@ components:
         oAuthClientSecret:
           type: string
         oAuthRedirectUris:
+          type: array
           items:
             type: string
-          type: array
         isEnabled:
           type: boolean
         customerTaxId:
@@ -3627,22 +2673,8 @@ components:
           type: string
         useExclusiveOAuthParams:
           type: boolean
-      type: object
     SoftwareCustomerEntity:
-      example:
-        oAuthRedirectUris:
-        - oAuthRedirectUris
-        - oAuthRedirectUris
-        transmitterTaxId: 172074537
-        useExclusiveOAuthParams: true
-        created: 2022-03-10T00:00:00.000+00:00
-        isEnabled: true
-        softwareCode: softwareCode
-        oAuthClientId: oAuthClientId
-        id: id
-        oAuthClientSecret: oAuthClientSecret
-        updated: 2022-03-10T00:00:00.000+00:00
-        customerTaxId: 642471055
+      type: object
       properties:
         id:
           type: string
@@ -3667,35 +2699,17 @@ components:
         oAuthClientSecret:
           type: string
         oAuthRedirectUris:
+          type: array
           items:
             type: string
-          type: array
         isEnabled:
           type: boolean
         created:
-          example: 2022-03-10
-          format: date
-          type: string
+          $ref: '#/components/schemas/Date'
         updated:
-          example: 2022-03-10
-          format: date
-          type: string
-      type: object
+          $ref: '#/components/schemas/Date'
     SoftwareDto:
-      example:
-        groupMembers:
-        - 6
-        - 6
-        receiveLevelDate: 2022-03-10T00:00:00.000+00:00
-        transmitLevelDate: 2022-03-10T00:00:00.000+00:00
-        internal: true
-        code: code
-        integratedWithPe: true
-        taxId: 0
-        created: 2022-03-10T00:00:00.000+00:00
-        name: name
-        type: type
-        userJoinedPe: true
+      type: object
       properties:
         code:
           type: string
@@ -3707,9 +2721,7 @@ components:
           format: int32
           type: integer
         created:
-          example: 2022-03-10
-          format: date
-          type: string
+          $ref: '#/components/schemas/Date'
         internal:
           type: boolean
         userJoinedPe:
@@ -3717,26 +2729,16 @@ components:
         integratedWithPe:
           type: boolean
         groupMembers:
+          type: array
           items:
             format: int32
             type: integer
-          type: array
         transmitLevelDate:
-          example: 2022-03-10
-          format: date
-          type: string
+          $ref: '#/components/schemas/Date'
         receiveLevelDate:
-          example: 2022-03-10
-          format: date
-          type: string
-      type: object
+          $ref: '#/components/schemas/Date'
     SoftwareGroupMemberDto:
-      example:
-        groupMemberTaxId: 0
-        softwareName: softwareName
-        softwareCode: softwareCode
-        id: id
-        groupMemberName: groupMemberName
+      type: object
       properties:
         id:
           type: string
@@ -3749,14 +2751,8 @@ components:
           type: integer
         groupMemberName:
           type: string
-      type: object
     SoftwareGroupMemberEntity:
-      example:
-        groupMemberTaxId: 172074537
-        created: 2022-03-10T00:00:00.000+00:00
-        softwareCode: softwareCode
-        id: id
-        updated: 2022-03-10T00:00:00.000+00:00
+      type: object
       properties:
         id:
           type: string
@@ -3770,27 +2766,11 @@ components:
           minimum: 100000000
           type: integer
         created:
-          example: 2022-03-10
-          format: date
-          type: string
+          $ref: '#/components/schemas/Date'
         updated:
-          example: 2022-03-10
-          format: date
-          type: string
-      type: object
+          $ref: '#/components/schemas/Date'
     SoftwareTransmitterDto:
-      example:
-        transmitterName: transmitterName
-        oAuthRedirectUris:
-        - oAuthRedirectUris
-        - oAuthRedirectUris
-        softwareName: softwareName
-        transmitterTaxId: 0
-        isEnabled: true
-        softwareCode: softwareCode
-        oAuthClientId: oAuthClientId
-        id: id
-        oAuthClientSecret: oAuthClientSecret
+      type: object
       properties:
         id:
           type: string
@@ -3808,25 +2788,13 @@ components:
         oAuthClientSecret:
           type: string
         oAuthRedirectUris:
+          type: array
           items:
             type: string
-          type: array
         isEnabled:
           type: boolean
-      type: object
     SoftwareTransmitterEntity:
-      example:
-        oAuthRedirectUris:
-        - oAuthRedirectUris
-        - oAuthRedirectUris
-        transmitterTaxId: 172074537
-        created: 2022-03-10T00:00:00.000+00:00
-        isEnabled: true
-        softwareCode: softwareCode
-        oAuthClientId: oAuthClientId
-        id: id
-        oAuthClientSecret: oAuthClientSecret
-        updated: 2022-03-10T00:00:00.000+00:00
+      type: object
       properties:
         id:
           type: string
@@ -3844,104 +2812,25 @@ components:
         oAuthClientSecret:
           type: string
         oAuthRedirectUris:
+          type: array
           items:
             type: string
-          type: array
         isEnabled:
           type: boolean
         created:
-          example: 2022-03-10
-          format: date
-          type: string
+          $ref: '#/components/schemas/Date'
         updated:
-          example: 2022-03-10
-          format: date
-          type: string
-      type: object
+          $ref: '#/components/schemas/Date'
     UUID:
       format: uuid
       pattern: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
       type: string
-    DfeResource_createDfe_request:
-      properties:
-        file:
-          format: binary
-          type: string
-      type: object
-    DfeListPaginationResponse_payload:
-      allOf:
-      - $ref: '#/components/schemas/ItemsPaginationObject'
-      type: object
-      xml:
-        name: Payload
-    PayloadProcessingResponseDfe_payload:
-      allOf:
-      - $ref: '#/components/schemas/Dfe'
-      type: object
-      xml:
-        name: Payload
-    PayloadProcessingResponseDfeSelfBillingAuthorizeResponse_payload:
-      allOf:
-      - $ref: '#/components/schemas/DfeSelfBillingAuthorizeResponse'
-      type: object
-      xml:
-        name: Payload
-    PayloadProcessingResponseEvent_payload:
-      allOf:
-      - $ref: '#/components/schemas/Event'
-      type: object
-      xml:
-        name: Payload
-    PayloadProcessingResponseLedDto_payload:
-      allOf:
-      - $ref: '#/components/schemas/LedDto'
-      type: object
-      xml:
-        name: Payload
-    PayloadProcessingResponseSoftwareCustomerDto_payload:
-      allOf:
-      - $ref: '#/components/schemas/SoftwareCustomerDto'
-      type: object
-      xml:
-        name: Payload
-    PayloadProcessingResponseSoftwareCustomerEntity_payload:
-      allOf:
-      - $ref: '#/components/schemas/SoftwareCustomerEntity'
-      type: object
-      xml:
-        name: Payload
-    PayloadProcessingResponseSoftwareGroupMemberDto_payload:
-      allOf:
-      - $ref: '#/components/schemas/SoftwareGroupMemberDto'
-      type: object
-      xml:
-        name: Payload
-    PayloadProcessingResponseSoftwareGroupMemberEntity_payload:
-      allOf:
-      - $ref: '#/components/schemas/SoftwareGroupMemberEntity'
-      type: object
-      xml:
-        name: Payload
-    PayloadProcessingResponseSoftwareTransmitterDto_payload:
-      allOf:
-      - $ref: '#/components/schemas/SoftwareTransmitterDto'
-      type: object
-      xml:
-        name: Payload
-    PayloadProcessingResponseSoftwareTransmitterEntity_payload:
-      allOf:
-      - $ref: '#/components/schemas/SoftwareTransmitterEntity'
-      type: object
-      xml:
-        name: Payload
   securitySchemes:
     SecurityScheme:
+      type: oauth2
       description: Authentication
       flows:
         implicit:
           authorizationUrl: https://iam.efatura.cv/auth/realms/taxpayers/protocol/openid-connect/auth
-          refreshUrl: https://iam.efatura.cv/auth/realms/taxpayers/protocol/openid-connect/token
-          scopes: {}
           tokenUrl: https://iam.efatura.cv/auth/realms/taxpayers/protocol/openid-connect/token/introspect
-      type: oauth2
-
+          refreshUrl: https://iam.efatura.cv/auth/realms/taxpayers/protocol/openid-connect/token

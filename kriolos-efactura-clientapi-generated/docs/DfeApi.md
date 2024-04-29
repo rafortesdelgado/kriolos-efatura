@@ -4,6 +4,7 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**dfeResourceAuthorizeSelfBilling**](DfeApi.md#dfeResourceAuthorizeSelfBilling) | **POST** /v1/dfe/self-billing/authorize | Pedido de autorização para autofaturação. |
 | [**dfeResourceCreateDfe**](DfeApi.md#dfeResourceCreateDfe) | **POST** /v1/dfe | Comunicação de novos DFEs. |
 | [**dfeResourceDeleteDfeEvent**](DfeApi.md#dfeResourceDeleteDfeEvent) | **DELETE** /v1/dfe | Elimina todos os DFEs e os respetivos eventos no repositório de Homologação/Teste. |
 | [**dfeResourceGetDfeById**](DfeApi.md#dfeResourceGetDfeById) | **GET** /v1/dfe/{Id} | Consulta de DFE com IUD. |
@@ -12,6 +13,78 @@ All URIs are relative to *http://localhost*
 | [**dfeResourceGetDfeSummaryListV2**](DfeApi.md#dfeResourceGetDfeSummaryListV2) | **GET** /v2/dfe | Lista de DFEs que suporta paginação. |
 | [**dfeResourceGetDfeXmlById**](DfeApi.md#dfeResourceGetDfeXmlById) | **GET** /v1/dfe/xml/{Id} | Consulta de XML com IUD exatamente como foi gerado e assinado pelo contribuinte e com aposição de timestamp. |
 
+
+
+## dfeResourceAuthorizeSelfBilling
+
+> PayloadProcessingResponseDfeSelfBillingAuthorizeResponse dfeResourceAuthorizeSelfBilling(cvEfRepositoryCode, dfeSelfBillingAuthorizeRequest)
+
+Pedido de autorização para autofaturação.
+
+### Example
+
+```java
+// Import classes:
+import io.github.kriolos.efatura.clientapi.generated.ApiClient;
+import io.github.kriolos.efatura.clientapi.generated.ApiException;
+import io.github.kriolos.efatura.clientapi.generated.Configuration;
+import io.github.kriolos.efatura.clientapi.generated.auth.*;
+import io.github.kriolos.efatura.clientapi.generated.model.*;
+import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("http://localhost");
+        
+        // Configure OAuth2 access token for authorization: SecurityScheme
+        OAuth SecurityScheme = (OAuth) defaultClient.getAuthentication("SecurityScheme");
+        SecurityScheme.setAccessToken("YOUR ACCESS TOKEN");
+
+        DfeApi apiInstance = new DfeApi(defaultClient);
+        String cvEfRepositoryCode = "cvEfRepositoryCode_example"; // String | 
+        DfeSelfBillingAuthorizeRequest dfeSelfBillingAuthorizeRequest = new DfeSelfBillingAuthorizeRequest(); // DfeSelfBillingAuthorizeRequest | 
+        try {
+            PayloadProcessingResponseDfeSelfBillingAuthorizeResponse result = apiInstance.dfeResourceAuthorizeSelfBilling(cvEfRepositoryCode, dfeSelfBillingAuthorizeRequest);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DfeApi#dfeResourceAuthorizeSelfBilling");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **cvEfRepositoryCode** | **String**|  | [optional] |
+| **dfeSelfBillingAuthorizeRequest** | [**DfeSelfBillingAuthorizeRequest**](DfeSelfBillingAuthorizeRequest.md)|  | [optional] |
+
+### Return type
+
+[**PayloadProcessingResponseDfeSelfBillingAuthorizeResponse**](PayloadProcessingResponseDfeSelfBillingAuthorizeResponse.md)
+
+### Authorization
+
+[SecurityScheme](../README.md#SecurityScheme)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+| **401** | Not Authorized |  -  |
+| **403** | Not Allowed |  -  |
 
 
 ## dfeResourceCreateDfe

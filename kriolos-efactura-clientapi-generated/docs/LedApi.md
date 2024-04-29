@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**ledResourceCreateLed**](LedApi.md#ledResourceCreateLed) | **POST** /v1/led | Regista um novo LED. |
-| [**ledResourceDeleteLed**](LedApi.md#ledResourceDeleteLed) | **DELETE** /v1/led/{LedCode} | Elimina um LED sem DFEs associados. |
+| [**ledResourceCreateLed**](LedApi.md#ledResourceCreateLed) | **POST** /v1/led | Regista uma nova LED. |
+| [**ledResourceDeleteLed**](LedApi.md#ledResourceDeleteLed) | **DELETE** /v1/led/{LedCode} | Elimina uma LED sem DFEs associados. |
 | [**ledResourceGetAllLeds**](LedApi.md#ledResourceGetAllLeds) | **GET** /v1/led | Lista de LEDs. |
 | [**ledResourceGetLedByCode**](LedApi.md#ledResourceGetLedByCode) | **GET** /v1/led/{LedCode} | Consulta de LED com código. |
-| [**ledResourceUpdateLed**](LedApi.md#ledResourceUpdateLed) | **PUT** /v1/led/{LedCode} | Atualiza um LED. |
+| [**ledResourceUpdateLed**](LedApi.md#ledResourceUpdateLed) | **PUT** /v1/led/{LedCode} | Atualiza uma LED. |
 
 
 
@@ -16,7 +16,7 @@ All URIs are relative to *http://localhost*
 
 > PayloadProcessingResponseLedDto ledResourceCreateLed(saveLedDto)
 
-Regista um novo LED.
+Regista uma nova LED.
 
 ### Example
 
@@ -86,7 +86,7 @@ public class Example {
 
 > PayloadProcessingResponseBoolean ledResourceDeleteLed(ledCode)
 
-Elimina um LED sem DFEs associados.
+Elimina uma LED sem DFEs associados.
 
 ### Example
 
@@ -292,7 +292,7 @@ public class Example {
 
 > PayloadProcessingResponseLedDto ledResourceUpdateLed(ledCode, saveLedDto)
 
-Atualiza um LED.
+Atualiza uma LED.
 
 ### Example
 

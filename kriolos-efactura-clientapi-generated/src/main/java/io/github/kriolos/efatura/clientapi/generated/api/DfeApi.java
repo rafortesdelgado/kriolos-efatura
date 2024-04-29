@@ -10,9 +10,11 @@ import jakarta.ws.rs.core.GenericType;
 
 import io.github.kriolos.efatura.clientapi.generated.model.DfeListPaginationResponse;
 import io.github.kriolos.efatura.clientapi.generated.model.DfeListProcessingResponse;
+import io.github.kriolos.efatura.clientapi.generated.model.DfeSelfBillingAuthorizeRequest;
 import io.github.kriolos.efatura.clientapi.generated.model.EfEntriesProcessingResponse;
 import java.io.File;
 import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseDfe;
+import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseDfeSelfBillingAuthorizeResponse;
 import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseLong;
 import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseString;
 
@@ -21,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-13T22:35:54.857427200-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-04-23T17:20:58.717987600-01:00[Atlantic/Cape_Verde]")
 public class DfeApi {
   private ApiClient apiClient;
 
@@ -51,6 +53,76 @@ public class DfeApi {
     this.apiClient = apiClient;
   }
 
+  /**
+   * Pedido de autorização para autofaturação.
+   * 
+   * @param cvEfRepositoryCode  (optional)
+   * @param dfeSelfBillingAuthorizeRequest  (optional)
+   * @return PayloadProcessingResponseDfeSelfBillingAuthorizeResponse
+   * @throws ApiException if fails to make API call
+   * @http.response.details
+     <table summary="Response Details" border="1">
+       <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+       <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+       <tr><td> 401 </td><td> Not Authorized </td><td>  -  </td></tr>
+       <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
+     </table>
+   */
+  public PayloadProcessingResponseDfeSelfBillingAuthorizeResponse dfeResourceAuthorizeSelfBilling(String cvEfRepositoryCode, DfeSelfBillingAuthorizeRequest dfeSelfBillingAuthorizeRequest) throws ApiException {
+    return dfeResourceAuthorizeSelfBillingWithHttpInfo(cvEfRepositoryCode, dfeSelfBillingAuthorizeRequest).getData();
+  }
+
+  /**
+   * Pedido de autorização para autofaturação.
+   * 
+   * @param cvEfRepositoryCode  (optional)
+   * @param dfeSelfBillingAuthorizeRequest  (optional)
+   * @return ApiResponse&lt;PayloadProcessingResponseDfeSelfBillingAuthorizeResponse&gt;
+   * @throws ApiException if fails to make API call
+   * @http.response.details
+     <table summary="Response Details" border="1">
+       <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+       <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+       <tr><td> 401 </td><td> Not Authorized </td><td>  -  </td></tr>
+       <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
+     </table>
+   */
+  public ApiResponse<PayloadProcessingResponseDfeSelfBillingAuthorizeResponse> dfeResourceAuthorizeSelfBillingWithHttpInfo(String cvEfRepositoryCode, DfeSelfBillingAuthorizeRequest dfeSelfBillingAuthorizeRequest) throws ApiException {
+    Object localVarPostBody = dfeSelfBillingAuthorizeRequest;
+    
+    // create path and map variables
+    String localVarPath = "/v1/dfe/self-billing/authorize";
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    if (cvEfRepositoryCode != null)
+      localVarHeaderParams.put("cv-ef-repository-code", apiClient.parameterToString(cvEfRepositoryCode));
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] { "SecurityScheme" };
+
+    GenericType<PayloadProcessingResponseDfeSelfBillingAuthorizeResponse> localVarReturnType = new GenericType<PayloadProcessingResponseDfeSelfBillingAuthorizeResponse>() {};
+
+    return apiClient.invokeAPI("DfeApi.dfeResourceAuthorizeSelfBilling", localVarPath, "POST", localVarQueryParams, localVarPostBody,
+                               localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType,
+                               localVarAuthNames, localVarReturnType, false);
+  }
   /**
    * Comunicação de novos DFEs.
    * 

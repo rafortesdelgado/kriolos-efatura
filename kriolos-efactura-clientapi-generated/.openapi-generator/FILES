@@ -29,6 +29,9 @@ docs/DfePayments.md
 docs/DfeProperty.md
 docs/DfeReference.md
 docs/DfeRentReceipt.md
+docs/DfeSelfBilling.md
+docs/DfeSelfBillingAuthorizeRequest.md
+docs/DfeSelfBillingAuthorizeResponse.md
 docs/DfeStandardIdentification.md
 docs/DfeSummary.md
 docs/DfeTotals.md
@@ -54,6 +57,8 @@ docs/Message.md
 docs/PayloadProcessingResponseBoolean.md
 docs/PayloadProcessingResponseDfe.md
 docs/PayloadProcessingResponseDfePayload.md
+docs/PayloadProcessingResponseDfeSelfBillingAuthorizeResponse.md
+docs/PayloadProcessingResponseDfeSelfBillingAuthorizeResponsePayload.md
 docs/PayloadProcessingResponseEvent.md
 docs/PayloadProcessingResponseEventPayload.md
 docs/PayloadProcessingResponseLedDto.md
@@ -144,6 +149,9 @@ src/main/java/io/github/kriolos/efatura/clientapi/generated/model/DfePayments.ja
 src/main/java/io/github/kriolos/efatura/clientapi/generated/model/DfeProperty.java
 src/main/java/io/github/kriolos/efatura/clientapi/generated/model/DfeReference.java
 src/main/java/io/github/kriolos/efatura/clientapi/generated/model/DfeRentReceipt.java
+src/main/java/io/github/kriolos/efatura/clientapi/generated/model/DfeSelfBilling.java
+src/main/java/io/github/kriolos/efatura/clientapi/generated/model/DfeSelfBillingAuthorizeRequest.java
+src/main/java/io/github/kriolos/efatura/clientapi/generated/model/DfeSelfBillingAuthorizeResponse.java
 src/main/java/io/github/kriolos/efatura/clientapi/generated/model/DfeStandardIdentification.java
 src/main/java/io/github/kriolos/efatura/clientapi/generated/model/DfeSummary.java
 src/main/java/io/github/kriolos/efatura/clientapi/generated/model/DfeTotals.java
@@ -167,6 +175,8 @@ src/main/java/io/github/kriolos/efatura/clientapi/generated/model/Message.java
 src/main/java/io/github/kriolos/efatura/clientapi/generated/model/PayloadProcessingResponseBoolean.java
 src/main/java/io/github/kriolos/efatura/clientapi/generated/model/PayloadProcessingResponseDfe.java
 src/main/java/io/github/kriolos/efatura/clientapi/generated/model/PayloadProcessingResponseDfePayload.java
+src/main/java/io/github/kriolos/efatura/clientapi/generated/model/PayloadProcessingResponseDfeSelfBillingAuthorizeResponse.java
+src/main/java/io/github/kriolos/efatura/clientapi/generated/model/PayloadProcessingResponseDfeSelfBillingAuthorizeResponsePayload.java
 src/main/java/io/github/kriolos/efatura/clientapi/generated/model/PayloadProcessingResponseEvent.java
 src/main/java/io/github/kriolos/efatura/clientapi/generated/model/PayloadProcessingResponseEventPayload.java
 src/main/java/io/github/kriolos/efatura/clientapi/generated/model/PayloadProcessingResponseLedDto.java

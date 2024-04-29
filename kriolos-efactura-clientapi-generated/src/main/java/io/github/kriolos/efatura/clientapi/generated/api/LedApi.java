@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-13T22:35:54.857427200-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-04-23T17:20:58.717987600-01:00[Atlantic/Cape_Verde]")
 public class LedApi {
   private ApiClient apiClient;
 
@@ -49,7 +49,7 @@ public class LedApi {
   }
 
   /**
-   * Regista um novo LED.
+   * Regista uma nova LED.
    * 
    * @param saveLedDto  (optional)
    * @return PayloadProcessingResponseLedDto
@@ -67,7 +67,7 @@ public class LedApi {
   }
 
   /**
-   * Regista um novo LED.
+   * Regista uma nova LED.
    * 
    * @param saveLedDto  (optional)
    * @return ApiResponse&lt;PayloadProcessingResponseLedDto&gt;
@@ -115,7 +115,7 @@ public class LedApi {
                                localVarAuthNames, localVarReturnType, false);
   }
   /**
-   * Elimina um LED sem DFEs associados.
+   * Elimina uma LED sem DFEs associados.
    * 
    * @param ledCode  (required)
    * @return PayloadProcessingResponseBoolean
@@ -133,7 +133,7 @@ public class LedApi {
   }
 
   /**
-   * Elimina um LED sem DFEs associados.
+   * Elimina uma LED sem DFEs associados.
    * 
    * @param ledCode  (required)
    * @return ApiResponse&lt;PayloadProcessingResponseBoolean&gt;
@@ -323,7 +323,7 @@ public class LedApi {
                                localVarAuthNames, localVarReturnType, false);
   }
   /**
-   * Atualiza um LED.
+   * Atualiza uma LED.
    * 
    * @param ledCode  (required)
    * @param saveLedDto  (optional)
@@ -342,7 +342,7 @@ public class LedApi {
   }
 
   /**
-   * Atualiza um LED.
+   * Atualiza uma LED.
    * 
    * @param ledCode  (required)
    * @param saveLedDto  (optional)

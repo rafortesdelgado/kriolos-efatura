@@ -4,18 +4,31 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.Event;
-import org.openqa.selenium.devtools.v119.network.Network;
+import org.openqa.selenium.devtools.v122.network.Network;
 
 import io.github.kriolos.efatura.components.LoginProcess;
 
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
+import java.io.File;
 
 public class GetTokenHelper {
 
 	public static String init(String nif, String password) {
+		String path = "C:\\Users\\Rafael Delgado\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe";
+		File chromeDriverFile = new File(path);
 
-		ChromeDriver driver = new ChromeDriver();
+		if(!chromeDriverFile.exists()) 
+		{
+			return null;
+		}
+
+		ChromeDriverService service =  new ChromeDriverService.Builder()
+			.usingDriverExecutable(chromeDriverFile)
+			.usingAnyFreePort()
+			.build();
+		
+		ChromeDriver driver = new ChromeDriver(service);
 		// driver.manage().window().maximize();
 
 		// Set Dev-Tools and create a session
