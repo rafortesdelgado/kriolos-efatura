@@ -6,6 +6,7 @@
         <artifactId>kriolos-efatura</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+    
     <artifactId>kriolos-efatura-service</artifactId>
     <name>Kriolos :: eFatura :: Service</name>
     <packaging>jar</packaging>

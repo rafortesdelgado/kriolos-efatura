@@ -113,16 +113,10 @@
   <modules>
             
     <module>kriolos-efatura-datamodel</module>
-            
     <module>kriolos-efatura-core</module>
-            
     <module>kriolos-efatura-clientapi</module>
-            
-    <module>kriolos-efatura-service-web</module>
     <module>kriolos-efatura-service</module>
-
-    
-                
+    <module>kriolos-efatura-service-web</module>
   </modules>
   
 </project>
