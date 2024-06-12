@@ -38,7 +38,8 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   EfTransmission.JSON_PROPERTY_SOFTWARE,
   EfTransmission.JSON_PROPERTY_CONTINGENCY
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-04-23T17:20:58.717987600-01:00[Atlantic/Cape_Verde]")
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-06-12T16:11:19.537447100-01:00[Atlantic/Cape_Verde]")
 public class EfTransmission {
   public static final String JSON_PROPERTY_ISSUE_MODE = "IssueMode";
   private Integer issueMode;

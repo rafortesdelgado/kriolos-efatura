@@ -54,6 +54,7 @@
 <!--                                <serializationLibrary>gson</serializationLibrary>-->
 <!--                                <dateLibrary>joda</dateLibrary>-->
 <!--                                <annotationLibrary>swagger1</annotationLibrary>-->
+                                <additionalModelTypeAnnotations>@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)</additionalModelTypeAnnotations>
                             </configOptions>
                             
 
@@ -65,7 +66,7 @@
                             
                             <groupId>io.github.kriolos.efatura</groupId>
                             <artifactId>kriolos-efatura-clientapi-generated</artifactId>
-                            <artifactVersion>1.2.0</artifactVersion>
+                            <artifactVersion>1.2.2</artifactVersion>
                             
                             <gitHost>https://github.com</gitHost>
                             <gitUserId>kriolos</gitUserId>

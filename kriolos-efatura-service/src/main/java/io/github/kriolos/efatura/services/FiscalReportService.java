@@ -23,7 +23,7 @@ public class FiscalReportService {
         this.dfeApi = dfeApi;
     }
 
-    private static String startDate = "2024-01-01";    
+    private static String startDate = "2024-05-01";    
     //private static String endDate = "2023-11-01";
     private static String endDate = null;
 

@@ -33,14 +33,14 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
-            <version>4.15.0</version>
+            <version>4.20.0</version>
         </dependency>
         
         
         <dependency>
             <groupId>io.github.kriolos.efatura</groupId>
             <artifactId>kriolos-efatura-clientapi-generated</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.2</version>
             <scope>compile</scope>
         </dependency>
 

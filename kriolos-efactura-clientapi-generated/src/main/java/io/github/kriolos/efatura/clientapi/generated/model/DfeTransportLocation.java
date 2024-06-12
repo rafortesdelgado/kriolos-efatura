@@ -37,7 +37,8 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   DfeTransportLocation.JSON_PROPERTY_TRANSPORT_MODE_CODE,
   DfeTransportLocation.JSON_PROPERTY_VEHICLE_REGISTRATION_CODE
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-04-23T17:20:58.717987600-01:00[Atlantic/Cape_Verde]")
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-06-12T16:11:19.537447100-01:00[Atlantic/Cape_Verde]")
 public class DfeTransportLocation {
   public static final String JSON_PROPERTY_ADDRESS = "Address";
   private Address address;

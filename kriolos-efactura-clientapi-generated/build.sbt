@@ -2,7 +2,7 @@ lazy val root = (project in file(".")).
   settings(
     organization := "io.github.kriolos.efatura",
     name := "kriolos-efatura-clientapi-generated",
-    version := "1.2.0",
+    version := "1.2.2",
     scalaVersion := "2.11.4",
     scalacOptions ++= Seq("-feature"),
     Compile / javacOptions ++= Seq("-Xlint:deprecation"),

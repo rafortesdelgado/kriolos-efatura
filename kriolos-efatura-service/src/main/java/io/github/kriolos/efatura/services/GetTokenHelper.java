@@ -15,7 +15,7 @@ import java.io.File;
 public class GetTokenHelper {
 
 	public static String init(String nif, String password) {
-		String path = "C:\\Users\\Rafael Delgado\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe";
+		String path = "C:\\Users\\Rafael Delgado\\Downloads\\chromedriver-125-win64\\chromedriver-win64\\chromedriver.exe";
 		File chromeDriverFile = new File(path);
 
 		if(!chromeDriverFile.exists()) 

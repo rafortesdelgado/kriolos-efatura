@@ -11,7 +11,7 @@
 	<groupId>io.github.kriolos.efatura</groupId>
 	<artifactId>kriolos-efatura-service-web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>kriolos-efatura-service</name>
+	<name>Kriolos :: eFatura :: Service :: Web</name>
 	<description>Demo project for Spring Boot</description>
 	<packaging>jar</packaging>
 

@@ -8,5 +8,5 @@
     </parent>
     <artifactId>kriolos-efatura-core</artifactId>
     <name>Kriolos :: eFatura :: Core</name>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 </project>

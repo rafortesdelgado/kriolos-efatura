@@ -76,7 +76,8 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   Dfe.JSON_PROPERTY_NOTE,
   Dfe.JSON_PROPERTY_CANCELED_DATE_TIME
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-04-23T17:20:58.717987600-01:00[Atlantic/Cape_Verde]")
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-06-12T16:11:19.537447100-01:00[Atlantic/Cape_Verde]")
 public class Dfe {
   public static final String JSON_PROPERTY_ID = "Id";
   private String id;
