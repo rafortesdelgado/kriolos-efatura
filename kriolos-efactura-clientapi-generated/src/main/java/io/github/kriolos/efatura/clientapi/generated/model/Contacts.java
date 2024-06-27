@@ -37,7 +37,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   Contacts.JSON_PROPERTY_WEBSITE
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-06-12T16:11:19.537447100-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-06-13T10:20:11.702467700-01:00[Atlantic/Cape_Verde]")
 public class Contacts {
   public static final String JSON_PROPERTY_EMAIL = "Email";
   private String email;

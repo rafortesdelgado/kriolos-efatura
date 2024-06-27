@@ -46,7 +46,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   DfeTotals.JSON_PROPERTY_PAYABLE_ALTERNATIVE_AMOUNTS
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-06-12T16:11:19.537447100-01:00[Atlantic/Cape_Verde]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-06-13T10:20:11.702467700-01:00[Atlantic/Cape_Verde]")
 public class DfeTotals {
   public static final String JSON_PROPERTY_PRICE_EXTENSION_TOTAL_AMOUNT = "PriceExtensionTotalAmount";
   private Double priceExtensionTotalAmount;

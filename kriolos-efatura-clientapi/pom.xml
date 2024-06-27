@@ -47,12 +47,13 @@
 <!--                                <allowUnicodeIdentifiers>true</allowUnicodeIdentifiers>-->
                                 <useOneOfDiscriminatorLookup>false</useOneOfDiscriminatorLookup> 
                                 <disallowAdditionalPropertiesIfNotPresent>false</disallowAdditionalPropertiesIfNotPresent>
+                                <dateLibrary>java8</dateLibrary>
                                 <!-- <usePlayWS>true</usePlayWS> -->
 <!--                                <useSingleRequestParameter>true</useSingleRequestParameter>-->
 <!--								<useOneOfDiscriminatorLookup>true</useOneOfDiscriminatorLookup>-->
 <!--                                <dynamicOperations>true</dynamicOperations>-->
 <!--                                <serializationLibrary>gson</serializationLibrary>-->
-<!--                                <dateLibrary>joda</dateLibrary>-->
+<!--                                -->
 <!--                                <annotationLibrary>swagger1</annotationLibrary>-->
                                 <additionalModelTypeAnnotations>@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)</additionalModelTypeAnnotations>
                             </configOptions>

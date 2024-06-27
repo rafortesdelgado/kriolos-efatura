@@ -68,6 +68,12 @@ public class FiscalReportService {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
+                        catch (Exception e) {
+                            //throw e ;
+                            System.out.println(":::::ERROR:::::"+ Program.cliName + ":::::" + ds);
+                            // TODO Auto-generated catch block
+                            //e.printStackTrace();
+                        }
                         return null;
                     })
                     .filter(l -> l != null)
@@ -139,6 +145,12 @@ public class FiscalReportService {
                         } catch (ApiException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
+                        }
+                        catch (Exception e) {
+                            //throw e ;
+                            System.out.println(":::::ERROR:::::" + Program.cliName + ":::::" + ds);
+                            // TODO Auto-generated catch block
+                            //e.printStackTrace();
                         }
                         return null;
                     })
