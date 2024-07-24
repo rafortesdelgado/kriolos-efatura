@@ -15,20 +15,23 @@ import java.io.File;
 public class GetTokenHelper {
 
 	public static String init(String nif, String password) {
-		String path = "C:\\Users\\Rafael Delgado\\Downloads\\chromedriver-125-win64\\chromedriver-win64\\chromedriver.exe";
-		File chromeDriverFile = new File(path);
 
-		if(!chromeDriverFile.exists()) 
-		{
-			return null;
-		}
+		// String path = "C:\\Users\\Rafael Delgado\\Downloads\\chromedriver-125-win64\\chromedriver-win64\\chromedriver.exe";
+		// File chromeDriverFile = new File(path);
 
-		ChromeDriverService service =  new ChromeDriverService.Builder()
-			.usingDriverExecutable(chromeDriverFile)
-			.usingAnyFreePort()
-			.build();
+
+		// if(!chromeDriverFile.exists()) 
+		// {
+		// 	return null;
+		// }
+
+		// ChromeDriverService service =  new ChromeDriverService.Builder()
+		// 	.usingDriverExecutable(chromeDriverFile)
+		// 	.usingAnyFreePort()
+		// 	.build();
 		
-		ChromeDriver driver = new ChromeDriver(service);
+		// ChromeDriver driver = new ChromeDriver(service);
+		ChromeDriver driver = new ChromeDriver();
 		// driver.manage().window().maximize();
 
 		// Set Dev-Tools and create a session

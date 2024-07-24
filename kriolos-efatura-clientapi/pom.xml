@@ -21,7 +21,7 @@
             <plugin>
                 <groupId>org.openapitools</groupId>
 			    <artifactId>openapi-generator-maven-plugin</artifactId>
-			    <version>6.3.0</version>
+			    <version>7.7.0</version>
                 <executions>
                     <execution>
                         <phase>generate-sources</phase>
@@ -32,29 +32,26 @@
                             <skipValidateSpec>true</skipValidateSpec>
                             <withXml>true</withXml>
                             <removeOperationIdPrefix></removeOperationIdPrefix>
-                            
-<!--                            <typeMappings>-->
-<!--						         convert Double to BigDecimal -->
-<!--						        <typeMapping>Double=java.math.BigDecimal</typeMapping>-->
-<!--						    </typeMappings>-->
-                            
-<!--                            <verbose>true</verbose>-->
+                            <verbose>false</verbose>
 
                             <configOptions>
 								<library>jersey3</library>
-<!--                                <identifierNamingConvention>snake_case</identifierNamingConvention>-->
-<!--                                <legacyDiscriminatorBehavior>false</legacyDiscriminatorBehavior>-->
-<!--                                <allowUnicodeIdentifiers>true</allowUnicodeIdentifiers>-->
-                                <useOneOfDiscriminatorLookup>false</useOneOfDiscriminatorLookup> 
+                                <!-- <identifierNamingConvention>snake_case</identifierNamingConvention> -->
+                                <legacyDiscriminatorBehavior>true</legacyDiscriminatorBehavior>
+                                <!-- <allowUnicodeIdentifiers>true</allowUnicodeIdentifiers> -->
                                 <disallowAdditionalPropertiesIfNotPresent>false</disallowAdditionalPropertiesIfNotPresent>
                                 <dateLibrary>java8</dateLibrary>
+                                <!-- <useOneOfDiscriminatorLookup>true</useOneOfDiscriminatorLookup>  -->
+                                
+                                <!-- <disallowAdditionalPropertiesIfNotPresent>false</disallowAdditionalPropertiesIfNotPresent> -->
+                                <!-- <dateLibrary>java8</dateLibrary> -->
                                 <!-- <usePlayWS>true</usePlayWS> -->
 <!--                                <useSingleRequestParameter>true</useSingleRequestParameter>-->
 <!--								<useOneOfDiscriminatorLookup>true</useOneOfDiscriminatorLookup>-->
 <!--                                <dynamicOperations>true</dynamicOperations>-->
 <!--                                <serializationLibrary>gson</serializationLibrary>-->
 <!--                                -->
-<!--                                <annotationLibrary>swagger1</annotationLibrary>-->
+                                <!-- <annotationLibrary>swagger2</annotationLibrary> -->
                                 <additionalModelTypeAnnotations>@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)</additionalModelTypeAnnotations>
                             </configOptions>
                             
@@ -74,7 +71,10 @@
                             <gitRepoId>kriolos-efatura</gitRepoId>
                             
                             <!-- -->
-                            <output>${project.build.directory}/../../kriolos-efactura-clientapi-generated</output>
+                            <!-- <output>${project.build.directory}/../../kriolos-efactura-clientapi-generated</output> --> <!-- WINDOWS -->
+                            <!-- <output>${project.build.directory}/kriolos-efactura-clientapi-generated</output> -->
+                            <!-- <output>${project.basedir}/kriolos-efactura-clientapi-generated</output>  -->
+                            <output>${parent.basedir}/../../kriolos-efatura-clientapi-generated</output> 
                         </configuration>
                     </execution>
                 </executions>

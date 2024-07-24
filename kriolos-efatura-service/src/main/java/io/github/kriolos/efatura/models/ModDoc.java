@@ -48,6 +48,7 @@ public class ModDoc {
 	public void toCsv(String csvOutputFilePath) throws IOException {
 		final File f = new File(csvOutputFilePath);
 		f.createNewFile();
+		f.createNewFile();
 		toCsv(f);
 		System.out.println("ExportCompleted");
 	}

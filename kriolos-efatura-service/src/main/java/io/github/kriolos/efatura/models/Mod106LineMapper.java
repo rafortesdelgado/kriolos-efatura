@@ -5,14 +5,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import io.github.kriolos.efatura.clientapi.generated.model.Dfe;
 import io.github.kriolos.efatura.clientapi.generated.model.DfeLine;
-import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseDfePayload;
 import io.github.kriolos.efatura.enums.DfeDocumentTypeEnum;
 
 public class Mod106LineMapper implements ModLineIMapper{
 	
 	@Override
-	public int addLineToModDoc ( int i , ModDoc doc , PayloadProcessingResponseDfePayload  d ) 
+	public int addLineToModDoc ( int i , ModDoc doc , Dfe  d ) 
 	{
 		try {				
 			Map<Double, List<DfeLine>> lines = d.getLines().stream().collect(

@@ -8,8 +8,8 @@ import java.util.stream.Stream;
 import io.github.kriolos.efatura.Program;
 import io.github.kriolos.efatura.clientapi.generated.ApiException;
 import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
+import io.github.kriolos.efatura.clientapi.generated.model.Dfe;
 import io.github.kriolos.efatura.clientapi.generated.model.DfeListPaginationResponse;
-import io.github.kriolos.efatura.clientapi.generated.model.PayloadProcessingResponseDfePayload;
 import io.github.kriolos.efatura.enums.DfeDocumentTypeEnum;
 import io.github.kriolos.efatura.enums.IssueDirection;
 import io.github.kriolos.efatura.models.Mod106LineMapper;
@@ -59,7 +59,7 @@ public class FiscalReportService {
                     })
                     .collect(Collectors.toList());
 
-            List<PayloadProcessingResponseDfePayload> dfes = list.stream()
+            List<Dfe> dfes = list.stream() 
                     .parallel()
                     .map(ds -> {
                         try {
@@ -137,7 +137,7 @@ public class FiscalReportService {
                     })
                     .collect(Collectors.toList());
 
-            List<PayloadProcessingResponseDfePayload> dfes = list.stream()
+            List<Dfe> dfes = list.stream()
                     .parallel()
                     .map(ds -> {
                         try {
