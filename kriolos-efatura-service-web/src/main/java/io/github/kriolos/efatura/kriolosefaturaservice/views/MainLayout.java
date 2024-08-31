@@ -7,6 +7,7 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.RouteParameters;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
@@ -39,8 +40,8 @@ public class MainLayout extends AppLayout {
         addToDrawer(new VerticalLayout( 
             new RouterLink("Inicio", HomeView.class),
             new RouterLink("Empresas", ClientView.class),
-            new RouterLink("Doc. Emitidos", Doc106GetterView.class),
-            new RouterLink("Doc. Recebidos", Doc106GetterView.class)
+            new RouterLink("Doc. Emitidos", Doc106GetterView.class , new RouteParameters("direction" , "out")),
+            new RouterLink("Doc. Recebidos", Doc106GetterView.class, new RouteParameters("direction" , "in"))
         ));
     }
 }
