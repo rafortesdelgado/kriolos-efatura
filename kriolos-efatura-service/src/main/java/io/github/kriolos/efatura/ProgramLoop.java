@@ -41,8 +41,8 @@ public class ProgramLoop {
 				apiCli.setBasePath("https://services.efatura.cv/");
 				apiCli.setAccessToken(token);
 				FiscalReportService frs = new FiscalReportService(dfeApi);
-				frs.getMod106Suppliers("2024");  
-				frs.getMod106Clients("2024");
+				frs.getMod106Suppliers("2024", "2024-08-01", null);  
+				frs.getMod106Clients("2024", "2024-08-01", null);
 
 			}
 			catch(Exception e ) 

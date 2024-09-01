@@ -11,9 +11,9 @@ public class ClientService  {
 
     public Stream<Client> getClients() 
     {
-        Client c = Client.builder().nif(1234567890)
-        .name("1234567890")
-        .password("secretas")
+        Client c = Client.builder().nif(289308496)
+        .name("syncit")
+        .password("lausdeo156@@!")
         .build();
         return Stream.of(c);
     } 

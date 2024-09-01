@@ -23,13 +23,15 @@ public class FiscalReportService {
         this.dfeApi = dfeApi;
     }
 
-    private static String startDate = "2024-05-01";    
+    private static String _startDate = "2024-05-01";    
     //private static String endDate = "2023-11-01";
-    private static String endDate = null;
+    private static String _endDate = null;
 
-
-
-    public void getMod106Suppliers(String year) {
+    public void getMod106Suppliers(String year) 
+    {
+        getMod106Suppliers(year , FiscalReportService._startDate, FiscalReportService._endDate);
+    }
+    public void getMod106Suppliers(String year, String startDate, String endDate) {
         try {
             DfeListPaginationResponse result = dfeApi.dfeResourceGetDfeSummaryListV2(
                     endDate, // data de fim de autorizacao,
@@ -106,7 +108,12 @@ public class FiscalReportService {
     }
 
 
-    public void getMod106Clients(String year) {
+    public void getMod106Clients(String year) 
+    {
+        getMod106Clients(year , FiscalReportService._startDate, FiscalReportService._endDate);
+    }
+
+    public void getMod106Clients(String year, String startDate, String endDate) {
         try {
 
             DfeListPaginationResponse result = dfeApi.dfeResourceGetDfeSummaryListV2(

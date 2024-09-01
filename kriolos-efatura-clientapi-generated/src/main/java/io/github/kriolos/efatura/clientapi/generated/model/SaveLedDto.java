@@ -38,7 +38,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   SaveLedDto.JSON_PROPERTY_SOFTWARE_CODE
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-07-23T13:33:35.367561143-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-09-01T21:45:11.948946335-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class SaveLedDto {
   public static final String JSON_PROPERTY_CODE = "code";
   private String code;

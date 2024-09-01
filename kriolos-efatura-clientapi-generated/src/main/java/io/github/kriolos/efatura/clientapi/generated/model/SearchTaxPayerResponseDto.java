@@ -43,7 +43,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   SearchTaxPayerResponseDto.JSON_PROPERTY_TAX_PAYER_SIZE
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-07-23T13:33:35.367561143-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-09-01T21:45:11.948946335-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class SearchTaxPayerResponseDto {
   public static final String JSON_PROPERTY_TAX_ID = "TaxId";
   private Integer taxId;

@@ -75,13 +75,13 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>2.1.214</version>
+            <version>2.3.232</version>
         </dependency>
         
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.2.17.Final</version>
+            <version>6.6.0.Final</version>
         </dependency>
 
     
@@ -106,7 +106,7 @@
                 <configuration>
                     <archive>
                     <manifest>
-                        <mainClass>io.github.kriolos.efatura.Program</mainClass>
+                        <mainClass>io.github.kriolos.efatura.ProgramLoop</mainClass>
                     </manifest>
                     </archive>
                     <descriptorRefs>

@@ -4,6 +4,7 @@ package io.github.kriolos.efatura.kriolosefaturaservice.views;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Executors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,13 @@ public class Doc106GetterView extends VerticalLayout implements BeforeEnterObser
         Button searchButton = new Button("Pesquisar");
 
         searchButton.addClickListener(clickEvent -> {
-            run(startDatePicker.getValue(), endDatePicker.getValue(), directionComboBox.getValue() );
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override 
+            public void run() {
+                runAction(startDatePicker.getValue(), endDatePicker.getValue(), directionComboBox.getValue() );
+            }
+        });
+            
         });
 
         searchButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -86,7 +93,7 @@ public class Doc106GetterView extends VerticalLayout implements BeforeEnterObser
         direction = event.getRouteParameters().get("direction").get();
     }
 
-    public void run( LocalDate startDate, LocalDate endDate, String direction  ) 
+    private void runAction( LocalDate startDate, LocalDate endDate, String direction  ) 
     {
         ApiClient apiCli = new ApiClient();
 		apiCli.setDebugging(false);
@@ -98,7 +105,7 @@ public class Doc106GetterView extends VerticalLayout implements BeforeEnterObser
 		{
 			try
 			{
-				String jwt = GetTokenHelperV2.init(c.getNif() + "", c.getPassword()); 
+				String jwt = GetTokenHelper.init(c.getNif() + "", c.getPassword()); 
 				String token = jwt;
 
 				apiCli.setBasePath("https://services.efatura.cv/");
