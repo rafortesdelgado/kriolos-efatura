@@ -4,7 +4,7 @@ e-Fatura API
 
 - API version: 1.2.0
 
-- Build date: 2024-07-23T13:33:35.367561143-01:00[Atlantic/Cape_Verde]
+- Build date: 2024-09-01T21:45:11.948946335-01:00[Atlantic/Cape_Verde]
 
 - Generator version: 7.7.0
 
