@@ -2,60 +2,43 @@ package io.github.kriolos.efatura.kriolosefaturaservice.views;
 
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.Executors;
-import java.util.stream.Stream;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
-import com.vaadin.flow.router.BeforeEvent;
-import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.theme.lumo.LumoUtility;
 
-import io.github.kriolos.efatura.Program;
 import io.github.kriolos.efatura.clientapi.generated.ApiClient;
 import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
 import io.github.kriolos.efatura.kriolosefaturaservice.models.Client;
-import io.github.kriolos.efatura.kriolosefaturaservice.services.ClientService;
+import io.github.kriolos.efatura.kriolosefaturaservice.repositories.ClientRepository;
 import io.github.kriolos.efatura.services.FiscalReportService;
 import io.github.kriolos.efatura.services.GetTokenHelper;
-// import io.github.kriolos.efatura.services.FiscalReportService;
 import jakarta.annotation.security.PermitAll;
 
 @PermitAll
 @Route(value="fiscalReport/:direction", layout = MainLayout.class) 
 public class Doc106GetterView extends VerticalLayout implements BeforeEnterObserver{ 
 
-    private final ClientService clientService;
+    private final ClientRepository clientService;
     private String direction = null;
     
-    public Doc106GetterView(ClientService clientService) {
+    public Doc106GetterView(ClientRepository clientService) {
 
         this.clientService = clientService;
         
         Grid<Client> grid = new Grid<>(Client.class, true);
         grid.setSelectionMode(SelectionMode.MULTI);
 
-        grid.setItems(clientService.getClients().toList());
+        grid.setItems(clientService.findAll());
         
         HorizontalLayout div = new HorizontalLayout();
         DatePicker startDatePicker = new DatePicker("Start date");
@@ -68,22 +51,18 @@ public class Doc106GetterView extends VerticalLayout implements BeforeEnterObser
 
         searchButton.addClickListener(clickEvent -> {
             Executors.newSingleThreadExecutor().execute(new Runnable() {
-            @Override 
-            public void run() {
-                runAction(startDatePicker.getValue(), endDatePicker.getValue(), directionComboBox.getValue() );
-            }
-        });
-            
+                @Override 
+                public void run() {
+                    runAction(startDatePicker.getValue(), endDatePicker.getValue(), directionComboBox.getValue() );
+                }
+            });  
         });
 
         searchButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         div.add(startDatePicker, endDatePicker, directionComboBox);
 
-        add(div);
-        add(searchButton);
-        add(grid);
-
+        add(div, searchButton, grid);
     }
 
 
@@ -98,14 +77,12 @@ public class Doc106GetterView extends VerticalLayout implements BeforeEnterObser
         ApiClient apiCli = new ApiClient();
 		apiCli.setDebugging(false);
 		DfeApi dfeApi = new DfeApi(apiCli);
-        Stream<Client> list = clientService
-            .getClients();
 
-		for( Client c : list.toList()) 
+		for( Client c : clientService.findAll()) 
 		{
 			try
 			{
-				String jwt = GetTokenHelper.init(c.getNif() + "", c.getPassword()); 
+				String jwt = GetTokenHelper.init(c.getNif(), c.getPassword()); 
 				String token = jwt;
 
 				apiCli.setBasePath("https://services.efatura.cv/");

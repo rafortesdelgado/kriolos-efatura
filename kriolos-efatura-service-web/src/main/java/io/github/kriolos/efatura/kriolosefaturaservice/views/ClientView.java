@@ -5,53 +5,54 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Focusable;
-import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.editor.Editor;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.theme.lumo.LumoUtility;
-
 import io.github.kriolos.efatura.kriolosefaturaservice.models.Client;
-import io.github.kriolos.efatura.kriolosefaturaservice.services.ClientService;
+import io.github.kriolos.efatura.kriolosefaturaservice.repositories.ClientRepository;
 import jakarta.annotation.security.PermitAll;
 
 @PermitAll
 @Route(value="clients", layout = MainLayout.class) 
-public class ClientView extends HorizontalLayout { 
+public class ClientView extends VerticalLayout { 
 
-    ClientService clientService;
+    ClientRepository clientRepository;
+    private Grid<Client> grid;
+    private Editor<Client> editor;
+    private Binder<Client> binder;
     
-    public ClientView(ClientService clientService) {
-        this.clientService = clientService;
+    public ClientView(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
         
-        Grid<Client> grid = new Grid<>(Client.class, true);
+        this.grid = new Grid<>(Client.class, false);
         
-        Editor<Client> editor = grid.getEditor();
-        Binder<Client> binder = new Binder<Client>(Client.class);
+        this.binder = new Binder<Client>(Client.class);
+        this.editor = grid.getEditor();
+
         editor.setBinder(binder);
+        editor.setBuffered(true);
+        // binder.bindInstanceFields(this);
+
+        var addButton = new Button("Novo Cliente", VaadinIcon.PLUS.create());
+        var deleteButton = new Button("Remover Cliente", VaadinIcon.MINUS.create());
+
+        addButton.addClickListener(e -> savePerson());
+        deleteButton.addClickListener(e -> deletePerson());
         
-        Stream<Client> clients = clientService.getClients();
-        grid.setItems(clients.toList());
-        //grid.setDropMode();
+        grid.setItems(clientRepository.findAll());
 
-        grid.addSelectionListener(selection -> {
-            Optional<Client> optionalPerson = selection.getFirstSelectedItem();
-            if (optionalPerson.isPresent()) {
-                editor.editItem(optionalPerson.get());
-
-                // System.out.printf("Selected person: %s%n",
-                // optionalPerson.get().getFullName());
+        grid.asSingleSelect().addValueChangeListener(event -> {
+            if (event.getValue() != null) {
+                binder.setBean(event.getValue());
+            } else {
+                binder.setBean(new Client());
             }
         });
 
@@ -65,6 +66,23 @@ public class ClientView extends HorizontalLayout {
             }
         });
 
-        add(grid);
+        var horizontalLayout = new HorizontalLayout( addButton, deleteButton);
+        add(horizontalLayout , grid);
+    }
+
+    private void savePerson() {
+        Client person = binder.getBean();
+        clientRepository.save(person);
+        updateGrid();
+    }
+
+    private void deletePerson() {
+        Client person = binder.getBean();
+        clientRepository.delete(person);
+        updateGrid();
+    }
+
+    private void updateGrid() {
+        grid.setItems(clientRepository.findAll());
     }
 }

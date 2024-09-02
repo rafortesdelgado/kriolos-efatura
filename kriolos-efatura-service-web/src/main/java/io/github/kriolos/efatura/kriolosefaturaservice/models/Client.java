@@ -1,17 +1,33 @@
 package io.github.kriolos.efatura.kriolosefaturaservice.models;
 
-import com.vaadin.flow.component.template.Id;
-
-import lombok.Builder;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter @Builder
+//@Getter @Setter 
+@Getter @Setter 
+@Entity
 public class Client {
+
     @Id
-    public int nif;
+    @GeneratedValue
+    public long id;
+    
+    public String nif;
     
     public String name;
 
     public String password;
+
+    public Client(String name , String nif , String password) {
+        this.name = name ; 
+        this.nif = nif; 
+        this.password = password;
+    }
+
+    public Client() {
+        
+    }
 }

@@ -10,7 +10,6 @@ public class ProgramToken {
 
 	public static void main (String[] args) throws IOException 
 	{
-		System.out.println(args[0]);
 		Stream<String[]> list = Stream.of(args).map(s -> s.split(";"));
 
 		for( String [] d : list.toArray(String[][]::new) ) 
@@ -31,7 +30,5 @@ public class ProgramToken {
 			}
 			
 		}
-
-		System.in.read();
 	}
 }

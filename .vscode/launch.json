@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ProgramToken",
+            "request": "launch",
+            "mainClass": "io.github.kriolos.efatura.ProgramToken",
+            "projectName": "kriolos-efatura-service"
+        },
+        {
+            "type": "java",
             "name": "ProgramLoop",
             "request": "launch",
             "mainClass": "io.github.kriolos.efatura.ProgramLoop",

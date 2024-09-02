@@ -1,4 +1,4 @@
-package io.github.kriolos.efatura.components;
+package io.github.kriolos.efatura.kriolosefaturaservice.components;
 
 import com.vaadin.flow.component.grid.Grid;
 

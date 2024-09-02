@@ -28,15 +28,32 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.20.0</version>
+            <version>4.24.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
-            <version>4.20.0</version>
+            <version>4.24.0</version>
         </dependency>
-        
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-devtools-v128</artifactId>
+            <version>4.24.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.9.2</version>
+            <exclusions>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+			</exclusions>
+        </dependency>
         
         <dependency>
             <groupId>io.github.kriolos.efatura</groupId>
@@ -83,13 +100,12 @@
             <artifactId>hibernate-core</artifactId>
             <version>6.6.0.Final</version>
         </dependency>
-
     
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
 
@@ -115,14 +131,14 @@
                 </configuration>
                 <executions>
                     <execution>
-                    <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                    <phase>package</phase> <!-- bind to the packaging phase -->
+                    <id>make-assembly</id> 
+                    <phase>package</phase> 
                     <goals>
                         <goal>single</goal>
                     </goals>
                     </execution>
                 </executions>
-                </plugin>
+            </plugin> -->
         </plugins>
     </build>
 </project>
