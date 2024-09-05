@@ -1,5 +1,10 @@
 package io.github.kriolos.efatura.kriolosefaturaservice.views;
 
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.util.concurrent.Executors;
 
@@ -54,18 +59,12 @@ public class Doc106GetterView extends VerticalLayout implements BeforeEnterObser
         Button searchButton = new Button("Pesquisar");
 
         searchButton.addClickListener(clickEvent -> {
-            Executors.newFixedThreadPool(2).submit(new Runnable() {
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
                     runAction(startDatePicker.getValue(), endDatePicker.getValue(), directionComboBox.getValue());
                 }
             });
-            // Executors.newSingleThreadExecutor().execute(new Runnable() {
-            //     @Override
-            //     public void run() {
-            //         runAction(startDatePicker.getValue(), endDatePicker.getValue(), directionComboBox.getValue());
-            //     }
-            // });
         });
 
         searchButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -85,10 +84,19 @@ public class Doc106GetterView extends VerticalLayout implements BeforeEnterObser
         apiCli.setDebugging(false);
         DfeApi dfeApi = new DfeApi(apiCli);
 
+        HttpClient httpClient = HttpClient.newHttpClient();
+        URI uri = URI.create("http://localhost:8081/hello/fiscal");
+
         for (Client c : clientService.findAll()) {
             try {
-                String jwt = GetTokenHelper.init(c.getNif(), c.getPassword());
-                String token = jwt;
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(uri)
+                        .GET()
+                        .build();
+
+                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+                String token = response.body().intern();
 
                 apiCli.setBasePath("https://services.efatura.cv/");
                 apiCli.setAccessToken(token);
