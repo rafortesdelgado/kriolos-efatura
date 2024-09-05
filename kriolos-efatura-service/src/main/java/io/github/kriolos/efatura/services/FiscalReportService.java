@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import io.github.kriolos.efatura.Program;
+import io.github.kriolos.efatura.ProgramSingle;
 import io.github.kriolos.efatura.clientapi.generated.ApiException;
 import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
 import io.github.kriolos.efatura.clientapi.generated.model.Dfe;
@@ -72,7 +73,7 @@ public class FiscalReportService {
                         }
                         catch (Exception e) {
                             //throw e ;
-                            System.out.println(":::::ERROR:::::"+ Program.cliName + ":::::" + ds);
+                            System.out.println(":::::ERROR:::::"+ ProgramSingle.cliName + ":::::" + ds);
                             // TODO Auto-generated catch block
                             //e.printStackTrace();
                         }
@@ -81,7 +82,7 @@ public class FiscalReportService {
                     .filter(l -> l != null)
                     .collect(Collectors.toList());
 
-            ExportToCsv.ExportDfeSummary(dfes, Program.cliName +"_forn_", new Mod106LineMapper()::addLineToModDoc);
+            ExportToCsv.ExportDfeSummary(dfes, ProgramSingle.cliName +"_forn_", new Mod106LineMapper()::addLineToModDoc);
 
         } catch (ApiException e) {
             System.out.println(e.getCode());
@@ -155,7 +156,7 @@ public class FiscalReportService {
                         }
                         catch (Exception e) {
                             //throw e ;
-                            System.out.println(":::::ERROR:::::" + Program.cliName + ":::::" + ds);
+                            System.out.println(":::::ERROR:::::" + ProgramSingle.cliName + ":::::" + ds);
                             // TODO Auto-generated catch block
                             //e.printStackTrace();
                         }
@@ -164,7 +165,7 @@ public class FiscalReportService {
                     .filter(l -> l != null)
                     .collect(Collectors.toList());
 
-            ExportToCsv.ExportDfeSummary(dfes,Program.cliName + "_cli_",new Mod107LineMapper()::addLineToModDoc);
+            ExportToCsv.ExportDfeSummary(dfes,ProgramSingle.cliName + "_cli_",new Mod107LineMapper()::addLineToModDoc);
 
         } catch (ApiException e) {
             System.out.println(e.getCode());

@@ -35,7 +35,7 @@ public class ProgramLoop {
 			try
 			{
 				String jwt = GetTokenHelper.init(d[1],d[2]);
-				Program.cliName = d[0].replace(' ', '_');
+				ProgramSingle.cliName = d[0].replace(' ', '_');
 				String token = jwt;
 				int selection = 3;
 				apiCli.setBasePath("https://services.efatura.cv/");
