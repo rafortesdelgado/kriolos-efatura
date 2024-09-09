@@ -30,17 +30,10 @@ public class ExportToCsv {
 //	Campo Destino Modelo
 //	Número de Ordem
 
-	public static void ExportDfeSummary(List<Dfe> data, String label, ModLineIMapper mapper) {
+
+	public static void ExportDfeSummary(ModDoc doc) {
 		System.out.println("Export dfe");
-
-		final ModDoc doc = new ModDoc(label,data.size());
-		int i = 0;
-		Collections.sort(data, (o1, o2) -> DfePayloadComparator(o1,o2));
-		for (Dfe d : data) {
-			i = mapper.addLineToModDoc(i, doc, d);
-		}
-
-		String path = "/home/lumus/Desktop/desktop/Orconta/" + label + ".csv";
+		String path = "/home/lumus/Desktop/desktop/Orconta/" + doc.getLabel() + ".csv";
 		// path = getPath();
 		try {
 			doc.toCsv(path);
@@ -49,24 +42,7 @@ public class ExportToCsv {
 		}
 	}
 
-	private static int DfePayloadComparator
-		(Dfe p1 , Dfe p2){
-		
-		int compare =  LocalDate.parse(p1.getIssueDate())
-			.compareTo(LocalDate.parse(p2.getIssueDate()));
-
-		if(compare != 0 ) {
-			return compare;
-		}
-
-		compare = p1.getEmitterParty().getTaxId().hashCode() - p2.getEmitterParty().getTaxId().hashCode();
-		
-		if(compare != 0 ) {
-			return compare;
-		}
-
-		return p1.getDocumentNumber() - p2.getDocumentNumber();
-	} 
+	
 
 	public static String getPath() {
 

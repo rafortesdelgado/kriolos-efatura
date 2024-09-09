@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import io.github.kriolos.efatura.Program;
 import io.github.kriolos.efatura.ProgramSingle;
 import io.github.kriolos.efatura.clientapi.generated.ApiException;
 import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
@@ -15,6 +14,7 @@ import io.github.kriolos.efatura.enums.DfeDocumentTypeEnum;
 import io.github.kriolos.efatura.enums.IssueDirection;
 import io.github.kriolos.efatura.models.Mod106LineMapper;
 import io.github.kriolos.efatura.models.Mod107LineMapper;
+import io.github.kriolos.efatura.models.ModDoc;
 
 public class FiscalReportService {
 
@@ -28,11 +28,11 @@ public class FiscalReportService {
     //private static String endDate = "2023-11-01";
     private static String _endDate = null;
 
-    public void getMod106Suppliers(String year) 
+    public ModDoc getMod106Suppliers(String year) 
     {
-        getMod106Suppliers(year , FiscalReportService._startDate, FiscalReportService._endDate);
+        return getMod106Suppliers(year , FiscalReportService._startDate, FiscalReportService._endDate);
     }
-    public void getMod106Suppliers(String year, String startDate, String endDate) {
+    public ModDoc getMod106Suppliers(String year, String startDate, String endDate) {
         try {
             DfeListPaginationResponse result = dfeApi.dfeResourceGetDfeSummaryListV2(
                     endDate, // data de fim de autorizacao,
@@ -82,7 +82,11 @@ public class FiscalReportService {
                     .filter(l -> l != null)
                     .collect(Collectors.toList());
 
-            ExportToCsv.ExportDfeSummary(dfes, ProgramSingle.cliName +"_forn_", new Mod106LineMapper()::addLineToModDoc);
+            return ModDoc.CreateDoc( dfes, "_forn_" , new Mod106LineMapper()::addLineToModDoc);
+
+            
+
+            // ExportToCsv.ExportDfeSummary(dfes, ProgramSingle.cliName +"_forn_", new Mod106LineMapper()::addLineToModDoc);
 
         } catch (ApiException e) {
             System.out.println(e.getCode());
@@ -92,6 +96,7 @@ public class FiscalReportService {
 
             e.printStackTrace();
         }
+        return null;
     }
 
     private static String getFilterByDocTypeForMod106() {
@@ -109,12 +114,12 @@ public class FiscalReportService {
     }
 
 
-    public void getMod106Clients(String year) 
+    public ModDoc getMod106Clients(String year) 
     {
-        getMod106Clients(year , FiscalReportService._startDate, FiscalReportService._endDate);
+        return getMod106Clients(year , FiscalReportService._startDate, FiscalReportService._endDate);
     }
 
-    public void getMod106Clients(String year, String startDate, String endDate) {
+    public ModDoc getMod106Clients(String year, String startDate, String endDate) {
         try {
 
             DfeListPaginationResponse result = dfeApi.dfeResourceGetDfeSummaryListV2(
@@ -165,7 +170,9 @@ public class FiscalReportService {
                     .filter(l -> l != null)
                     .collect(Collectors.toList());
 
-            ExportToCsv.ExportDfeSummary(dfes,ProgramSingle.cliName + "_cli_",new Mod107LineMapper()::addLineToModDoc);
+            return ModDoc.CreateDoc( dfes, "_cli_" , new Mod107LineMapper()::addLineToModDoc);
+
+            // ExportToCsv.ExportDfeSummary(dfes,ProgramSingle.cliName + "_cli_",new Mod107LineMapper()::addLineToModDoc);
 
         } catch (ApiException e) {
             System.out.println(e.getCode());
@@ -175,5 +182,7 @@ public class FiscalReportService {
 
             e.printStackTrace();
         }
+
+        return null;
     }
 }
