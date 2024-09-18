@@ -13,14 +13,12 @@ import io.github.kriolos.efatura.services.TokenManager;
 
 public class ProgramSingle {
 
-	public static String cliName;	
 	public static String path = FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath();
 	public static void main (String[] args) 
 	{
 		// String jwt = GetTokenHelper.init("200505181","505216");
-		// Program.cliName = "steel";
+		String cliName = "syncit";
 		String jwt = GetTokenHelper.init("289308496","lausdeo156@@!");
-		ProgramSingle.cliName = "syncit";
         String token = jwt;
 		int selection = 3;
 
@@ -46,7 +44,7 @@ public class ProgramSingle {
 		apiCli.setAccessToken(token);
 		
 		DfeApi dfeApi = new DfeApi(apiCli);
-		FiscalReportService frs = new FiscalReportService(dfeApi);
+		FiscalReportService frs = new FiscalReportService(dfeApi, cliName);
 		
 		
 

@@ -18,10 +18,12 @@ import io.github.kriolos.efatura.models.ModDoc;
 
 public class FiscalReportService {
 
-    private DfeApi dfeApi;
+    private final DfeApi dfeApi;
+    private final String clientName;
 
-    public FiscalReportService(DfeApi dfeApi) {
+    public FiscalReportService(DfeApi dfeApi, String clientName) {
         this.dfeApi = dfeApi;
+        this.clientName = clientName;
     }
 
     private static String _startDate = "2024-05-01";    
@@ -73,7 +75,7 @@ public class FiscalReportService {
                         }
                         catch (Exception e) {
                             //throw e ;
-                            System.out.println(":::::ERROR:::::"+ ProgramSingle.cliName + ":::::" + ds);
+                            System.out.println(":::::ERROR:::::"+clientName+ ":::::" + ds);
                             // TODO Auto-generated catch block
                             //e.printStackTrace();
                         }
@@ -82,7 +84,7 @@ public class FiscalReportService {
                     .filter(l -> l != null)
                     .collect(Collectors.toList());
 
-            return ModDoc.CreateDoc( dfes, "_forn_" , new Mod106LineMapper()::addLineToModDoc);
+            return ModDoc.CreateDoc( dfes, this.clientName + "_forn_" , new Mod106LineMapper()::addLineToModDoc);
 
             
 
@@ -161,7 +163,7 @@ public class FiscalReportService {
                         }
                         catch (Exception e) {
                             //throw e ;
-                            System.out.println(":::::ERROR:::::" + ProgramSingle.cliName + ":::::" + ds);
+                            System.out.println(":::::ERROR:::::" + clientName + ":::::" + ds);
                             // TODO Auto-generated catch block
                             //e.printStackTrace();
                         }
@@ -170,7 +172,7 @@ public class FiscalReportService {
                     .filter(l -> l != null)
                     .collect(Collectors.toList());
 
-            return ModDoc.CreateDoc( dfes, "_cli_" , new Mod107LineMapper()::addLineToModDoc);
+            return ModDoc.CreateDoc( dfes, this.clientName + "_cli_" , new Mod107LineMapper()::addLineToModDoc);
 
             // ExportToCsv.ExportDfeSummary(dfes,ProgramSingle.cliName + "_cli_",new Mod107LineMapper()::addLineToModDoc);
 

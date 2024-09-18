@@ -31,7 +31,7 @@ public class ClientView extends VerticalLayout {
     public ClientView(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
         
-        this.grid = new Grid<>(Client.class, false);
+        this.grid = new Grid<>(Client.class, true);
         
         this.binder = new Binder<Client>(Client.class);
         this.editor = grid.getEditor();
@@ -60,10 +60,12 @@ public class ClientView extends VerticalLayout {
             Client client = e.getItem();
             editor.editItem(client);
             Component editorComponent = e.getColumn().getEditorComponent();
-            if(editorComponent instanceof Focusable) 
-            {
-                ((Focusable) editorComponent).focus();
-            }
+            editorComponent.onEnabledStateChanged(true);
+
+            // if(editorComponent instanceof Focusable) 
+            // {
+            //     ((Focusable) editorComponent).focus();
+            // }
         });
 
         var horizontalLayout = new HorizontalLayout( addButton, deleteButton);

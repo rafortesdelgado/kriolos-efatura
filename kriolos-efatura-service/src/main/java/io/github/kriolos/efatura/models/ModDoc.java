@@ -41,7 +41,7 @@ public class ModDoc {
 		this(label, 100);
 	}
 
-	public String getLabel() {return label; }
+	public String getLabel() { return label; }
 
 	public ModDoc(String label, int capacity) {
 		this.lines = new ArrayList<>(capacity);
@@ -57,7 +57,7 @@ public class ModDoc {
 		f.createNewFile();
 		f.createNewFile();
 		toCsv(f);
-		System.out.println("ExportCompleted");
+		System.out.println("ExportCompleted" + csvOutputFilePath);
 	}
 
 	public void toCsv(File f) throws IOException {

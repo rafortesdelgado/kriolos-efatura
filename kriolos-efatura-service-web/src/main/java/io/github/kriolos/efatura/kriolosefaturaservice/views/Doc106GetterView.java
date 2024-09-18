@@ -100,7 +100,7 @@ public class Doc106GetterView extends VerticalLayout implements BeforeEnterObser
 
                 apiCli.setBasePath("https://services.efatura.cv/");
                 apiCli.setAccessToken(token);
-                FiscalReportService frs = new FiscalReportService(dfeApi);
+                FiscalReportService frs = new FiscalReportService(dfeApi, c.name);
 
                 if (direction.equals("in") || direction.equals("all"))
                     frs.getMod106Suppliers("2024", startDate.toString(), endDate.toString());

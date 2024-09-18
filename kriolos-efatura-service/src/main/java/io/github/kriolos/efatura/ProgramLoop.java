@@ -37,14 +37,21 @@ public class ProgramLoop {
 			
 			try
 			{
-				String jwt = GetTokenHelper.init(d[1],d[2]);
-				ProgramSingle.cliName = d[0].replace(' ', '_');
+				if(d.length != 3) continue;
+				String clientName  = d[0].replace(' ', '_');
+				String nif = d[1];
+				String password = d[2];
+
+				String jwt = GetTokenHelper.init(nif,password);
+
 				String token = jwt;
+				
 				apiCli.setBasePath("https://services.efatura.cv/");
 				apiCli.setAccessToken(token);
-				FiscalReportService frs = new FiscalReportService(dfeApi);
-				ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers("2024", "2024-08-01", null));  
-				ExportToCsv.ExportDfeSummary(frs.getMod106Clients("2024", "2024-08-01", null));  
+				
+				FiscalReportService frs = new FiscalReportService(dfeApi, clientName);
+				ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers("2024", "2024-08-01", null), clientName);  
+				ExportToCsv.ExportDfeSummary(frs.getMod106Clients("2024", "2024-08-01", null), clientName);  
 
 			}
 			catch(Exception e ) 

@@ -31,7 +31,7 @@ public class ExportToCsv {
 //	Número de Ordem
 
 
-	public static void ExportDfeSummary(ModDoc doc) {
+	public static void ExportDfeSummary(ModDoc doc, String clientName) {
 		System.out.println("Export dfe");
 		String path = "/home/lumus/Desktop/desktop/Orconta/" + doc.getLabel() + ".csv";
 		// path = getPath();
