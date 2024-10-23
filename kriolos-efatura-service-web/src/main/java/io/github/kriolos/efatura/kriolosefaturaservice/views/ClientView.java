@@ -13,8 +13,11 @@ import com.vaadin.flow.component.grid.editor.Editor;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
+
+import io.github.kriolos.efatura.kriolosefaturaservice.components.CrudGrid;
 import io.github.kriolos.efatura.kriolosefaturaservice.models.Client;
 import io.github.kriolos.efatura.kriolosefaturaservice.repositories.ClientRepository;
 import jakarta.annotation.security.PermitAll;
@@ -59,9 +62,11 @@ public class ClientView extends VerticalLayout {
         grid.addItemDoubleClickListener(e -> {
             Client client = e.getItem();
             editor.editItem(client);
-            Component editorComponent = e.getColumn().getEditorComponent();
+            TextField editorComponent = (TextField) e.getColumn().getEditorComponent();
             editorComponent.onEnabledStateChanged(true);
 
+            e.getColumn().getId();
+            editorComponent.setValue(null);
             // if(editorComponent instanceof Focusable) 
             // {
             //     ((Focusable) editorComponent).focus();

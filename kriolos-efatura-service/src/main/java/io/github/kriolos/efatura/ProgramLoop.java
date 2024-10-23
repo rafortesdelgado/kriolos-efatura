@@ -5,14 +5,13 @@ import java.util.Scanner;
 
 import io.github.kriolos.efatura.clientapi.generated.ApiClient;
 import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
-import io.github.kriolos.efatura.models.ModDoc;
 import io.github.kriolos.efatura.services.ExportToCsv;
 import io.github.kriolos.efatura.services.FiscalReportService;
 import io.github.kriolos.efatura.services.GetTokenHelper;
 
 
-public class ProgramLoop {
-
+public class ProgramLoop
+{
 	public static void main (String[] args) 
 	{
 		Scanner input = new Scanner(System.in);
@@ -34,24 +33,23 @@ public class ProgramLoop {
 
 		for( String [] d : list) 
 		{
-			
 			try
 			{
 				if(d.length != 3) continue;
-				String clientName  = d[0].replace(' ', '_');
-				String nif = d[1];
-				String password = d[2];
+				String clientName  = d[0].replace(' ', '_').trim();
+				String nif = d[1].trim();
+				String password = d[2].trim();
 
-				String jwt = GetTokenHelper.init(nif,password);
+				if(nif.length() == 0 || password.length() == 0) continue;
 
-				String token = jwt;
+				String token = GetTokenHelper.init(nif,password);
 				
 				apiCli.setBasePath("https://services.efatura.cv/");
 				apiCli.setAccessToken(token);
 				
 				FiscalReportService frs = new FiscalReportService(dfeApi, clientName);
-				ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers("2024", "2024-08-01", null), clientName);  
-				ExportToCsv.ExportDfeSummary(frs.getMod106Clients("2024", "2024-08-01", null), clientName);  
+				ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers("2024", "2024-07-01", null), clientName);  
+				ExportToCsv.ExportDfeSummary(frs.getMod106Clients("2024", "2024-07-01", null), clientName);  
 
 			}
 			catch(Exception e ) 
