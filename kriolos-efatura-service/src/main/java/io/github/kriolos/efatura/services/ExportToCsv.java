@@ -33,7 +33,7 @@ public class ExportToCsv {
 
 	public static void ExportDfeSummary(ModDoc doc, String clientName) {
 		System.out.println("Export dfe");
-		String path = "/home/lumus/Desktop/desktop/Orconta/" + doc.getLabel() + ".csv";
+		String path = "/home/lumus/Desktop/Orconta/" + doc.getLabel() + ".csv";
 		// path = getPath();
 		try {
 			doc.toCsv(path);

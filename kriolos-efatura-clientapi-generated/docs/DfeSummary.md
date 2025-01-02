@@ -17,8 +17,8 @@
 |**receiverName** | **String** |  |  [optional] |
 |**payableAmount** | **Double** |  |  [optional] |
 |**taxTotalAmount** | **Double** |  |  [optional] |
-|**authorizedDateTime** | **LocalDate** |  |  [optional] |
-|**canceledDateTime** | **LocalDate** |  |  [optional] |
+|**authorizedDateTime** | **String** |  |  [optional] |
+|**canceledDateTime** | **String** |  |  [optional] |
 |**issueDirection** | **String** |  |  [optional] |
 
 

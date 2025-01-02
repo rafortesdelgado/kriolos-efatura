@@ -11,13 +11,13 @@
 |**name** | **String** |  |  [optional] |
 |**type** | **String** |  |  [optional] |
 |**taxId** | **Integer** |  |  [optional] |
-|**created** | **LocalDate** |  |  [optional] |
+|**created** | **String** |  |  [optional] |
 |**internal** | **Boolean** |  |  [optional] |
 |**userJoinedPe** | **Boolean** |  |  [optional] |
 |**integratedWithPe** | **Boolean** |  |  [optional] |
 |**groupMembers** | **List&lt;Integer&gt;** |  |  [optional] |
-|**transmitLevelDate** | **LocalDate** |  |  [optional] |
-|**receiveLevelDate** | **LocalDate** |  |  [optional] |
+|**transmitLevelDate** | **String** |  |  [optional] |
+|**receiveLevelDate** | **String** |  |  [optional] |
 
 
 

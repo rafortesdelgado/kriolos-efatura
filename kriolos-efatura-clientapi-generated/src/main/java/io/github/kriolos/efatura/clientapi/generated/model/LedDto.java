@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.time.LocalDate;
 import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.github.kriolos.efatura.clientapi.generated.JSON;
@@ -40,7 +39,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   LedDto.JSON_PROPERTY_CREATED
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-09-01T21:45:11.948946335-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-02T10:58:05.590040213-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class LedDto {
   public static final String JSON_PROPERTY_CODE = "code";
   private Integer code;
@@ -61,7 +60,7 @@ public class LedDto {
   private String softwareCode;
 
   public static final String JSON_PROPERTY_CREATED = "created";
-  private LocalDate created;
+  private String created;
 
   public LedDto() { 
   }
@@ -216,7 +215,7 @@ public class LedDto {
   }
 
 
-  public LedDto created(LocalDate created) {
+  public LedDto created(String created) {
     this.created = created;
     return this;
   }
@@ -229,14 +228,14 @@ public class LedDto {
   @JsonProperty(JSON_PROPERTY_CREATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public LocalDate getCreated() {
+  public String getCreated() {
     return created;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CREATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCreated(LocalDate created) {
+  public void setCreated(String created) {
     this.created = created;
   }
 

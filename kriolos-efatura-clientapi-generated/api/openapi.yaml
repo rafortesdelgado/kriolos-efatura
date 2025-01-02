@@ -1744,7 +1744,6 @@ components:
       type: object
     Date:
       example: 2022-03-10
-      format: date
       type: string
     Dfe:
       properties:
@@ -2223,11 +2222,9 @@ components:
           type: number
         AuthorizedDateTime:
           example: 2022-03-10
-          format: date
           type: string
         CanceledDateTime:
           example: 2022-03-10
-          format: date
           type: string
         IssueDirection:
           type: string
@@ -2605,13 +2602,11 @@ components:
           type: string
         IssueDateTime:
           example: 2022-03-10
-          format: date
           type: string
         IssueReasonDescription:
           type: string
         AuthorizedDate:
           example: 2022-03-10
-          format: date
           type: string
       type: object
     ItemsPaginationItemsPaginationObject:
@@ -2681,7 +2676,6 @@ components:
           type: string
         created:
           example: 2022-03-10
-          format: date
           type: string
       type: object
     Message:
@@ -3776,11 +3770,9 @@ components:
           type: boolean
         created:
           example: 2022-03-10
-          format: date
           type: string
         updated:
           example: 2022-03-10
-          format: date
           type: string
       type: object
     SoftwareDto:
@@ -3810,7 +3802,6 @@ components:
           type: integer
         created:
           example: 2022-03-10
-          format: date
           type: string
         internal:
           type: boolean
@@ -3825,11 +3816,9 @@ components:
           type: array
         transmitLevelDate:
           example: 2022-03-10
-          format: date
           type: string
         receiveLevelDate:
           example: 2022-03-10
-          format: date
           type: string
       type: object
     SoftwareGroupMemberDto:
@@ -3873,11 +3862,9 @@ components:
           type: integer
         created:
           example: 2022-03-10
-          format: date
           type: string
         updated:
           example: 2022-03-10
-          format: date
           type: string
       type: object
     SoftwareTransmitterDto:
@@ -3953,11 +3940,9 @@ components:
           type: boolean
         created:
           example: 2022-03-10
-          format: date
           type: string
         updated:
           example: 2022-03-10
-          format: date
           type: string
       type: object
     UUID:

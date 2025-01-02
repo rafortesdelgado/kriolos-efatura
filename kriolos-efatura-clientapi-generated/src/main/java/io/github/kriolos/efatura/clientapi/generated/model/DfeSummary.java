@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.time.LocalDate;
 import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.github.kriolos.efatura.clientapi.generated.JSON;
@@ -46,7 +45,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   DfeSummary.JSON_PROPERTY_ISSUE_DIRECTION
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-09-01T21:45:11.948946335-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-02T10:58:05.590040213-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class DfeSummary {
   public static final String JSON_PROPERTY_ID = "Id";
   private String id;
@@ -79,10 +78,10 @@ public class DfeSummary {
   private Double taxTotalAmount;
 
   public static final String JSON_PROPERTY_AUTHORIZED_DATE_TIME = "AuthorizedDateTime";
-  private LocalDate authorizedDateTime;
+  private String authorizedDateTime;
 
   public static final String JSON_PROPERTY_CANCELED_DATE_TIME = "CanceledDateTime";
-  private LocalDate canceledDateTime;
+  private String canceledDateTime;
 
   public static final String JSON_PROPERTY_ISSUE_DIRECTION = "IssueDirection";
   private String issueDirection;
@@ -340,7 +339,7 @@ public class DfeSummary {
   }
 
 
-  public DfeSummary authorizedDateTime(LocalDate authorizedDateTime) {
+  public DfeSummary authorizedDateTime(String authorizedDateTime) {
     this.authorizedDateTime = authorizedDateTime;
     return this;
   }
@@ -353,19 +352,19 @@ public class DfeSummary {
   @JsonProperty(JSON_PROPERTY_AUTHORIZED_DATE_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public LocalDate getAuthorizedDateTime() {
+  public String getAuthorizedDateTime() {
     return authorizedDateTime;
   }
 
 
   @JsonProperty(JSON_PROPERTY_AUTHORIZED_DATE_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setAuthorizedDateTime(LocalDate authorizedDateTime) {
+  public void setAuthorizedDateTime(String authorizedDateTime) {
     this.authorizedDateTime = authorizedDateTime;
   }
 
 
-  public DfeSummary canceledDateTime(LocalDate canceledDateTime) {
+  public DfeSummary canceledDateTime(String canceledDateTime) {
     this.canceledDateTime = canceledDateTime;
     return this;
   }
@@ -378,14 +377,14 @@ public class DfeSummary {
   @JsonProperty(JSON_PROPERTY_CANCELED_DATE_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public LocalDate getCanceledDateTime() {
+  public String getCanceledDateTime() {
     return canceledDateTime;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CANCELED_DATE_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCanceledDateTime(LocalDate canceledDateTime) {
+  public void setCanceledDateTime(String canceledDateTime) {
     this.canceledDateTime = canceledDateTime;
   }
 

@@ -1,16 +1,17 @@
 package io.github.kriolos.efatura;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import io.github.kriolos.efatura.clientapi.generated.ApiClient;
-import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
-import io.github.kriolos.efatura.services.ExportToCsv;
-import io.github.kriolos.efatura.services.FiscalReportService;
+import io.github.kriolos.efatura.clientapi.generated.api.LedApi;
+import io.github.kriolos.efatura.clientapi.generated.model.LedDto;
 import io.github.kriolos.efatura.services.GetTokenHelper;
+import io.github.kriolos.efatura.services.LedService;
 
 
-public class ProgramLoop
+public class ProgramLedLoop
 {
 	public static void main (String[] args) 
 	{
@@ -27,8 +28,7 @@ public class ProgramLoop
 		input.close();
 
 		ApiClient apiCli = new ApiClient();
-		apiCli.setDebugging(false);
-		DfeApi dfeApi = new DfeApi(apiCli);
+		LedApi dfeApi = new LedApi(apiCli);
 		
 
 		for( String [] d : list) 
@@ -47,10 +47,10 @@ public class ProgramLoop
 				apiCli.setBasePath("https://services.efatura.cv/");
 				apiCli.setAccessToken(token);
 				
-				FiscalReportService frs = new FiscalReportService(dfeApi, clientName);
-				ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers("2024", null, null), clientName);  
-				ExportToCsv.ExportDfeSummary(frs.getMod106Clients("2024", null, null), clientName);  
+				LedService ledService = new LedService(dfeApi);
 
+				List<LedDto> ledsDto =  ledService.GetLed(2024);
+				ledService.CreateLed(ledsDto, "2025");
 			}
 			catch(Exception e ) 
 			{
@@ -60,7 +60,6 @@ public class ProgramLoop
 			finally 
 			{
 			}
-			
 		}
 	}
 }

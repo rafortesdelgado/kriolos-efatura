@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +45,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   SoftwareCustomerEntity.JSON_PROPERTY_UPDATED
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-09-01T21:45:11.948946335-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-02T10:58:05.590040213-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class SoftwareCustomerEntity {
   public static final String JSON_PROPERTY_ID = "id";
   private String id;
@@ -76,10 +75,10 @@ public class SoftwareCustomerEntity {
   private Boolean isEnabled;
 
   public static final String JSON_PROPERTY_CREATED = "created";
-  private LocalDate created;
+  private String created;
 
   public static final String JSON_PROPERTY_UPDATED = "updated";
-  private LocalDate updated;
+  private String updated;
 
   public SoftwareCustomerEntity() { 
   }
@@ -321,7 +320,7 @@ public class SoftwareCustomerEntity {
   }
 
 
-  public SoftwareCustomerEntity created(LocalDate created) {
+  public SoftwareCustomerEntity created(String created) {
     this.created = created;
     return this;
   }
@@ -334,19 +333,19 @@ public class SoftwareCustomerEntity {
   @JsonProperty(JSON_PROPERTY_CREATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public LocalDate getCreated() {
+  public String getCreated() {
     return created;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CREATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCreated(LocalDate created) {
+  public void setCreated(String created) {
     this.created = created;
   }
 
 
-  public SoftwareCustomerEntity updated(LocalDate updated) {
+  public SoftwareCustomerEntity updated(String updated) {
     this.updated = updated;
     return this;
   }
@@ -359,14 +358,14 @@ public class SoftwareCustomerEntity {
   @JsonProperty(JSON_PROPERTY_UPDATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public LocalDate getUpdated() {
+  public String getUpdated() {
     return updated;
   }
 
 
   @JsonProperty(JSON_PROPERTY_UPDATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setUpdated(LocalDate updated) {
+  public void setUpdated(String updated) {
     this.updated = updated;
   }
 

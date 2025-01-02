@@ -41,22 +41,11 @@
                                 <!-- <allowUnicodeIdentifiers>true</allowUnicodeIdentifiers> -->
                                 <disallowAdditionalPropertiesIfNotPresent>false</disallowAdditionalPropertiesIfNotPresent>
                                 <dateLibrary>java8</dateLibrary>
-                                <!-- <useOneOfDiscriminatorLookup>true</useOneOfDiscriminatorLookup>  -->
-                                
-                                <!-- <disallowAdditionalPropertiesIfNotPresent>false</disallowAdditionalPropertiesIfNotPresent> -->
-                                <!-- <dateLibrary>java8</dateLibrary> -->
-                                <!-- <usePlayWS>true</usePlayWS> -->
-<!--                                <useSingleRequestParameter>true</useSingleRequestParameter>-->
-<!--								<useOneOfDiscriminatorLookup>true</useOneOfDiscriminatorLookup>-->
-<!--                                <dynamicOperations>true</dynamicOperations>-->
-<!--                                <serializationLibrary>gson</serializationLibrary>-->
-<!--                                -->
-                                <!-- <annotationLibrary>swagger2</annotationLibrary> -->
                                 <additionalModelTypeAnnotations>@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)</additionalModelTypeAnnotations>
                             </configOptions>
                             
 
-                            <inputSpec>${project.basedir}/src/main/resources/openapi_1_2_0.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi.yaml</inputSpec>
                             <generatorName>java</generatorName>
                             <packageName>io.github.kriolos.efatura.clientapi.generated</packageName>
                             <apiPackage>io.github.kriolos.efatura.clientapi.generated.api</apiPackage>

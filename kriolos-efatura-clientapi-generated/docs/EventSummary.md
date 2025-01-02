@@ -9,9 +9,9 @@
 |------------ | ------------- | ------------- | -------------|
 |**id** | **String** |  |  [optional] |
 |**eventTypeCode** | **String** |  |  [optional] |
-|**issueDateTime** | **LocalDate** |  |  [optional] |
+|**issueDateTime** | **String** |  |  [optional] |
 |**issueReasonDescription** | **String** |  |  [optional] |
-|**authorizedDate** | **LocalDate** |  |  [optional] |
+|**authorizedDate** | **String** |  |  [optional] |
 
 
 

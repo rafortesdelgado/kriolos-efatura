@@ -1409,6 +1409,7 @@ components:
     Date:
       format: date
       type: string
+      pattern: "YYYY-MM-DD hh:mm:ss"
       example: 2022-03-10
     Dfe:
       type: object

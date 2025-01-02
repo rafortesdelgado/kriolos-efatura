@@ -16,8 +16,8 @@
 |**oAuthClientSecret** | **String** |  |  [optional] |
 |**oAuthRedirectUris** | **List&lt;String&gt;** |  |  [optional] |
 |**isEnabled** | **Boolean** |  |  [optional] |
-|**created** | **LocalDate** |  |  [optional] |
-|**updated** | **LocalDate** |  |  [optional] |
+|**created** | **String** |  |  [optional] |
+|**updated** | **String** |  |  [optional] |
 
 
 

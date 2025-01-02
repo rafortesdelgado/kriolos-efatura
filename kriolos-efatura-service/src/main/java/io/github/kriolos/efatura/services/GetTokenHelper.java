@@ -9,6 +9,7 @@ import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.v128.network.Network;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.github.bonigarcia.wdm.managers.ChromeDriverManager;
 import io.github.kriolos.efatura.components.LoginProcess;
 
 public class GetTokenHelper {
@@ -18,8 +19,8 @@ public class GetTokenHelper {
 		
 		//WebDriverManager.chromedriver().browserVersion("126.0.6463.0").setup();
 		//WebDriverManager.chromedriver().browserVersion("125.0.6381.0").setup();
-		WebDriverManager.chromedriver().browserVersion("128.0.6613.0").setup();
-		//ChromeDriverManager.getInstance().setup();
+		//WebDriverManager.chromedriver().browserVersion("128.0.6613.0").setup();
+		ChromeDriverManager.getInstance().setup();
 		
 		ChromeDriver driver = null;
 		try 
