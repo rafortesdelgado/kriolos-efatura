@@ -39,7 +39,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   PayloadProcessingResponseDfe.JSON_PROPERTY_PAYLOAD
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-02T10:58:05.590040213-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-03T09:47:51.391128802-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class PayloadProcessingResponseDfe {
   public static final String JSON_PROPERTY_MESSAGES = "messages";
   private List<Message> messages = new ArrayList<>();

@@ -25,12 +25,9 @@ public class ProgramLedLoop
 			list.add(line.split(";"));
 		}
 
-		input.close();
-
 		ApiClient apiCli = new ApiClient();
 		LedApi dfeApi = new LedApi(apiCli);
 		
-
 		for( String [] d : list) 
 		{
 			try
@@ -50,7 +47,8 @@ public class ProgramLedLoop
 				LedService ledService = new LedService(dfeApi);
 
 				List<LedDto> ledsDto =  ledService.GetLed(2024);
-				ledService.CreateLed(ledsDto, "2025");
+				ledsDto.forEach(led -> System.out.println(led));
+				//ledService.CreateLed(ledsDto, "2025");
 			}
 			catch(Exception e ) 
 			{
@@ -59,6 +57,7 @@ public class ProgramLedLoop
 			}
 			finally 
 			{
+				input.close();
 			}
 		}
 	}

@@ -1744,6 +1744,8 @@ components:
       type: object
     Date:
       example: 2022-03-10
+      format: date-cv
+      pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
       type: string
     Dfe:
       properties:
@@ -2222,9 +2224,13 @@ components:
           type: number
         AuthorizedDateTime:
           example: 2022-03-10
+          format: date-cv
+          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
           type: string
         CanceledDateTime:
           example: 2022-03-10
+          format: date-cv
+          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
           type: string
         IssueDirection:
           type: string
@@ -2602,11 +2608,15 @@ components:
           type: string
         IssueDateTime:
           example: 2022-03-10
+          format: date-cv
+          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
           type: string
         IssueReasonDescription:
           type: string
         AuthorizedDate:
           example: 2022-03-10
+          format: date-cv
+          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
           type: string
       type: object
     ItemsPaginationItemsPaginationObject:
@@ -2676,6 +2686,8 @@ components:
           type: string
         created:
           example: 2022-03-10
+          format: date-cv
+          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
           type: string
       type: object
     Message:
@@ -3770,9 +3782,13 @@ components:
           type: boolean
         created:
           example: 2022-03-10
+          format: date-cv
+          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
           type: string
         updated:
           example: 2022-03-10
+          format: date-cv
+          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
           type: string
       type: object
     SoftwareDto:
@@ -3802,6 +3818,8 @@ components:
           type: integer
         created:
           example: 2022-03-10
+          format: date-cv
+          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
           type: string
         internal:
           type: boolean
@@ -3816,9 +3834,13 @@ components:
           type: array
         transmitLevelDate:
           example: 2022-03-10
+          format: date-cv
+          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
           type: string
         receiveLevelDate:
           example: 2022-03-10
+          format: date-cv
+          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
           type: string
       type: object
     SoftwareGroupMemberDto:
@@ -3862,9 +3884,13 @@ components:
           type: integer
         created:
           example: 2022-03-10
+          format: date-cv
+          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
           type: string
         updated:
           example: 2022-03-10
+          format: date-cv
+          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
           type: string
       type: object
     SoftwareTransmitterDto:
@@ -3940,9 +3966,13 @@ components:
           type: boolean
         created:
           example: 2022-03-10
+          format: date-cv
+          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
           type: string
         updated:
           example: 2022-03-10
+          format: date-cv
+          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
           type: string
       type: object
     UUID:
