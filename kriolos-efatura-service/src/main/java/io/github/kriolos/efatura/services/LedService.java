@@ -20,6 +20,14 @@ public class LedService {
     public List<LedDto> GetLed (int year ) throws ApiException  {
         return this.ledApi.ledResourceGetAllLeds().getPayload()
             .stream()
+            .filter( l ->  {
+                try {
+                    Integer.parseInt(l.getSerie());
+                    return true;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            })
             .filter( l ->  Integer.parseInt(l.getSerie()) == year)
             .collect(Collectors.toList());
             
