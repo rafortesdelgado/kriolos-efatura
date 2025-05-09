@@ -25,6 +25,8 @@ tags:
   name: EVENT
 - description: Recurso para interagir com LEDs.
   name: LED
+- description: Recurso para interagir com OPACC.
+  name: OPACC
 - description: Recurso para interagir com software.
   name: SOFTWARE
 - description: Recurso para interagir com contribuintes.
@@ -68,7 +70,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_cert_read
-        - cv_ef_cert_all
       summary: Consulta de keystore.
       tags:
       - CERTIFICATE
@@ -96,7 +97,7 @@ paths:
       - application/xml
   /v1/dfe:
     delete:
-      operationId: DfeResource_deleteDfeEvent
+      operationId: DfeResource_deleteDfeAndEvent
       parameters:
       - explode: false
         in: header
@@ -122,7 +123,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_delete
-        - cv_ef_dfe_all
       summary: Elimina todos os DFEs e os respetivos eventos no repositório de Homologação/Teste.
       tags:
       - DFE
@@ -240,7 +240,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_list
-        - cv_ef_dfe_all
       summary: Lista de DFEs limitada em 10000 DFEs.
       tags:
       - DFE
@@ -283,7 +282,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_create
-        - cv_ef_dfe_all
       summary: Comunicação de novos DFEs.
       tags:
       - DFE
@@ -326,7 +324,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_iud
-        - cv_ef_dfe_all
       summary: Consulta de PDF de um DFE com IUD.
       tags:
       - DFE
@@ -363,7 +360,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_self_billing_authorize
-        - cv_ef_dfe_all
       summary: Pedido de autorização para autofaturação.
       tags:
       - DFE
@@ -405,7 +401,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_iud
-        - cv_ef_dfe_all
       summary: Consulta de XML com IUD exatamente como foi gerado e assinado pelo
         contribuinte e com aposição de timestamp.
       tags:
@@ -448,7 +443,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_iud
-        - cv_ef_dfe_all
       summary: Consulta de DFE com IUD.
       tags:
       - DFE
@@ -553,7 +547,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_read
-        - cv_ef_event_all
       summary: Lista de eventos limitada em 10000 eventos.
       tags:
       - EVENT
@@ -596,7 +589,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_create
-        - cv_ef_event_all
       summary: Comunicação de novos eventos.
       tags:
       - EVENT
@@ -639,7 +631,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_read
-        - cv_ef_event_all
       summary: Consulta de evento com ID.
       tags:
       - EVENT
@@ -681,7 +672,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_read
-        - cv_ef_event_all
       summary: Consulta de evento com ID.
       tags:
       - EVENT
@@ -708,7 +698,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_read
-        - cv_ef_led_all
       summary: Lista de LEDs.
       tags:
       - LED
@@ -736,7 +725,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_create
-        - cv_ef_led_all
       summary: Regista uma nova LED.
       tags:
       - LED
@@ -768,7 +756,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_delete
-        - cv_ef_led_all
       summary: Elimina uma LED sem DFEs associados.
       tags:
       - LED
@@ -798,7 +785,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_read
-        - cv_ef_led_all
       summary: Consulta de LED com código.
       tags:
       - LED
@@ -833,11 +819,141 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_update
-        - cv_ef_led_all
       summary: Atualiza uma LED.
       tags:
       - LED
       x-content-type: application/json
+      x-accepts:
+      - application/json
+  /v1/opacc/accountant-customer:
+    get:
+      operationId: OpaccResource_getAccountantCustomers
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseListOpaccAccountantCustomerDto'
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme: []
+      summary: Lista de contribuintes que são clientes do contabilista certificado
+        representado pelo utilizador autenticado.
+      tags:
+      - OPACC
+      x-accepts:
+      - application/json
+    post:
+      operationId: OpaccResource_createAccountantCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpaccAccountantCustomerCreateDto'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseOpaccAccountantCustomerDto'
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme: []
+      summary: Regista um contribuinte como um cliente de um contabilista certificado.
+      tags:
+      - OPACC
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /v1/opacc/accountant-customer/{CustomerId}:
+    delete:
+      operationId: OpaccResource_deleteAccountantCustomer
+      parameters:
+      - explode: false
+        in: path
+        name: CustomerId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessingResponse'
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme: []
+      summary: Elimina um contribuinte como um cliente de um contabilista certificado.
+      tags:
+      - OPACC
+      x-accepts:
+      - application/json
+  /v1/opacc/accountant-list:
+    get:
+      operationId: OpaccResource_getAccountants
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseListOpaccAccountantDto'
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_opacc_read_accountant_list
+      summary: Lista Nacional de Auditores e Contabilistas Certificados Autorizados.
+      tags:
+      - OPACC
+      x-accepts:
+      - application/json
+    post:
+      operationId: OpaccResource_uploadAccountants
+      requestBody:
+        content:
+          multipart/form-data:
+            encoding:
+              file:
+                contentType: application/octet-stream
+                style: form
+            schema:
+              $ref: '#/components/schemas/DfeResource_createDfe_request'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessingResponse'
+          description: OK
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_opacc_upload_accountant_list
+      summary: Carrega na PE a Lista Nacional de Auditores e Contabilistas Certificados
+        Autorizados.
+      tags:
+      - OPACC
+      x-content-type: multipart/form-data
       x-accepts:
       - application/json
   /v1/software:
@@ -857,7 +973,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_read_list
-        - cv_ef_sw_all
       summary: Lista de aplicações (software) de faturação/transmissão registadas
         na Plataforma Eletrónica.
       tags:
@@ -881,8 +996,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_read
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
       summary: Lista contribuintes clientes de software.
       tags:
       - SOFTWARE
@@ -909,8 +1022,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_create
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
       summary: Regista um novo contribuinte cliente de software.
       tags:
       - SOFTWARE
@@ -942,8 +1053,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_delete
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
       summary: Elimina um contribuinte cliente de software.
       tags:
       - SOFTWARE
@@ -973,8 +1082,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_read
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
       summary: Consulta contribuinte cliente de software com ID.
       tags:
       - SOFTWARE
@@ -1009,8 +1116,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_update
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
       summary: Atualiza um contribuinte cliente de software.
       tags:
       - SOFTWARE
@@ -1047,8 +1152,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_update
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
       summary: Ativa/Desativa um contribuinte cliente de software.
       tags:
       - SOFTWARE
@@ -1072,8 +1175,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_read
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
       summary: Lista de membros de grupo de software.
       tags:
       - SOFTWARE
@@ -1100,8 +1201,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_create
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
       summary: Regista novo membro de grupo de software.
       tags:
       - SOFTWARE
@@ -1133,8 +1232,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_delete
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
       summary: Elimina um membro de grupo de software.
       tags:
       - SOFTWARE
@@ -1164,8 +1261,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_read
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
       summary: Consulta de membro de grupo de software com ID.
       tags:
       - SOFTWARE
@@ -1200,8 +1295,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_update
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
       summary: Atualiza um membro de grupo de software.
       tags:
       - SOFTWARE
@@ -1225,8 +1318,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_read
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
       summary: Lista de transmissores associados a software.
       tags:
       - SOFTWARE
@@ -1253,8 +1344,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_create
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
       summary: Regista novo transmissor.
       tags:
       - SOFTWARE
@@ -1286,8 +1375,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_delete
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
       summary: Elimina um transmissor.
       tags:
       - SOFTWARE
@@ -1317,8 +1404,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_read
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
       summary: Consulta transmissor com ID.
       tags:
       - SOFTWARE
@@ -1353,8 +1438,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_update
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
       summary: Atualiza um transmissor.
       tags:
       - SOFTWARE
@@ -1391,8 +1474,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_update
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
       summary: Ativa/Desativa um transmissor.
       tags:
       - SOFTWARE
@@ -1442,7 +1523,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_tp_search
-        - cv_ef_tp_all
       summary: Pesquisa contribuintes por NIF e/ou Nome.
       tags:
       - TAXPAYER
@@ -1574,7 +1654,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_list
-        - cv_ef_dfe_all
       summary: Lista de DFEs que suporta paginação.
       tags:
       - DFE
@@ -1693,7 +1772,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_read
-        - cv_ef_event_all
       summary: Lista de eventos que suporta paginação.
       tags:
       - EVENT
@@ -1742,10 +1820,14 @@ components:
         Website:
           type: string
       type: object
+    CvRegion:
+      enum:
+      - B
+      - S
+      type: string
     Date:
       example: 2022-03-10
-      format: date-cv
-      pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+      format: date
       type: string
     Dfe:
       properties:
@@ -1753,15 +1835,17 @@ components:
           type: string
         Version:
           type: string
-        Transmission:
-          $ref: '#/components/schemas/EfTransmission'
         RepositoryCode:
           format: int32
           type: integer
+        Transmission:
+          $ref: '#/components/schemas/EfTransmission'
         DocumentTypeCode:
           format: int32
           type: integer
         IsSpecimen:
+          type: boolean
+        IsIsolatedAct:
           type: boolean
         SelfBilling:
           $ref: '#/components/schemas/DfeSelfBilling'
@@ -1791,6 +1875,8 @@ components:
           type: string
         IssueReasonDescription:
           type: string
+        RappelPeriod:
+          $ref: '#/components/schemas/EfDatePeriod'
         EmitterParty:
           $ref: '#/components/schemas/EfParty'
         ReceiverParty:
@@ -1826,6 +1912,8 @@ components:
           type: array
         Note:
           type: string
+        AuthorizedDateTime:
+          type: string
         CanceledDateTime:
           type: string
       type: object
@@ -1839,10 +1927,10 @@ components:
       type: object
     DfeFiscalDocument:
       properties:
-        Value:
-          type: string
         IsOldDocument:
           type: boolean
+        Value:
+          type: string
       type: object
     DfeLine:
       properties:
@@ -1967,29 +2055,37 @@ components:
     DfeListProcessingResponse:
       example:
         payload:
-        - EmitterName: EmitterName
+        - IssueAuthorizedDelayMilliseconds: 7
+          EmitterName: EmitterName
           AuthorizedDateTime: 2022-03-10
-          LedCode: 6
-          PayableAmount: 5.962133916683182
-          EmitterTaxId: 1
+          LedCode: 1
+          IssueMode: 0
+          PayableAmount: 5.637376656633329
+          EmitterTaxId: 5
           CanceledDateTime: 2022-03-10
+          SoftwareCode: SoftwareCode
           ReceiverTaxId: ReceiverTaxId
-          DocumentTypeCode: 0
+          DocumentTypeCode: 6
+          IssueDateTime: 2022-03-10
           ReceiverTaxIdCountryCode: ReceiverTaxIdCountryCode
-          TaxTotalAmount: 5.637376656633329
+          TaxTotalAmount: 2.3021358869347655
           Id: Id
           ReceiverName: ReceiverName
           IssueDirection: IssueDirection
-        - EmitterName: EmitterName
+        - IssueAuthorizedDelayMilliseconds: 7
+          EmitterName: EmitterName
           AuthorizedDateTime: 2022-03-10
-          LedCode: 6
-          PayableAmount: 5.962133916683182
-          EmitterTaxId: 1
+          LedCode: 1
+          IssueMode: 0
+          PayableAmount: 5.637376656633329
+          EmitterTaxId: 5
           CanceledDateTime: 2022-03-10
+          SoftwareCode: SoftwareCode
           ReceiverTaxId: ReceiverTaxId
-          DocumentTypeCode: 0
+          DocumentTypeCode: 6
+          IssueDateTime: 2022-03-10
           ReceiverTaxIdCountryCode: ReceiverTaxIdCountryCode
-          TaxTotalAmount: 5.637376656633329
+          TaxTotalAmount: 2.3021358869347655
           Id: Id
           ReceiverName: ReceiverName
           IssueDirection: IssueDirection
@@ -2183,22 +2279,29 @@ components:
       type: object
     DfeSummary:
       example:
+        IssueAuthorizedDelayMilliseconds: 7
         EmitterName: EmitterName
         AuthorizedDateTime: 2022-03-10
-        LedCode: 6
-        PayableAmount: 5.962133916683182
-        EmitterTaxId: 1
+        LedCode: 1
+        IssueMode: 0
+        PayableAmount: 5.637376656633329
+        EmitterTaxId: 5
         CanceledDateTime: 2022-03-10
+        SoftwareCode: SoftwareCode
         ReceiverTaxId: ReceiverTaxId
-        DocumentTypeCode: 0
+        DocumentTypeCode: 6
+        IssueDateTime: 2022-03-10
         ReceiverTaxIdCountryCode: ReceiverTaxIdCountryCode
-        TaxTotalAmount: 5.637376656633329
+        TaxTotalAmount: 2.3021358869347655
         Id: Id
         ReceiverName: ReceiverName
         IssueDirection: IssueDirection
       properties:
         Id:
           type: string
+        IssueMode:
+          format: int32
+          type: integer
         DocumentTypeCode:
           format: int32
           type: integer
@@ -2216,21 +2319,28 @@ components:
           type: string
         ReceiverName:
           type: string
+        SoftwareCode:
+          type: string
         PayableAmount:
           format: double
           type: number
         TaxTotalAmount:
           format: double
           type: number
+        IssueDateTime:
+          example: 2022-03-10
+          format: date
+          type: string
         AuthorizedDateTime:
           example: 2022-03-10
-          format: date-cv
-          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+          format: date
           type: string
+        IssueAuthorizedDelayMilliseconds:
+          format: int64
+          type: integer
         CanceledDateTime:
           example: 2022-03-10
-          format: date-cv
-          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+          format: date
           type: string
         IssueDirection:
           type: string
@@ -2306,6 +2416,13 @@ components:
           format: int32
           type: integer
         ReasonDescription:
+          type: string
+      type: object
+    EfDatePeriod:
+      properties:
+        StartDate:
+          type: string
+        EndDate:
           type: string
       type: object
     EfEntriesProcessingResponse:
@@ -2464,11 +2581,11 @@ components:
           type: string
         Version:
           type: string
-        Transmission:
-          $ref: '#/components/schemas/EfTransmission'
         RepositoryCode:
           format: int32
           type: integer
+        Transmission:
+          $ref: '#/components/schemas/EfTransmission'
         EventTypeCode:
           type: string
         EmitterTaxId:
@@ -2608,15 +2725,13 @@ components:
           type: string
         IssueDateTime:
           example: 2022-03-10
-          format: date-cv
-          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+          format: date
           type: string
         IssueReasonDescription:
           type: string
         AuthorizedDate:
           example: 2022-03-10
-          format: date-cv
-          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+          format: date
           type: string
       type: object
     ItemsPaginationItemsPaginationObject:
@@ -2686,8 +2801,7 @@ components:
           type: string
         created:
           example: 2022-03-10
-          format: date-cv
-          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+          format: date
           type: string
       type: object
     Message:
@@ -2732,6 +2846,75 @@ components:
           xml:
             name: Type
       type: object
+    OpaccAccountantCustomerCreateDto:
+      example:
+        customerTaxId: customerTaxId
+      properties:
+        customerTaxId:
+          type: string
+      type: object
+    OpaccAccountantCustomerDto:
+      example:
+        createdAt: 2022-03-10
+        customerJoinedPe: true
+        customerId: customerId
+        accountantTaxId: 6
+        customerName: customerName
+        customerTaxId: 0
+      properties:
+        customerId:
+          type: string
+        customerTaxId:
+          format: int32
+          type: integer
+        customerName:
+          type: string
+        customerJoinedPe:
+          type: boolean
+        accountantTaxId:
+          format: int32
+          type: integer
+        createdAt:
+          example: 2022-03-10
+          format: date
+          type: string
+      type: object
+    OpaccAccountantDto:
+      example:
+        createdAt: 2022-03-10
+        taxId: 0
+        name: name
+        opaccId: 6
+        region: B
+        category: A
+        userJoinedPe: true
+      properties:
+        taxId:
+          format: int32
+          type: integer
+        name:
+          type: string
+        opaccId:
+          format: int32
+          type: integer
+        region:
+          $ref: '#/components/schemas/CvRegion'
+        category:
+          $ref: '#/components/schemas/OpaccCategory'
+        createdAt:
+          example: 2022-03-10
+          format: date
+          type: string
+        userJoinedPe:
+          type: boolean
+      type: object
+    OpaccCategory:
+      enum:
+      - A
+      - C
+      - SA
+      - SC
+      type: string
     PayloadProcessingResponseBoolean:
       example:
         payload: true
@@ -2984,6 +3167,114 @@ components:
         payload:
           items:
             $ref: '#/components/schemas/LedDto'
+          type: array
+          xml:
+            name: Payload
+      type: object
+      xml:
+        name: Response
+    PayloadProcessingResponseListOpaccAccountantCustomerDto:
+      example:
+        payload:
+        - createdAt: 2022-03-10
+          customerJoinedPe: true
+          customerId: customerId
+          accountantTaxId: 6
+          customerName: customerName
+          customerTaxId: 0
+        - createdAt: 2022-03-10
+          customerJoinedPe: true
+          customerId: customerId
+          accountantTaxId: 6
+          customerName: customerName
+          customerTaxId: 0
+        messages:
+        - dateTime: dateTime
+          code: code
+          description: description
+          index: 0
+          location: location
+          source: source
+          type: type
+        - dateTime: dateTime
+          code: code
+          description: description
+          index: 0
+          location: location
+          source: source
+          type: type
+        succeeded: true
+      properties:
+        messages:
+          items:
+            $ref: '#/components/schemas/Message'
+          type: array
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            attribute: true
+            name: Succeeded
+        payload:
+          items:
+            $ref: '#/components/schemas/OpaccAccountantCustomerDto'
+          type: array
+          xml:
+            name: Payload
+      type: object
+      xml:
+        name: Response
+    PayloadProcessingResponseListOpaccAccountantDto:
+      example:
+        payload:
+        - createdAt: 2022-03-10
+          taxId: 0
+          name: name
+          opaccId: 6
+          region: B
+          category: A
+          userJoinedPe: true
+        - createdAt: 2022-03-10
+          taxId: 0
+          name: name
+          opaccId: 6
+          region: B
+          category: A
+          userJoinedPe: true
+        messages:
+        - dateTime: dateTime
+          code: code
+          description: description
+          index: 0
+          location: location
+          source: source
+          type: type
+        - dateTime: dateTime
+          code: code
+          description: description
+          index: 0
+          location: location
+          source: source
+          type: type
+        succeeded: true
+      properties:
+        messages:
+          items:
+            $ref: '#/components/schemas/Message'
+          type: array
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            attribute: true
+            name: Succeeded
+        payload:
+          items:
+            $ref: '#/components/schemas/OpaccAccountantDto'
           type: array
           xml:
             name: Payload
@@ -3343,6 +3634,47 @@ components:
       type: object
       xml:
         name: Response
+    PayloadProcessingResponseOpaccAccountantCustomerDto:
+      example:
+        payload: "{}"
+        messages:
+        - dateTime: dateTime
+          code: code
+          description: description
+          index: 0
+          location: location
+          source: source
+          type: type
+        - dateTime: dateTime
+          code: code
+          description: description
+          index: 0
+          location: location
+          source: source
+          type: type
+        succeeded: true
+      properties:
+        messages:
+          items:
+            $ref: '#/components/schemas/Message'
+          type: array
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            attribute: true
+            name: Succeeded
+        payload:
+          allOf:
+          - $ref: '#/components/schemas/OpaccAccountantCustomerDto'
+          type: object
+          xml:
+            name: Payload
+      type: object
+      xml:
+        name: Response
     PayloadProcessingResponseSoftwareCustomerDto:
       example:
         payload: "{}"
@@ -3628,6 +3960,40 @@ components:
       type: object
       xml:
         name: Response
+    ProcessingResponse:
+      example:
+        messages:
+        - dateTime: dateTime
+          code: code
+          description: description
+          index: 0
+          location: location
+          source: source
+          type: type
+        - dateTime: dateTime
+          code: code
+          description: description
+          index: 0
+          location: location
+          source: source
+          type: type
+        succeeded: true
+      properties:
+        messages:
+          items:
+            $ref: '#/components/schemas/Message'
+          type: array
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            attribute: true
+            name: Succeeded
+      type: object
+      xml:
+        name: Response
     SaveLedDto:
       example:
         addressCode: addressCode
@@ -3782,13 +4148,11 @@ components:
           type: boolean
         created:
           example: 2022-03-10
-          format: date-cv
-          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+          format: date
           type: string
         updated:
           example: 2022-03-10
-          format: date-cv
-          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+          format: date
           type: string
       type: object
     SoftwareDto:
@@ -3818,8 +4182,7 @@ components:
           type: integer
         created:
           example: 2022-03-10
-          format: date-cv
-          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+          format: date
           type: string
         internal:
           type: boolean
@@ -3834,13 +4197,11 @@ components:
           type: array
         transmitLevelDate:
           example: 2022-03-10
-          format: date-cv
-          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+          format: date
           type: string
         receiveLevelDate:
           example: 2022-03-10
-          format: date-cv
-          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+          format: date
           type: string
       type: object
     SoftwareGroupMemberDto:
@@ -3884,13 +4245,11 @@ components:
           type: integer
         created:
           example: 2022-03-10
-          format: date-cv
-          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+          format: date
           type: string
         updated:
           example: 2022-03-10
-          format: date-cv
-          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+          format: date
           type: string
       type: object
     SoftwareTransmitterDto:
@@ -3966,13 +4325,11 @@ components:
           type: boolean
         created:
           example: 2022-03-10
-          format: date-cv
-          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+          format: date
           type: string
         updated:
           example: 2022-03-10
-          format: date-cv
-          pattern: "/([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/"
+          format: date
           type: string
       type: object
     UUID:

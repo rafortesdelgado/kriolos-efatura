@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.github.kriolos.efatura.clientapi.generated.model.Message;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,7 +42,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   EfEntryProcessingResponse.JSON_PROPERTY_PENDING_SIGNATURE_ID
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-03T09:47:51.391128802-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T10:15:19.824086604-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class EfEntryProcessingResponse {
   public static final String JSON_PROPERTY_MESSAGES = "messages";
   private List<Message> messages = new ArrayList<>();
@@ -53,7 +54,7 @@ public class EfEntryProcessingResponse {
   private String entryName;
 
   public static final String JSON_PROPERTY_AUTHORIZED_DATE_TIME = "authorizedDateTime";
-  private String authorizedDateTime;
+  private LocalDate authorizedDateTime;
 
   public static final String JSON_PROPERTY_SIGNATURE_TIME_STAMP = "signatureTimeStamp";
   private String signatureTimeStamp;
@@ -147,7 +148,7 @@ public class EfEntryProcessingResponse {
   }
 
 
-  public EfEntryProcessingResponse authorizedDateTime(String authorizedDateTime) {
+  public EfEntryProcessingResponse authorizedDateTime(LocalDate authorizedDateTime) {
     this.authorizedDateTime = authorizedDateTime;
     return this;
   }
@@ -160,14 +161,14 @@ public class EfEntryProcessingResponse {
   @JsonProperty(JSON_PROPERTY_AUTHORIZED_DATE_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public String getAuthorizedDateTime() {
+  public LocalDate getAuthorizedDateTime() {
     return authorizedDateTime;
   }
 
 
   @JsonProperty(JSON_PROPERTY_AUTHORIZED_DATE_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setAuthorizedDateTime(String authorizedDateTime) {
+  public void setAuthorizedDateTime(LocalDate authorizedDateTime) {
     this.authorizedDateTime = authorizedDateTime;
   }
 

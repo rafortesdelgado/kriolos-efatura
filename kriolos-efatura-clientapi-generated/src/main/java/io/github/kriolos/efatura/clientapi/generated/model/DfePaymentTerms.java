@@ -33,7 +33,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   DfePaymentTerms.JSON_PROPERTY_NOTE
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-03T09:47:51.391128802-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T10:15:19.824086604-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class DfePaymentTerms {
   public static final String JSON_PROPERTY_NOTE = "Note";
   private String note;

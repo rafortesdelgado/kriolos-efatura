@@ -7,8 +7,8 @@
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-|**value** | **String** |  |  [optional] |
 |**isOldDocument** | **Boolean** |  |  [optional] |
+|**value** | **String** |  |  [optional] |
 
 
 

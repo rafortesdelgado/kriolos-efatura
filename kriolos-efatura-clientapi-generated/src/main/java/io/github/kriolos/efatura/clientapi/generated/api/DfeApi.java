@@ -24,7 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-03T09:47:51.391128802-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T10:15:19.824086604-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class DfeApi {
   private ApiClient apiClient;
 
@@ -172,8 +172,8 @@ public class DfeApi {
        <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
      </table>
    */
-  public PayloadProcessingResponseLong dfeResourceDeleteDfeEvent(String cvEfRepositoryCode) throws ApiException {
-    return dfeResourceDeleteDfeEventWithHttpInfo(cvEfRepositoryCode).getData();
+  public PayloadProcessingResponseLong dfeResourceDeleteDfeAndEvent(String cvEfRepositoryCode) throws ApiException {
+    return dfeResourceDeleteDfeAndEventWithHttpInfo(cvEfRepositoryCode).getData();
   }
 
   /**
@@ -190,7 +190,7 @@ public class DfeApi {
        <tr><td> 403 </td><td> Not Allowed </td><td>  -  </td></tr>
      </table>
    */
-  public ApiResponse<PayloadProcessingResponseLong> dfeResourceDeleteDfeEventWithHttpInfo(String cvEfRepositoryCode) throws ApiException {
+  public ApiResponse<PayloadProcessingResponseLong> dfeResourceDeleteDfeAndEventWithHttpInfo(String cvEfRepositoryCode) throws ApiException {
     // Header parameters
     Map<String, String> localVarHeaderParams = new LinkedHashMap<>();
     if (cvEfRepositoryCode != null) {
@@ -201,7 +201,7 @@ public class DfeApi {
     String localVarContentType = apiClient.selectHeaderContentType();
     String[] localVarAuthNames = new String[] {"SecurityScheme"};
     GenericType<PayloadProcessingResponseLong> localVarReturnType = new GenericType<PayloadProcessingResponseLong>() {};
-    return apiClient.invokeAPI("DfeApi.dfeResourceDeleteDfeEvent", "/v1/dfe", "DELETE", new ArrayList<>(), null,
+    return apiClient.invokeAPI("DfeApi.dfeResourceDeleteDfeAndEvent", "/v1/dfe", "DELETE", new ArrayList<>(), null,
                                localVarHeaderParams, new LinkedHashMap<>(), new LinkedHashMap<>(), localVarAccept, localVarContentType,
                                localVarAuthNames, localVarReturnType, false);
   }

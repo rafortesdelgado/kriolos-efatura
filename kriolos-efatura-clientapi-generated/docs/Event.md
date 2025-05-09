@@ -9,8 +9,8 @@
 |------------ | ------------- | ------------- | -------------|
 |**id** | **String** |  |  [optional] |
 |**version** | **String** |  |  [optional] |
-|**transmission** | [**EfTransmission**](EfTransmission.md) |  |  [optional] |
 |**repositoryCode** | **Integer** |  |  [optional] |
+|**transmission** | [**EfTransmission**](EfTransmission.md) |  |  [optional] |
 |**eventTypeCode** | **String** |  |  [optional] |
 |**emitterTaxId** | [**EfTaxId**](EfTaxId.md) |  |  [optional] |
 |**issueDateTime** | **String** |  |  [optional] |

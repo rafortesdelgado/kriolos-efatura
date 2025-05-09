@@ -45,7 +45,7 @@ Cabo Verde Elecronic Invoice
 [source, bash]
 ----
 cd kriolos-efactura-clientapi-generated
-mvn -P efcv,saftcv clean install -D maven.test.skip=true
+mvn -P efcv,saftcv clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
 cd ..
 mvn clean install
 ----

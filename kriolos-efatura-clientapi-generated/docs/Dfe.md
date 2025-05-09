@@ -9,10 +9,11 @@
 |------------ | ------------- | ------------- | -------------|
 |**id** | **String** |  |  [optional] |
 |**version** | **String** |  |  [optional] |
-|**transmission** | [**EfTransmission**](EfTransmission.md) |  |  [optional] |
 |**repositoryCode** | **Integer** |  |  [optional] |
+|**transmission** | [**EfTransmission**](EfTransmission.md) |  |  [optional] |
 |**documentTypeCode** | **Integer** |  |  [optional] |
 |**isSpecimen** | **Boolean** |  |  [optional] |
+|**isIsolatedAct** | **Boolean** |  |  [optional] |
 |**selfBilling** | [**DfeSelfBilling**](DfeSelfBilling.md) |  |  [optional] |
 |**ledCode** | **Integer** |  |  [optional] |
 |**ledDescription** | **String** |  |  [optional] |
@@ -26,6 +27,7 @@
 |**taxPointDate** | **String** |  |  [optional] |
 |**issueReasonCode** | **String** |  |  [optional] |
 |**issueReasonDescription** | **String** |  |  [optional] |
+|**rappelPeriod** | [**EfDatePeriod**](EfDatePeriod.md) |  |  [optional] |
 |**emitterParty** | [**EfParty**](EfParty.md) |  |  [optional] |
 |**receiverParty** | [**EfParty**](EfParty.md) |  |  [optional] |
 |**transportServiceProviderParty** | [**EfParty**](EfParty.md) |  |  [optional] |
@@ -39,6 +41,7 @@
 |**payments** | [**DfePayments**](DfePayments.md) |  |  [optional] |
 |**references** | [**List&lt;DfeReference&gt;**](DfeReference.md) |  |  [optional] |
 |**note** | **String** |  |  [optional] |
+|**authorizedDateTime** | **String** |  |  [optional] |
 |**canceledDateTime** | **String** |  |  [optional] |
 
 

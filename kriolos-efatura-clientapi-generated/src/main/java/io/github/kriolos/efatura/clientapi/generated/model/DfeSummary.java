@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.time.LocalDate;
 import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.github.kriolos.efatura.clientapi.generated.JSON;
@@ -31,6 +32,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
  */
 @JsonPropertyOrder({
   DfeSummary.JSON_PROPERTY_ID,
+  DfeSummary.JSON_PROPERTY_ISSUE_MODE,
   DfeSummary.JSON_PROPERTY_DOCUMENT_TYPE_CODE,
   DfeSummary.JSON_PROPERTY_LED_CODE,
   DfeSummary.JSON_PROPERTY_EMITTER_TAX_ID,
@@ -38,17 +40,23 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   DfeSummary.JSON_PROPERTY_RECEIVER_TAX_ID_COUNTRY_CODE,
   DfeSummary.JSON_PROPERTY_RECEIVER_TAX_ID,
   DfeSummary.JSON_PROPERTY_RECEIVER_NAME,
+  DfeSummary.JSON_PROPERTY_SOFTWARE_CODE,
   DfeSummary.JSON_PROPERTY_PAYABLE_AMOUNT,
   DfeSummary.JSON_PROPERTY_TAX_TOTAL_AMOUNT,
+  DfeSummary.JSON_PROPERTY_ISSUE_DATE_TIME,
   DfeSummary.JSON_PROPERTY_AUTHORIZED_DATE_TIME,
+  DfeSummary.JSON_PROPERTY_ISSUE_AUTHORIZED_DELAY_MILLISECONDS,
   DfeSummary.JSON_PROPERTY_CANCELED_DATE_TIME,
   DfeSummary.JSON_PROPERTY_ISSUE_DIRECTION
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-03T09:47:51.391128802-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T10:15:19.824086604-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class DfeSummary {
   public static final String JSON_PROPERTY_ID = "Id";
   private String id;
+
+  public static final String JSON_PROPERTY_ISSUE_MODE = "IssueMode";
+  private Integer issueMode;
 
   public static final String JSON_PROPERTY_DOCUMENT_TYPE_CODE = "DocumentTypeCode";
   private Integer documentTypeCode;
@@ -71,17 +79,26 @@ public class DfeSummary {
   public static final String JSON_PROPERTY_RECEIVER_NAME = "ReceiverName";
   private String receiverName;
 
+  public static final String JSON_PROPERTY_SOFTWARE_CODE = "SoftwareCode";
+  private String softwareCode;
+
   public static final String JSON_PROPERTY_PAYABLE_AMOUNT = "PayableAmount";
   private Double payableAmount;
 
   public static final String JSON_PROPERTY_TAX_TOTAL_AMOUNT = "TaxTotalAmount";
   private Double taxTotalAmount;
 
+  public static final String JSON_PROPERTY_ISSUE_DATE_TIME = "IssueDateTime";
+  private LocalDate issueDateTime;
+
   public static final String JSON_PROPERTY_AUTHORIZED_DATE_TIME = "AuthorizedDateTime";
-  private String authorizedDateTime;
+  private LocalDate authorizedDateTime;
+
+  public static final String JSON_PROPERTY_ISSUE_AUTHORIZED_DELAY_MILLISECONDS = "IssueAuthorizedDelayMilliseconds";
+  private Long issueAuthorizedDelayMilliseconds;
 
   public static final String JSON_PROPERTY_CANCELED_DATE_TIME = "CanceledDateTime";
-  private String canceledDateTime;
+  private LocalDate canceledDateTime;
 
   public static final String JSON_PROPERTY_ISSUE_DIRECTION = "IssueDirection";
   private String issueDirection;
@@ -111,6 +128,31 @@ public class DfeSummary {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setId(String id) {
     this.id = id;
+  }
+
+
+  public DfeSummary issueMode(Integer issueMode) {
+    this.issueMode = issueMode;
+    return this;
+  }
+
+  /**
+   * Get issueMode
+   * @return issueMode
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ISSUE_MODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public Integer getIssueMode() {
+    return issueMode;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ISSUE_MODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setIssueMode(Integer issueMode) {
+    this.issueMode = issueMode;
   }
 
 
@@ -289,6 +331,31 @@ public class DfeSummary {
   }
 
 
+  public DfeSummary softwareCode(String softwareCode) {
+    this.softwareCode = softwareCode;
+    return this;
+  }
+
+  /**
+   * Get softwareCode
+   * @return softwareCode
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_SOFTWARE_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public String getSoftwareCode() {
+    return softwareCode;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SOFTWARE_CODE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setSoftwareCode(String softwareCode) {
+    this.softwareCode = softwareCode;
+  }
+
+
   public DfeSummary payableAmount(Double payableAmount) {
     this.payableAmount = payableAmount;
     return this;
@@ -339,7 +406,32 @@ public class DfeSummary {
   }
 
 
-  public DfeSummary authorizedDateTime(String authorizedDateTime) {
+  public DfeSummary issueDateTime(LocalDate issueDateTime) {
+    this.issueDateTime = issueDateTime;
+    return this;
+  }
+
+  /**
+   * Get issueDateTime
+   * @return issueDateTime
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ISSUE_DATE_TIME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public LocalDate getIssueDateTime() {
+    return issueDateTime;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ISSUE_DATE_TIME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setIssueDateTime(LocalDate issueDateTime) {
+    this.issueDateTime = issueDateTime;
+  }
+
+
+  public DfeSummary authorizedDateTime(LocalDate authorizedDateTime) {
     this.authorizedDateTime = authorizedDateTime;
     return this;
   }
@@ -352,19 +444,44 @@ public class DfeSummary {
   @JsonProperty(JSON_PROPERTY_AUTHORIZED_DATE_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public String getAuthorizedDateTime() {
+  public LocalDate getAuthorizedDateTime() {
     return authorizedDateTime;
   }
 
 
   @JsonProperty(JSON_PROPERTY_AUTHORIZED_DATE_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setAuthorizedDateTime(String authorizedDateTime) {
+  public void setAuthorizedDateTime(LocalDate authorizedDateTime) {
     this.authorizedDateTime = authorizedDateTime;
   }
 
 
-  public DfeSummary canceledDateTime(String canceledDateTime) {
+  public DfeSummary issueAuthorizedDelayMilliseconds(Long issueAuthorizedDelayMilliseconds) {
+    this.issueAuthorizedDelayMilliseconds = issueAuthorizedDelayMilliseconds;
+    return this;
+  }
+
+  /**
+   * Get issueAuthorizedDelayMilliseconds
+   * @return issueAuthorizedDelayMilliseconds
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ISSUE_AUTHORIZED_DELAY_MILLISECONDS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public Long getIssueAuthorizedDelayMilliseconds() {
+    return issueAuthorizedDelayMilliseconds;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ISSUE_AUTHORIZED_DELAY_MILLISECONDS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setIssueAuthorizedDelayMilliseconds(Long issueAuthorizedDelayMilliseconds) {
+    this.issueAuthorizedDelayMilliseconds = issueAuthorizedDelayMilliseconds;
+  }
+
+
+  public DfeSummary canceledDateTime(LocalDate canceledDateTime) {
     this.canceledDateTime = canceledDateTime;
     return this;
   }
@@ -377,14 +494,14 @@ public class DfeSummary {
   @JsonProperty(JSON_PROPERTY_CANCELED_DATE_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public String getCanceledDateTime() {
+  public LocalDate getCanceledDateTime() {
     return canceledDateTime;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CANCELED_DATE_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCanceledDateTime(String canceledDateTime) {
+  public void setCanceledDateTime(LocalDate canceledDateTime) {
     this.canceledDateTime = canceledDateTime;
   }
 
@@ -427,6 +544,7 @@ public class DfeSummary {
     }
     DfeSummary dfeSummary = (DfeSummary) o;
     return Objects.equals(this.id, dfeSummary.id) &&
+        Objects.equals(this.issueMode, dfeSummary.issueMode) &&
         Objects.equals(this.documentTypeCode, dfeSummary.documentTypeCode) &&
         Objects.equals(this.ledCode, dfeSummary.ledCode) &&
         Objects.equals(this.emitterTaxId, dfeSummary.emitterTaxId) &&
@@ -434,16 +552,19 @@ public class DfeSummary {
         Objects.equals(this.receiverTaxIdCountryCode, dfeSummary.receiverTaxIdCountryCode) &&
         Objects.equals(this.receiverTaxId, dfeSummary.receiverTaxId) &&
         Objects.equals(this.receiverName, dfeSummary.receiverName) &&
+        Objects.equals(this.softwareCode, dfeSummary.softwareCode) &&
         Objects.equals(this.payableAmount, dfeSummary.payableAmount) &&
         Objects.equals(this.taxTotalAmount, dfeSummary.taxTotalAmount) &&
+        Objects.equals(this.issueDateTime, dfeSummary.issueDateTime) &&
         Objects.equals(this.authorizedDateTime, dfeSummary.authorizedDateTime) &&
+        Objects.equals(this.issueAuthorizedDelayMilliseconds, dfeSummary.issueAuthorizedDelayMilliseconds) &&
         Objects.equals(this.canceledDateTime, dfeSummary.canceledDateTime) &&
         Objects.equals(this.issueDirection, dfeSummary.issueDirection);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, documentTypeCode, ledCode, emitterTaxId, emitterName, receiverTaxIdCountryCode, receiverTaxId, receiverName, payableAmount, taxTotalAmount, authorizedDateTime, canceledDateTime, issueDirection);
+    return Objects.hash(id, issueMode, documentTypeCode, ledCode, emitterTaxId, emitterName, receiverTaxIdCountryCode, receiverTaxId, receiverName, softwareCode, payableAmount, taxTotalAmount, issueDateTime, authorizedDateTime, issueAuthorizedDelayMilliseconds, canceledDateTime, issueDirection);
   }
 
   @Override
@@ -451,6 +572,7 @@ public class DfeSummary {
     StringBuilder sb = new StringBuilder();
     sb.append("class DfeSummary {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    issueMode: ").append(toIndentedString(issueMode)).append("\n");
     sb.append("    documentTypeCode: ").append(toIndentedString(documentTypeCode)).append("\n");
     sb.append("    ledCode: ").append(toIndentedString(ledCode)).append("\n");
     sb.append("    emitterTaxId: ").append(toIndentedString(emitterTaxId)).append("\n");
@@ -458,9 +580,12 @@ public class DfeSummary {
     sb.append("    receiverTaxIdCountryCode: ").append(toIndentedString(receiverTaxIdCountryCode)).append("\n");
     sb.append("    receiverTaxId: ").append(toIndentedString(receiverTaxId)).append("\n");
     sb.append("    receiverName: ").append(toIndentedString(receiverName)).append("\n");
+    sb.append("    softwareCode: ").append(toIndentedString(softwareCode)).append("\n");
     sb.append("    payableAmount: ").append(toIndentedString(payableAmount)).append("\n");
     sb.append("    taxTotalAmount: ").append(toIndentedString(taxTotalAmount)).append("\n");
+    sb.append("    issueDateTime: ").append(toIndentedString(issueDateTime)).append("\n");
     sb.append("    authorizedDateTime: ").append(toIndentedString(authorizedDateTime)).append("\n");
+    sb.append("    issueAuthorizedDelayMilliseconds: ").append(toIndentedString(issueAuthorizedDelayMilliseconds)).append("\n");
     sb.append("    canceledDateTime: ").append(toIndentedString(canceledDateTime)).append("\n");
     sb.append("    issueDirection: ").append(toIndentedString(issueDirection)).append("\n");
     sb.append("}");

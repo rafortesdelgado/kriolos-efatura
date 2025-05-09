@@ -30,45 +30,20 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
  * DfeFiscalDocument
  */
 @JsonPropertyOrder({
-  DfeFiscalDocument.JSON_PROPERTY_VALUE,
-  DfeFiscalDocument.JSON_PROPERTY_IS_OLD_DOCUMENT
+  DfeFiscalDocument.JSON_PROPERTY_IS_OLD_DOCUMENT,
+  DfeFiscalDocument.JSON_PROPERTY_VALUE
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-03T09:47:51.391128802-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T10:15:19.824086604-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class DfeFiscalDocument {
-  public static final String JSON_PROPERTY_VALUE = "Value";
-  private String value;
-
   public static final String JSON_PROPERTY_IS_OLD_DOCUMENT = "IsOldDocument";
   private Boolean isOldDocument;
 
+  public static final String JSON_PROPERTY_VALUE = "Value";
+  private String value;
+
   public DfeFiscalDocument() { 
   }
-
-  public DfeFiscalDocument value(String value) {
-    this.value = value;
-    return this;
-  }
-
-  /**
-   * Get value
-   * @return value
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_VALUE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public String getValue() {
-    return value;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_VALUE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setValue(String value) {
-    this.value = value;
-  }
-
 
   public DfeFiscalDocument isOldDocument(Boolean isOldDocument) {
     this.isOldDocument = isOldDocument;
@@ -95,6 +70,31 @@ public class DfeFiscalDocument {
   }
 
 
+  public DfeFiscalDocument value(String value) {
+    this.value = value;
+    return this;
+  }
+
+  /**
+   * Get value
+   * @return value
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_VALUE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public String getValue() {
+    return value;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_VALUE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setValue(String value) {
+    this.value = value;
+  }
+
+
   /**
    * Return true if this DfeFiscalDocument object is equal to o.
    */
@@ -107,21 +107,21 @@ public class DfeFiscalDocument {
       return false;
     }
     DfeFiscalDocument dfeFiscalDocument = (DfeFiscalDocument) o;
-    return Objects.equals(this.value, dfeFiscalDocument.value) &&
-        Objects.equals(this.isOldDocument, dfeFiscalDocument.isOldDocument);
+    return Objects.equals(this.isOldDocument, dfeFiscalDocument.isOldDocument) &&
+        Objects.equals(this.value, dfeFiscalDocument.value);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(value, isOldDocument);
+    return Objects.hash(isOldDocument, value);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class DfeFiscalDocument {\n");
-    sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("    isOldDocument: ").append(toIndentedString(isOldDocument)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("}");
     return sb.toString();
   }

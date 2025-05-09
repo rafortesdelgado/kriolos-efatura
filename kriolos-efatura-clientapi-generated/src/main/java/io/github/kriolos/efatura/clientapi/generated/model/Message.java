@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.time.LocalDate;
 import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.github.kriolos.efatura.clientapi.generated.JSON;
@@ -39,13 +40,13 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   Message.JSON_PROPERTY_TYPE
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-03T09:47:51.391128802-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T10:15:19.824086604-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class Message {
   public static final String JSON_PROPERTY_CODE = "code";
   private String code;
 
   public static final String JSON_PROPERTY_DATE_TIME = "dateTime";
-  private String dateTime;
+  private LocalDate dateTime;
 
   public static final String JSON_PROPERTY_DESCRIPTION = "description";
   private String description;
@@ -90,7 +91,7 @@ public class Message {
   }
 
 
-  public Message dateTime(String dateTime) {
+  public Message dateTime(LocalDate dateTime) {
     this.dateTime = dateTime;
     return this;
   }
@@ -103,14 +104,14 @@ public class Message {
   @JsonProperty(JSON_PROPERTY_DATE_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public String getDateTime() {
+  public LocalDate getDateTime() {
     return dateTime;
   }
 
 
   @JsonProperty(JSON_PROPERTY_DATE_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setDateTime(String dateTime) {
+  public void setDateTime(LocalDate dateTime) {
     this.dateTime = dateTime;
   }
 

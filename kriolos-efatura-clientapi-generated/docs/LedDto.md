@@ -13,7 +13,7 @@
 |**addressCode** | **String** |  |  [optional] |
 |**addressDetail** | **String** |  |  [optional] |
 |**softwareCode** | **String** |  |  [optional] |
-|**created** | **String** |  |  [optional] |
+|**created** | **LocalDate** |  |  [optional] |
 
 
 

@@ -21,7 +21,10 @@ public class ProgramLoop
 		String line;
 		while( !(line=input.nextLine().trim()).isBlank())
 		{
-			list.add(line.split(";"));
+			if(!line.startsWith("#")) 
+			{
+				list.add(line.split(";"));
+			}
 		}
 
 		input.close();
@@ -48,8 +51,8 @@ public class ProgramLoop
 				apiCli.setAccessToken(token);
 				
 				FiscalReportService frs = new FiscalReportService(dfeApi, clientName);
-				ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers("2024", null, null), clientName);  
-				ExportToCsv.ExportDfeSummary(frs.getMod106Clients("2024", null, null), clientName);  
+				ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers(null, "2025-01-01", null), clientName);  
+				ExportToCsv.ExportDfeSummary(frs.getMod106Clients(null, "2025-01-01", null), clientName);  
 
 			}
 			catch(Exception e ) 

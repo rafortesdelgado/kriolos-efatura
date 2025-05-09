@@ -4,7 +4,7 @@ e-Fatura API
 
 - API version: 1.2.0
 
-- Build date: 2025-01-03T09:47:51.391128802-01:00[Atlantic/Cape_Verde]
+- Build date: 2025-05-09T10:15:19.824086604-01:00[Atlantic/Cape_Verde]
 
 - Generator version: 7.7.0
 
@@ -45,7 +45,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>io.github.kriolos.efatura</groupId>
   <artifactId>kriolos-efatura-clientapi-generated</artifactId>
-  <version>1.2.2</version>
+  <version>1.2.3</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -61,7 +61,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "io.github.kriolos.efatura:kriolos-efatura-clientapi-generated:1.2.2"
+     implementation "io.github.kriolos.efatura:kriolos-efatura-clientapi-generated:1.2.3"
   }
 ```
 
@@ -75,7 +75,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-- `target/kriolos-efatura-clientapi-generated-1.2.2.jar`
+- `target/kriolos-efatura-clientapi-generated-1.2.3.jar`
 - `target/lib/*.jar`
 
 ## Getting Started
@@ -127,7 +127,7 @@ Class | Method | HTTP request | Description
 *DataApi* | [**publicDataResourceGetPeDateTime**](docs/DataApi.md#publicDataResourceGetPeDateTime) | **GET** /v1/data/pe-date-time | Devolve a data/hora atual da Plataforma Eletrónica.
 *DfeApi* | [**dfeResourceAuthorizeSelfBilling**](docs/DfeApi.md#dfeResourceAuthorizeSelfBilling) | **POST** /v1/dfe/self-billing/authorize | Pedido de autorização para autofaturação.
 *DfeApi* | [**dfeResourceCreateDfe**](docs/DfeApi.md#dfeResourceCreateDfe) | **POST** /v1/dfe | Comunicação de novos DFEs.
-*DfeApi* | [**dfeResourceDeleteDfeEvent**](docs/DfeApi.md#dfeResourceDeleteDfeEvent) | **DELETE** /v1/dfe | Elimina todos os DFEs e os respetivos eventos no repositório de Homologação/Teste.
+*DfeApi* | [**dfeResourceDeleteDfeAndEvent**](docs/DfeApi.md#dfeResourceDeleteDfeAndEvent) | **DELETE** /v1/dfe | Elimina todos os DFEs e os respetivos eventos no repositório de Homologação/Teste.
 *DfeApi* | [**dfeResourceGetDfeById**](docs/DfeApi.md#dfeResourceGetDfeById) | **GET** /v1/dfe/{Id} | Consulta de DFE com IUD.
 *DfeApi* | [**dfeResourceGetDfePdfById**](docs/DfeApi.md#dfeResourceGetDfePdfById) | **GET** /v1/dfe/pdf/{Id} | Consulta de PDF de um DFE com IUD.
 *DfeApi* | [**dfeResourceGetDfeSummaryListV1**](docs/DfeApi.md#dfeResourceGetDfeSummaryListV1) | **GET** /v1/dfe | Lista de DFEs limitada em 10000 DFEs.
@@ -143,6 +143,11 @@ Class | Method | HTTP request | Description
 *LedApi* | [**ledResourceGetAllLeds**](docs/LedApi.md#ledResourceGetAllLeds) | **GET** /v1/led | Lista de LEDs.
 *LedApi* | [**ledResourceGetLedByCode**](docs/LedApi.md#ledResourceGetLedByCode) | **GET** /v1/led/{LedCode} | Consulta de LED com código.
 *LedApi* | [**ledResourceUpdateLed**](docs/LedApi.md#ledResourceUpdateLed) | **PUT** /v1/led/{LedCode} | Atualiza uma LED.
+*OpaccApi* | [**opaccResourceCreateAccountantCustomer**](docs/OpaccApi.md#opaccResourceCreateAccountantCustomer) | **POST** /v1/opacc/accountant-customer | Regista um contribuinte como um cliente de um contabilista certificado.
+*OpaccApi* | [**opaccResourceDeleteAccountantCustomer**](docs/OpaccApi.md#opaccResourceDeleteAccountantCustomer) | **DELETE** /v1/opacc/accountant-customer/{CustomerId} | Elimina um contribuinte como um cliente de um contabilista certificado.
+*OpaccApi* | [**opaccResourceGetAccountantCustomers**](docs/OpaccApi.md#opaccResourceGetAccountantCustomers) | **GET** /v1/opacc/accountant-customer | Lista de contribuintes que são clientes do contabilista certificado representado pelo utilizador autenticado.
+*OpaccApi* | [**opaccResourceGetAccountants**](docs/OpaccApi.md#opaccResourceGetAccountants) | **GET** /v1/opacc/accountant-list | Lista Nacional de Auditores e Contabilistas Certificados Autorizados.
+*OpaccApi* | [**opaccResourceUploadAccountants**](docs/OpaccApi.md#opaccResourceUploadAccountants) | **POST** /v1/opacc/accountant-list | Carrega na PE a Lista Nacional de Auditores e Contabilistas Certificados Autorizados.
 *SoftwareApi* | [**softwareResourceCreateSoftwareCustomer**](docs/SoftwareApi.md#softwareResourceCreateSoftwareCustomer) | **POST** /v1/software/customer | Regista um novo contribuinte cliente de software.
 *SoftwareApi* | [**softwareResourceCreateSoftwareGroupMember**](docs/SoftwareApi.md#softwareResourceCreateSoftwareGroupMember) | **POST** /v1/software/group-member | Regista novo membro de grupo de software.
 *SoftwareApi* | [**softwareResourceCreateSoftwareTransmitter**](docs/SoftwareApi.md#softwareResourceCreateSoftwareTransmitter) | **POST** /v1/software/transmitter | Regista novo transmissor.
@@ -168,6 +173,7 @@ Class | Method | HTTP request | Description
 
  - [Address](docs/Address.md)
  - [Contacts](docs/Contacts.md)
+ - [CvRegion](docs/CvRegion.md)
  - [Dfe](docs/Dfe.md)
  - [DfeDiscount](docs/DfeDiscount.md)
  - [DfeFiscalDocument](docs/DfeFiscalDocument.md)
@@ -195,6 +201,7 @@ Class | Method | HTTP request | Description
  - [DfeTransportDuration](docs/DfeTransportDuration.md)
  - [DfeTransportLocation](docs/DfeTransportLocation.md)
  - [EfContingency](docs/EfContingency.md)
+ - [EfDatePeriod](docs/EfDatePeriod.md)
  - [EfEntriesProcessingResponse](docs/EfEntriesProcessingResponse.md)
  - [EfEntryProcessingResponse](docs/EfEntryProcessingResponse.md)
  - [EfParty](docs/EfParty.md)
@@ -209,18 +216,25 @@ Class | Method | HTTP request | Description
  - [ItemsPaginationObject](docs/ItemsPaginationObject.md)
  - [LedDto](docs/LedDto.md)
  - [Message](docs/Message.md)
+ - [OpaccAccountantCustomerCreateDto](docs/OpaccAccountantCustomerCreateDto.md)
+ - [OpaccAccountantCustomerDto](docs/OpaccAccountantCustomerDto.md)
+ - [OpaccAccountantDto](docs/OpaccAccountantDto.md)
+ - [OpaccCategory](docs/OpaccCategory.md)
  - [PayloadProcessingResponseBoolean](docs/PayloadProcessingResponseBoolean.md)
  - [PayloadProcessingResponseDfe](docs/PayloadProcessingResponseDfe.md)
  - [PayloadProcessingResponseDfeSelfBillingAuthorizeResponse](docs/PayloadProcessingResponseDfeSelfBillingAuthorizeResponse.md)
  - [PayloadProcessingResponseEvent](docs/PayloadProcessingResponseEvent.md)
  - [PayloadProcessingResponseLedDto](docs/PayloadProcessingResponseLedDto.md)
  - [PayloadProcessingResponseListLedDto](docs/PayloadProcessingResponseListLedDto.md)
+ - [PayloadProcessingResponseListOpaccAccountantCustomerDto](docs/PayloadProcessingResponseListOpaccAccountantCustomerDto.md)
+ - [PayloadProcessingResponseListOpaccAccountantDto](docs/PayloadProcessingResponseListOpaccAccountantDto.md)
  - [PayloadProcessingResponseListSearchTaxPayerResponseDto](docs/PayloadProcessingResponseListSearchTaxPayerResponseDto.md)
  - [PayloadProcessingResponseListSoftwareCustomerDto](docs/PayloadProcessingResponseListSoftwareCustomerDto.md)
  - [PayloadProcessingResponseListSoftwareDto](docs/PayloadProcessingResponseListSoftwareDto.md)
  - [PayloadProcessingResponseListSoftwareGroupMemberDto](docs/PayloadProcessingResponseListSoftwareGroupMemberDto.md)
  - [PayloadProcessingResponseListSoftwareTransmitterDto](docs/PayloadProcessingResponseListSoftwareTransmitterDto.md)
  - [PayloadProcessingResponseLong](docs/PayloadProcessingResponseLong.md)
+ - [PayloadProcessingResponseOpaccAccountantCustomerDto](docs/PayloadProcessingResponseOpaccAccountantCustomerDto.md)
  - [PayloadProcessingResponseSoftwareCustomerDto](docs/PayloadProcessingResponseSoftwareCustomerDto.md)
  - [PayloadProcessingResponseSoftwareCustomerEntity](docs/PayloadProcessingResponseSoftwareCustomerEntity.md)
  - [PayloadProcessingResponseSoftwareGroupMemberDto](docs/PayloadProcessingResponseSoftwareGroupMemberDto.md)
@@ -228,6 +242,7 @@ Class | Method | HTTP request | Description
  - [PayloadProcessingResponseSoftwareTransmitterDto](docs/PayloadProcessingResponseSoftwareTransmitterDto.md)
  - [PayloadProcessingResponseSoftwareTransmitterEntity](docs/PayloadProcessingResponseSoftwareTransmitterEntity.md)
  - [PayloadProcessingResponseString](docs/PayloadProcessingResponseString.md)
+ - [ProcessingResponse](docs/ProcessingResponse.md)
  - [SaveLedDto](docs/SaveLedDto.md)
  - [SearchTaxPayerResponseDto](docs/SearchTaxPayerResponseDto.md)
  - [SoftwareCustomerDto](docs/SoftwareCustomerDto.md)

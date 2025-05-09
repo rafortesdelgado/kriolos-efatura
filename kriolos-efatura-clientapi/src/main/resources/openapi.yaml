@@ -1,3 +1,4 @@
+---
 openapi: 3.0.3
 info:
   title: e-Fatura API
@@ -23,6 +24,8 @@ tags:
   description: Recurso para interagir com eventos.
 - name: LED
   description: Recurso para interagir com LEDs.
+- name: OPACC
+  description: Recurso para interagir com OPACC.
 - name: SOFTWARE
   description: Recurso para interagir com software.
 - name: TAXPAYER
@@ -65,7 +68,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_cert_read
-        - cv_ef_cert_all
   /v1/data/pe-date-time:
     get:
       tags:
@@ -158,7 +160,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_list
-        - cv_ef_dfe_all
     post:
       tags:
       - DFE
@@ -198,12 +199,11 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_create
-        - cv_ef_dfe_all
     delete:
       tags:
       - DFE
       summary: Elimina todos os DFEs e os respetivos eventos no repositório de Homologação/Teste.
-      operationId: DfeResource_deleteDfeEvent
+      operationId: DfeResource_deleteDfeAndEvent
       parameters:
       - name: cv-ef-repository-code
         in: header
@@ -226,7 +226,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_delete
-        - cv_ef_dfe_all
   /v1/dfe/pdf/{Id}:
     get:
       tags:
@@ -260,7 +259,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_iud
-        - cv_ef_dfe_all
   /v1/dfe/self-billing/authorize:
     post:
       tags:
@@ -291,7 +289,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_self_billing_authorize
-        - cv_ef_dfe_all
   /v1/dfe/xml/{Id}:
     get:
       tags:
@@ -326,7 +323,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_iud
-        - cv_ef_dfe_all
   /v1/dfe/{Id}:
     get:
       tags:
@@ -360,7 +356,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_iud
-        - cv_ef_dfe_all
   /v1/event:
     get:
       tags:
@@ -429,7 +424,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_read
-        - cv_ef_event_all
     post:
       tags:
       - EVENT
@@ -469,7 +463,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_create
-        - cv_ef_event_all
   /v1/event/xml/{Id}:
     get:
       tags:
@@ -503,7 +496,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_read
-        - cv_ef_event_all
   /v1/event/{Id}:
     get:
       tags:
@@ -537,7 +529,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_read
-        - cv_ef_event_all
   /v1/led:
     get:
       tags:
@@ -561,7 +552,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_read
-        - cv_ef_led_all
     post:
       tags:
       - LED
@@ -586,7 +576,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_create
-        - cv_ef_led_all
   /v1/led/{LedCode}:
     get:
       tags:
@@ -613,7 +602,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_read
-        - cv_ef_led_all
     put:
       tags:
       - LED
@@ -644,7 +632,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_update
-        - cv_ef_led_all
     delete:
       tags:
       - LED
@@ -670,7 +657,126 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_delete
-        - cv_ef_led_all
+  /v1/opacc/accountant-customer:
+    get:
+      tags:
+      - OPACC
+      summary: Lista de contribuintes que são clientes do contabilista certificado
+        representado pelo utilizador autenticado.
+      operationId: OpaccResource_getAccountantCustomers
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseListOpaccAccountantCustomerDto'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme: []
+    post:
+      tags:
+      - OPACC
+      summary: Regista um contribuinte como um cliente de um contabilista certificado.
+      operationId: OpaccResource_createAccountantCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpaccAccountantCustomerCreateDto'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseOpaccAccountantCustomerDto'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme: []
+  /v1/opacc/accountant-customer/{CustomerId}:
+    delete:
+      tags:
+      - OPACC
+      summary: Elimina um contribuinte como um cliente de um contabilista certificado.
+      operationId: OpaccResource_deleteAccountantCustomer
+      parameters:
+      - name: CustomerId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessingResponse'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme: []
+  /v1/opacc/accountant-list:
+    get:
+      tags:
+      - OPACC
+      summary: Lista Nacional de Auditores e Contabilistas Certificados Autorizados.
+      operationId: OpaccResource_getAccountants
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseListOpaccAccountantDto'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_opacc_read_accountant_list
+    post:
+      tags:
+      - OPACC
+      summary: Carrega na PE a Lista Nacional de Auditores e Contabilistas Certificados
+        Autorizados.
+      operationId: OpaccResource_uploadAccountants
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  format: binary
+                  type: string
+            encoding:
+              file:
+                contentType: application/octet-stream
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessingResponse'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_opacc_upload_accountant_list
   /v1/software:
     get:
       tags:
@@ -692,7 +798,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_read_list
-        - cv_ef_sw_all
   /v1/software/customer:
     get:
       tags:
@@ -713,8 +818,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_read
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
     post:
       tags:
       - SOFTWARE
@@ -739,8 +842,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_create
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
   /v1/software/customer/{Id}:
     get:
       tags:
@@ -767,8 +868,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_read
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
     put:
       tags:
       - SOFTWARE
@@ -799,8 +898,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_update
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
     delete:
       tags:
       - SOFTWARE
@@ -826,8 +923,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_delete
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
   /v1/software/customer/{Id}/enabled:
     put:
       tags:
@@ -859,8 +954,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_update
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
   /v1/software/group-member:
     get:
       tags:
@@ -881,8 +974,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_read
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
     post:
       tags:
       - SOFTWARE
@@ -907,8 +998,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_create
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
   /v1/software/group-member/{Id}:
     get:
       tags:
@@ -935,8 +1024,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_read
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
     put:
       tags:
       - SOFTWARE
@@ -967,8 +1054,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_update
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
     delete:
       tags:
       - SOFTWARE
@@ -994,8 +1079,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_delete
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
   /v1/software/transmitter:
     get:
       tags:
@@ -1016,8 +1099,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_read
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
     post:
       tags:
       - SOFTWARE
@@ -1042,8 +1123,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_create
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
   /v1/software/transmitter/{Id}:
     get:
       tags:
@@ -1070,8 +1149,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_read
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
     put:
       tags:
       - SOFTWARE
@@ -1102,8 +1179,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_update
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
     delete:
       tags:
       - SOFTWARE
@@ -1129,8 +1204,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_delete
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
   /v1/software/transmitter/{Id}/enabled:
     put:
       tags:
@@ -1162,8 +1235,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_update
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
   /v1/taxpayer/search:
     get:
       tags:
@@ -1201,7 +1272,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_tp_search
-        - cv_ef_tp_all
   /v2/dfe:
     get:
       tags:
@@ -1286,7 +1356,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_list
-        - cv_ef_dfe_all
   /v2/event:
     get:
       tags:
@@ -1363,7 +1432,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_read
-        - cv_ef_event_all
 components:
   schemas:
     Address:
@@ -1406,10 +1474,14 @@ components:
           type: string
         Website:
           type: string
-    Date:
-      format: date-cv
+    CvRegion:
+      enum:
+      - B
+      - S
       type: string
-      pattern:  /([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/
+    Date:
+      format: date
+      type: string
       example: 2022-03-10
     Dfe:
       type: object
@@ -1418,15 +1490,17 @@ components:
           type: string
         Version:
           type: string
-        Transmission:
-          $ref: '#/components/schemas/EfTransmission'
         RepositoryCode:
           format: int32
           type: integer
+        Transmission:
+          $ref: '#/components/schemas/EfTransmission'
         DocumentTypeCode:
           format: int32
           type: integer
         IsSpecimen:
+          type: boolean
+        IsIsolatedAct:
           type: boolean
         SelfBilling:
           $ref: '#/components/schemas/DfeSelfBilling'
@@ -1456,6 +1530,8 @@ components:
           type: string
         IssueReasonDescription:
           type: string
+        RappelPeriod:
+          $ref: '#/components/schemas/EfDatePeriod'
         EmitterParty:
           $ref: '#/components/schemas/EfParty'
         ReceiverParty:
@@ -1491,6 +1567,8 @@ components:
             $ref: '#/components/schemas/DfeReference'
         Note:
           type: string
+        AuthorizedDateTime:
+          type: string
         CanceledDateTime:
           type: string
     DfeDiscount:
@@ -1504,10 +1582,10 @@ components:
     DfeFiscalDocument:
       type: object
       properties:
-        Value:
-          type: string
         IsOldDocument:
           type: boolean
+        Value:
+          type: string
     DfeLine:
       type: object
       properties:
@@ -1781,6 +1859,9 @@ components:
       properties:
         Id:
           type: string
+        IssueMode:
+          format: int32
+          type: integer
         DocumentTypeCode:
           format: int32
           type: integer
@@ -1798,14 +1879,21 @@ components:
           type: string
         ReceiverName:
           type: string
+        SoftwareCode:
+          type: string
         PayableAmount:
           format: double
           type: number
         TaxTotalAmount:
           format: double
           type: number
+        IssueDateTime:
+          $ref: '#/components/schemas/Date'
         AuthorizedDateTime:
           $ref: '#/components/schemas/Date'
+        IssueAuthorizedDelayMilliseconds:
+          format: int64
+          type: integer
         CanceledDateTime:
           $ref: '#/components/schemas/Date'
         IssueDirection:
@@ -1882,6 +1970,13 @@ components:
           format: int32
           type: integer
         ReasonDescription:
+          type: string
+    EfDatePeriod:
+      type: object
+      properties:
+        StartDate:
+          type: string
+        EndDate:
           type: string
     EfEntriesProcessingResponse:
       type: object
@@ -1977,11 +2072,11 @@ components:
           type: string
         Version:
           type: string
-        Transmission:
-          $ref: '#/components/schemas/EfTransmission'
         RepositoryCode:
           format: int32
           type: integer
+        Transmission:
+          $ref: '#/components/schemas/EfTransmission'
         EventTypeCode:
           type: string
         EmitterTaxId:
@@ -2167,6 +2262,54 @@ components:
           type: string
           xml:
             name: Type
+    OpaccAccountantCustomerCreateDto:
+      type: object
+      properties:
+        customerTaxId:
+          type: string
+    OpaccAccountantCustomerDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+        customerTaxId:
+          format: int32
+          type: integer
+        customerName:
+          type: string
+        customerJoinedPe:
+          type: boolean
+        accountantTaxId:
+          format: int32
+          type: integer
+        createdAt:
+          $ref: '#/components/schemas/Date'
+    OpaccAccountantDto:
+      type: object
+      properties:
+        taxId:
+          format: int32
+          type: integer
+        name:
+          type: string
+        opaccId:
+          format: int32
+          type: integer
+        region:
+          $ref: '#/components/schemas/CvRegion'
+        category:
+          $ref: '#/components/schemas/OpaccCategory'
+        createdAt:
+          $ref: '#/components/schemas/Date'
+        userJoinedPe:
+          type: boolean
+    OpaccCategory:
+      enum:
+      - A
+      - C
+      - SA
+      - SC
+      type: string
     PayloadProcessingResponseBoolean:
       type: object
       properties:
@@ -2299,6 +2442,52 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LedDto'
+          xml:
+            name: Payload
+      xml:
+        name: Response
+    PayloadProcessingResponseListOpaccAccountantCustomerDto:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
+        payload:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpaccAccountantCustomerDto'
+          xml:
+            name: Payload
+      xml:
+        name: Response
+    PayloadProcessingResponseListOpaccAccountantDto:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
+        payload:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpaccAccountantDto'
           xml:
             name: Payload
       xml:
@@ -2436,6 +2625,29 @@ components:
         payload:
           format: int64
           type: integer
+          xml:
+            name: Payload
+      xml:
+        name: Response
+    PayloadProcessingResponseOpaccAccountantCustomerDto:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
+        payload:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OpaccAccountantCustomerDto'
           xml:
             name: Payload
       xml:
@@ -2597,6 +2809,23 @@ components:
           type: string
           xml:
             name: Payload
+      xml:
+        name: Response
+    ProcessingResponse:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
       xml:
         name: Response
     SaveLedDto:

@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +46,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   SoftwareDto.JSON_PROPERTY_RECEIVE_LEVEL_DATE
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-03T09:47:51.391128802-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T10:15:19.824086604-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class SoftwareDto {
   public static final String JSON_PROPERTY_CODE = "code";
   private String code;
@@ -60,7 +61,7 @@ public class SoftwareDto {
   private Integer taxId;
 
   public static final String JSON_PROPERTY_CREATED = "created";
-  private String created;
+  private LocalDate created;
 
   public static final String JSON_PROPERTY_INTERNAL = "internal";
   private Boolean internal;
@@ -75,10 +76,10 @@ public class SoftwareDto {
   private List<Integer> groupMembers = new ArrayList<>();
 
   public static final String JSON_PROPERTY_TRANSMIT_LEVEL_DATE = "transmitLevelDate";
-  private String transmitLevelDate;
+  private LocalDate transmitLevelDate;
 
   public static final String JSON_PROPERTY_RECEIVE_LEVEL_DATE = "receiveLevelDate";
-  private String receiveLevelDate;
+  private LocalDate receiveLevelDate;
 
   public SoftwareDto() { 
   }
@@ -183,7 +184,7 @@ public class SoftwareDto {
   }
 
 
-  public SoftwareDto created(String created) {
+  public SoftwareDto created(LocalDate created) {
     this.created = created;
     return this;
   }
@@ -196,14 +197,14 @@ public class SoftwareDto {
   @JsonProperty(JSON_PROPERTY_CREATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public String getCreated() {
+  public LocalDate getCreated() {
     return created;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CREATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCreated(String created) {
+  public void setCreated(LocalDate created) {
     this.created = created;
   }
 
@@ -316,7 +317,7 @@ public class SoftwareDto {
   }
 
 
-  public SoftwareDto transmitLevelDate(String transmitLevelDate) {
+  public SoftwareDto transmitLevelDate(LocalDate transmitLevelDate) {
     this.transmitLevelDate = transmitLevelDate;
     return this;
   }
@@ -329,19 +330,19 @@ public class SoftwareDto {
   @JsonProperty(JSON_PROPERTY_TRANSMIT_LEVEL_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public String getTransmitLevelDate() {
+  public LocalDate getTransmitLevelDate() {
     return transmitLevelDate;
   }
 
 
   @JsonProperty(JSON_PROPERTY_TRANSMIT_LEVEL_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setTransmitLevelDate(String transmitLevelDate) {
+  public void setTransmitLevelDate(LocalDate transmitLevelDate) {
     this.transmitLevelDate = transmitLevelDate;
   }
 
 
-  public SoftwareDto receiveLevelDate(String receiveLevelDate) {
+  public SoftwareDto receiveLevelDate(LocalDate receiveLevelDate) {
     this.receiveLevelDate = receiveLevelDate;
     return this;
   }
@@ -354,14 +355,14 @@ public class SoftwareDto {
   @JsonProperty(JSON_PROPERTY_RECEIVE_LEVEL_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public String getReceiveLevelDate() {
+  public LocalDate getReceiveLevelDate() {
     return receiveLevelDate;
   }
 
 
   @JsonProperty(JSON_PROPERTY_RECEIVE_LEVEL_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setReceiveLevelDate(String receiveLevelDate) {
+  public void setReceiveLevelDate(LocalDate receiveLevelDate) {
     this.receiveLevelDate = receiveLevelDate;
   }
 

@@ -8,7 +8,7 @@
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
 |**code** | **String** |  |  [optional] |
-|**dateTime** | **String** |  |  [optional] |
+|**dateTime** | **LocalDate** |  |  [optional] |
 |**description** | **String** |  |  [optional] |
 |**index** | **Integer** |  |  [optional] |
 |**location** | **String** |  |  [optional] |

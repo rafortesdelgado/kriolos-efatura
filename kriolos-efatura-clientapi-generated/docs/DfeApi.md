@@ -6,7 +6,7 @@ All URIs are relative to *http://localhost*
 |------------- | ------------- | -------------|
 | [**dfeResourceAuthorizeSelfBilling**](DfeApi.md#dfeResourceAuthorizeSelfBilling) | **POST** /v1/dfe/self-billing/authorize | Pedido de autorização para autofaturação. |
 | [**dfeResourceCreateDfe**](DfeApi.md#dfeResourceCreateDfe) | **POST** /v1/dfe | Comunicação de novos DFEs. |
-| [**dfeResourceDeleteDfeEvent**](DfeApi.md#dfeResourceDeleteDfeEvent) | **DELETE** /v1/dfe | Elimina todos os DFEs e os respetivos eventos no repositório de Homologação/Teste. |
+| [**dfeResourceDeleteDfeAndEvent**](DfeApi.md#dfeResourceDeleteDfeAndEvent) | **DELETE** /v1/dfe | Elimina todos os DFEs e os respetivos eventos no repositório de Homologação/Teste. |
 | [**dfeResourceGetDfeById**](DfeApi.md#dfeResourceGetDfeById) | **GET** /v1/dfe/{Id} | Consulta de DFE com IUD. |
 | [**dfeResourceGetDfePdfById**](DfeApi.md#dfeResourceGetDfePdfById) | **GET** /v1/dfe/pdf/{Id} | Consulta de PDF de um DFE com IUD. |
 | [**dfeResourceGetDfeSummaryListV1**](DfeApi.md#dfeResourceGetDfeSummaryListV1) | **GET** /v1/dfe | Lista de DFEs limitada em 10000 DFEs. |
@@ -160,9 +160,9 @@ public class Example {
 | **403** | Not Allowed |  -  |
 
 
-## dfeResourceDeleteDfeEvent
+## dfeResourceDeleteDfeAndEvent
 
-> PayloadProcessingResponseLong dfeResourceDeleteDfeEvent(cvEfRepositoryCode)
+> PayloadProcessingResponseLong dfeResourceDeleteDfeAndEvent(cvEfRepositoryCode)
 
 Elimina todos os DFEs e os respetivos eventos no repositório de Homologação/Teste.
 
@@ -189,10 +189,10 @@ public class Example {
         DfeApi apiInstance = new DfeApi(defaultClient);
         String cvEfRepositoryCode = "cvEfRepositoryCode_example"; // String | 
         try {
-            PayloadProcessingResponseLong result = apiInstance.dfeResourceDeleteDfeEvent(cvEfRepositoryCode);
+            PayloadProcessingResponseLong result = apiInstance.dfeResourceDeleteDfeAndEvent(cvEfRepositoryCode);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DfeApi#dfeResourceDeleteDfeEvent");
+            System.err.println("Exception when calling DfeApi#dfeResourceDeleteDfeAndEvent");
             System.err.println("Status code: " + e.getCode());
             System.err.println("Reason: " + e.getResponseBody());
             System.err.println("Response headers: " + e.getResponseHeaders());

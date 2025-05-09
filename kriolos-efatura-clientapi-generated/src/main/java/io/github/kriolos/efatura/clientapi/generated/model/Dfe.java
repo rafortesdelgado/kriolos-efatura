@@ -29,6 +29,7 @@ import io.github.kriolos.efatura.clientapi.generated.model.DfeRentReceipt;
 import io.github.kriolos.efatura.clientapi.generated.model.DfeSelfBilling;
 import io.github.kriolos.efatura.clientapi.generated.model.DfeTotals;
 import io.github.kriolos.efatura.clientapi.generated.model.DfeTransportLocation;
+import io.github.kriolos.efatura.clientapi.generated.model.EfDatePeriod;
 import io.github.kriolos.efatura.clientapi.generated.model.EfParty;
 import io.github.kriolos.efatura.clientapi.generated.model.EfTransmission;
 import java.util.ArrayList;
@@ -44,10 +45,11 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
 @JsonPropertyOrder({
   Dfe.JSON_PROPERTY_ID,
   Dfe.JSON_PROPERTY_VERSION,
-  Dfe.JSON_PROPERTY_TRANSMISSION,
   Dfe.JSON_PROPERTY_REPOSITORY_CODE,
+  Dfe.JSON_PROPERTY_TRANSMISSION,
   Dfe.JSON_PROPERTY_DOCUMENT_TYPE_CODE,
   Dfe.JSON_PROPERTY_IS_SPECIMEN,
+  Dfe.JSON_PROPERTY_IS_ISOLATED_ACT,
   Dfe.JSON_PROPERTY_SELF_BILLING,
   Dfe.JSON_PROPERTY_LED_CODE,
   Dfe.JSON_PROPERTY_LED_DESCRIPTION,
@@ -61,6 +63,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   Dfe.JSON_PROPERTY_TAX_POINT_DATE,
   Dfe.JSON_PROPERTY_ISSUE_REASON_CODE,
   Dfe.JSON_PROPERTY_ISSUE_REASON_DESCRIPTION,
+  Dfe.JSON_PROPERTY_RAPPEL_PERIOD,
   Dfe.JSON_PROPERTY_EMITTER_PARTY,
   Dfe.JSON_PROPERTY_RECEIVER_PARTY,
   Dfe.JSON_PROPERTY_TRANSPORT_SERVICE_PROVIDER_PARTY,
@@ -74,10 +77,11 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   Dfe.JSON_PROPERTY_PAYMENTS,
   Dfe.JSON_PROPERTY_REFERENCES,
   Dfe.JSON_PROPERTY_NOTE,
+  Dfe.JSON_PROPERTY_AUTHORIZED_DATE_TIME,
   Dfe.JSON_PROPERTY_CANCELED_DATE_TIME
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-03T09:47:51.391128802-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T10:15:19.824086604-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class Dfe {
   public static final String JSON_PROPERTY_ID = "Id";
   private String id;
@@ -85,17 +89,20 @@ public class Dfe {
   public static final String JSON_PROPERTY_VERSION = "Version";
   private String version;
 
-  public static final String JSON_PROPERTY_TRANSMISSION = "Transmission";
-  private EfTransmission transmission;
-
   public static final String JSON_PROPERTY_REPOSITORY_CODE = "RepositoryCode";
   private Integer repositoryCode;
+
+  public static final String JSON_PROPERTY_TRANSMISSION = "Transmission";
+  private EfTransmission transmission;
 
   public static final String JSON_PROPERTY_DOCUMENT_TYPE_CODE = "DocumentTypeCode";
   private Integer documentTypeCode;
 
   public static final String JSON_PROPERTY_IS_SPECIMEN = "IsSpecimen";
   private Boolean isSpecimen;
+
+  public static final String JSON_PROPERTY_IS_ISOLATED_ACT = "IsIsolatedAct";
+  private Boolean isIsolatedAct;
 
   public static final String JSON_PROPERTY_SELF_BILLING = "SelfBilling";
   private DfeSelfBilling selfBilling;
@@ -136,6 +143,9 @@ public class Dfe {
   public static final String JSON_PROPERTY_ISSUE_REASON_DESCRIPTION = "IssueReasonDescription";
   private String issueReasonDescription;
 
+  public static final String JSON_PROPERTY_RAPPEL_PERIOD = "RappelPeriod";
+  private EfDatePeriod rappelPeriod;
+
   public static final String JSON_PROPERTY_EMITTER_PARTY = "EmitterParty";
   private EfParty emitterParty;
 
@@ -174,6 +184,9 @@ public class Dfe {
 
   public static final String JSON_PROPERTY_NOTE = "Note";
   private String note;
+
+  public static final String JSON_PROPERTY_AUTHORIZED_DATE_TIME = "AuthorizedDateTime";
+  private String authorizedDateTime;
 
   public static final String JSON_PROPERTY_CANCELED_DATE_TIME = "CanceledDateTime";
   private String canceledDateTime;
@@ -231,31 +244,6 @@ public class Dfe {
   }
 
 
-  public Dfe transmission(EfTransmission transmission) {
-    this.transmission = transmission;
-    return this;
-  }
-
-  /**
-   * Get transmission
-   * @return transmission
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_TRANSMISSION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public EfTransmission getTransmission() {
-    return transmission;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_TRANSMISSION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setTransmission(EfTransmission transmission) {
-    this.transmission = transmission;
-  }
-
-
   public Dfe repositoryCode(Integer repositoryCode) {
     this.repositoryCode = repositoryCode;
     return this;
@@ -278,6 +266,31 @@ public class Dfe {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRepositoryCode(Integer repositoryCode) {
     this.repositoryCode = repositoryCode;
+  }
+
+
+  public Dfe transmission(EfTransmission transmission) {
+    this.transmission = transmission;
+    return this;
+  }
+
+  /**
+   * Get transmission
+   * @return transmission
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_TRANSMISSION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public EfTransmission getTransmission() {
+    return transmission;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_TRANSMISSION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setTransmission(EfTransmission transmission) {
+    this.transmission = transmission;
   }
 
 
@@ -328,6 +341,31 @@ public class Dfe {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setIsSpecimen(Boolean isSpecimen) {
     this.isSpecimen = isSpecimen;
+  }
+
+
+  public Dfe isIsolatedAct(Boolean isIsolatedAct) {
+    this.isIsolatedAct = isIsolatedAct;
+    return this;
+  }
+
+  /**
+   * Get isIsolatedAct
+   * @return isIsolatedAct
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_IS_ISOLATED_ACT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public Boolean getIsIsolatedAct() {
+    return isIsolatedAct;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_IS_ISOLATED_ACT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setIsIsolatedAct(Boolean isIsolatedAct) {
+    this.isIsolatedAct = isIsolatedAct;
   }
 
 
@@ -653,6 +691,31 @@ public class Dfe {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setIssueReasonDescription(String issueReasonDescription) {
     this.issueReasonDescription = issueReasonDescription;
+  }
+
+
+  public Dfe rappelPeriod(EfDatePeriod rappelPeriod) {
+    this.rappelPeriod = rappelPeriod;
+    return this;
+  }
+
+  /**
+   * Get rappelPeriod
+   * @return rappelPeriod
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_RAPPEL_PERIOD)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public EfDatePeriod getRappelPeriod() {
+    return rappelPeriod;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_RAPPEL_PERIOD)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setRappelPeriod(EfDatePeriod rappelPeriod) {
+    this.rappelPeriod = rappelPeriod;
   }
 
 
@@ -1005,6 +1068,31 @@ public class Dfe {
   }
 
 
+  public Dfe authorizedDateTime(String authorizedDateTime) {
+    this.authorizedDateTime = authorizedDateTime;
+    return this;
+  }
+
+  /**
+   * Get authorizedDateTime
+   * @return authorizedDateTime
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_AUTHORIZED_DATE_TIME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public String getAuthorizedDateTime() {
+    return authorizedDateTime;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_AUTHORIZED_DATE_TIME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setAuthorizedDateTime(String authorizedDateTime) {
+    this.authorizedDateTime = authorizedDateTime;
+  }
+
+
   public Dfe canceledDateTime(String canceledDateTime) {
     this.canceledDateTime = canceledDateTime;
     return this;
@@ -1044,10 +1132,11 @@ public class Dfe {
     Dfe dfe = (Dfe) o;
     return Objects.equals(this.id, dfe.id) &&
         Objects.equals(this.version, dfe.version) &&
-        Objects.equals(this.transmission, dfe.transmission) &&
         Objects.equals(this.repositoryCode, dfe.repositoryCode) &&
+        Objects.equals(this.transmission, dfe.transmission) &&
         Objects.equals(this.documentTypeCode, dfe.documentTypeCode) &&
         Objects.equals(this.isSpecimen, dfe.isSpecimen) &&
+        Objects.equals(this.isIsolatedAct, dfe.isIsolatedAct) &&
         Objects.equals(this.selfBilling, dfe.selfBilling) &&
         Objects.equals(this.ledCode, dfe.ledCode) &&
         Objects.equals(this.ledDescription, dfe.ledDescription) &&
@@ -1061,6 +1150,7 @@ public class Dfe {
         Objects.equals(this.taxPointDate, dfe.taxPointDate) &&
         Objects.equals(this.issueReasonCode, dfe.issueReasonCode) &&
         Objects.equals(this.issueReasonDescription, dfe.issueReasonDescription) &&
+        Objects.equals(this.rappelPeriod, dfe.rappelPeriod) &&
         Objects.equals(this.emitterParty, dfe.emitterParty) &&
         Objects.equals(this.receiverParty, dfe.receiverParty) &&
         Objects.equals(this.transportServiceProviderParty, dfe.transportServiceProviderParty) &&
@@ -1074,12 +1164,13 @@ public class Dfe {
         Objects.equals(this.payments, dfe.payments) &&
         Objects.equals(this.references, dfe.references) &&
         Objects.equals(this.note, dfe.note) &&
+        Objects.equals(this.authorizedDateTime, dfe.authorizedDateTime) &&
         Objects.equals(this.canceledDateTime, dfe.canceledDateTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, version, transmission, repositoryCode, documentTypeCode, isSpecimen, selfBilling, ledCode, ledDescription, serie, documentNumber, innerDocumentNumber, issueDate, issueTime, dueDate, orderReference, taxPointDate, issueReasonCode, issueReasonDescription, emitterParty, receiverParty, transportServiceProviderParty, transportRoute, receiptTypeCode, rentReceipt, receiverTypeCode, transportDocumentTypeCode, lines, totals, payments, references, note, canceledDateTime);
+    return Objects.hash(id, version, repositoryCode, transmission, documentTypeCode, isSpecimen, isIsolatedAct, selfBilling, ledCode, ledDescription, serie, documentNumber, innerDocumentNumber, issueDate, issueTime, dueDate, orderReference, taxPointDate, issueReasonCode, issueReasonDescription, rappelPeriod, emitterParty, receiverParty, transportServiceProviderParty, transportRoute, receiptTypeCode, rentReceipt, receiverTypeCode, transportDocumentTypeCode, lines, totals, payments, references, note, authorizedDateTime, canceledDateTime);
   }
 
   @Override
@@ -1088,10 +1179,11 @@ public class Dfe {
     sb.append("class Dfe {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
-    sb.append("    transmission: ").append(toIndentedString(transmission)).append("\n");
     sb.append("    repositoryCode: ").append(toIndentedString(repositoryCode)).append("\n");
+    sb.append("    transmission: ").append(toIndentedString(transmission)).append("\n");
     sb.append("    documentTypeCode: ").append(toIndentedString(documentTypeCode)).append("\n");
     sb.append("    isSpecimen: ").append(toIndentedString(isSpecimen)).append("\n");
+    sb.append("    isIsolatedAct: ").append(toIndentedString(isIsolatedAct)).append("\n");
     sb.append("    selfBilling: ").append(toIndentedString(selfBilling)).append("\n");
     sb.append("    ledCode: ").append(toIndentedString(ledCode)).append("\n");
     sb.append("    ledDescription: ").append(toIndentedString(ledDescription)).append("\n");
@@ -1105,6 +1197,7 @@ public class Dfe {
     sb.append("    taxPointDate: ").append(toIndentedString(taxPointDate)).append("\n");
     sb.append("    issueReasonCode: ").append(toIndentedString(issueReasonCode)).append("\n");
     sb.append("    issueReasonDescription: ").append(toIndentedString(issueReasonDescription)).append("\n");
+    sb.append("    rappelPeriod: ").append(toIndentedString(rappelPeriod)).append("\n");
     sb.append("    emitterParty: ").append(toIndentedString(emitterParty)).append("\n");
     sb.append("    receiverParty: ").append(toIndentedString(receiverParty)).append("\n");
     sb.append("    transportServiceProviderParty: ").append(toIndentedString(transportServiceProviderParty)).append("\n");
@@ -1118,6 +1211,7 @@ public class Dfe {
     sb.append("    payments: ").append(toIndentedString(payments)).append("\n");
     sb.append("    references: ").append(toIndentedString(references)).append("\n");
     sb.append("    note: ").append(toIndentedString(note)).append("\n");
+    sb.append("    authorizedDateTime: ").append(toIndentedString(authorizedDateTime)).append("\n");
     sb.append("    canceledDateTime: ").append(toIndentedString(canceledDateTime)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.time.LocalDate;
 import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.github.kriolos.efatura.clientapi.generated.JSON;
@@ -37,7 +38,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   EventSummary.JSON_PROPERTY_AUTHORIZED_DATE
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-03T09:47:51.391128802-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T10:15:19.824086604-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class EventSummary {
   public static final String JSON_PROPERTY_ID = "Id";
   private String id;
@@ -46,13 +47,13 @@ public class EventSummary {
   private String eventTypeCode;
 
   public static final String JSON_PROPERTY_ISSUE_DATE_TIME = "IssueDateTime";
-  private String issueDateTime;
+  private LocalDate issueDateTime;
 
   public static final String JSON_PROPERTY_ISSUE_REASON_DESCRIPTION = "IssueReasonDescription";
   private String issueReasonDescription;
 
   public static final String JSON_PROPERTY_AUTHORIZED_DATE = "AuthorizedDate";
-  private String authorizedDate;
+  private LocalDate authorizedDate;
 
   public EventSummary() { 
   }
@@ -107,7 +108,7 @@ public class EventSummary {
   }
 
 
-  public EventSummary issueDateTime(String issueDateTime) {
+  public EventSummary issueDateTime(LocalDate issueDateTime) {
     this.issueDateTime = issueDateTime;
     return this;
   }
@@ -120,14 +121,14 @@ public class EventSummary {
   @JsonProperty(JSON_PROPERTY_ISSUE_DATE_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public String getIssueDateTime() {
+  public LocalDate getIssueDateTime() {
     return issueDateTime;
   }
 
 
   @JsonProperty(JSON_PROPERTY_ISSUE_DATE_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setIssueDateTime(String issueDateTime) {
+  public void setIssueDateTime(LocalDate issueDateTime) {
     this.issueDateTime = issueDateTime;
   }
 
@@ -157,7 +158,7 @@ public class EventSummary {
   }
 
 
-  public EventSummary authorizedDate(String authorizedDate) {
+  public EventSummary authorizedDate(LocalDate authorizedDate) {
     this.authorizedDate = authorizedDate;
     return this;
   }
@@ -170,14 +171,14 @@ public class EventSummary {
   @JsonProperty(JSON_PROPERTY_AUTHORIZED_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public String getAuthorizedDate() {
+  public LocalDate getAuthorizedDate() {
     return authorizedDate;
   }
 
 
   @JsonProperty(JSON_PROPERTY_AUTHORIZED_DATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setAuthorizedDate(String authorizedDate) {
+  public void setAuthorizedDate(LocalDate authorizedDate) {
     this.authorizedDate = authorizedDate;
   }
 

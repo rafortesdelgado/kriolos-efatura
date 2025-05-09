@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.time.LocalDate;
 import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.github.kriolos.efatura.clientapi.generated.JSON;
@@ -37,7 +38,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   SoftwareGroupMemberEntity.JSON_PROPERTY_UPDATED
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-03T09:47:51.391128802-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T10:15:19.824086604-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class SoftwareGroupMemberEntity {
   public static final String JSON_PROPERTY_ID = "id";
   private String id;
@@ -49,10 +50,10 @@ public class SoftwareGroupMemberEntity {
   private Integer groupMemberTaxId;
 
   public static final String JSON_PROPERTY_CREATED = "created";
-  private String created;
+  private LocalDate created;
 
   public static final String JSON_PROPERTY_UPDATED = "updated";
-  private String updated;
+  private LocalDate updated;
 
   public SoftwareGroupMemberEntity() { 
   }
@@ -134,7 +135,7 @@ public class SoftwareGroupMemberEntity {
   }
 
 
-  public SoftwareGroupMemberEntity created(String created) {
+  public SoftwareGroupMemberEntity created(LocalDate created) {
     this.created = created;
     return this;
   }
@@ -147,19 +148,19 @@ public class SoftwareGroupMemberEntity {
   @JsonProperty(JSON_PROPERTY_CREATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public String getCreated() {
+  public LocalDate getCreated() {
     return created;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CREATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCreated(String created) {
+  public void setCreated(LocalDate created) {
     this.created = created;
   }
 
 
-  public SoftwareGroupMemberEntity updated(String updated) {
+  public SoftwareGroupMemberEntity updated(LocalDate updated) {
     this.updated = updated;
     return this;
   }
@@ -172,14 +173,14 @@ public class SoftwareGroupMemberEntity {
   @JsonProperty(JSON_PROPERTY_UPDATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public String getUpdated() {
+  public LocalDate getUpdated() {
     return updated;
   }
 
 
   @JsonProperty(JSON_PROPERTY_UPDATED)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setUpdated(String updated) {
+  public void setUpdated(LocalDate updated) {
     this.updated = updated;
   }
 

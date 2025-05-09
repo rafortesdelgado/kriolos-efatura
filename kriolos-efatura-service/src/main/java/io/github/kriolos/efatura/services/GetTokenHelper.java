@@ -6,9 +6,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.v128.network.Network;
+import org.openqa.selenium.devtools.v132.network.Network;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.managers.ChromeDriverManager;
 import io.github.kriolos.efatura.components.LoginProcess;
 
@@ -19,7 +18,7 @@ public class GetTokenHelper {
 		
 		//WebDriverManager.chromedriver().browserVersion("126.0.6463.0").setup();
 		//WebDriverManager.chromedriver().browserVersion("125.0.6381.0").setup();
-		//WebDriverManager.chromedriver().browserVersion("128.0.6613.0").setup();
+		//ChromeDriverManager.chromedriver().browserVersion("133.0.6943.127").setup();
 		ChromeDriverManager.getInstance().setup();
 		
 		ChromeDriver driver = null;
@@ -34,7 +33,7 @@ public class GetTokenHelper {
 			options.addArguments("--disable-browser-side-navigation"); 
 			options.addArguments("--disable-gpu"); 
 			
-			driver = new ChromeDriver();
+			driver = new ChromeDriver(options);
 
 			// Set Dev-Tools and create a session
 			DevTools tool = driver.getDevTools();

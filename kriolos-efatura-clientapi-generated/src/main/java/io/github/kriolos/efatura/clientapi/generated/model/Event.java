@@ -36,8 +36,8 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
 @JsonPropertyOrder({
   Event.JSON_PROPERTY_ID,
   Event.JSON_PROPERTY_VERSION,
-  Event.JSON_PROPERTY_TRANSMISSION,
   Event.JSON_PROPERTY_REPOSITORY_CODE,
+  Event.JSON_PROPERTY_TRANSMISSION,
   Event.JSON_PROPERTY_EVENT_TYPE_CODE,
   Event.JSON_PROPERTY_EMITTER_TAX_ID,
   Event.JSON_PROPERTY_ISSUE_DATE_TIME,
@@ -52,7 +52,7 @@ import io.github.kriolos.efatura.clientapi.generated.JSON;
   Event.JSON_PROPERTY_DOCUMENT_NUMBER_END
 })
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-03T09:47:51.391128802-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T10:15:19.824086604-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class Event {
   public static final String JSON_PROPERTY_ID = "Id";
   private String id;
@@ -60,11 +60,11 @@ public class Event {
   public static final String JSON_PROPERTY_VERSION = "Version";
   private String version;
 
-  public static final String JSON_PROPERTY_TRANSMISSION = "Transmission";
-  private EfTransmission transmission;
-
   public static final String JSON_PROPERTY_REPOSITORY_CODE = "RepositoryCode";
   private Integer repositoryCode;
+
+  public static final String JSON_PROPERTY_TRANSMISSION = "Transmission";
+  private EfTransmission transmission;
 
   public static final String JSON_PROPERTY_EVENT_TYPE_CODE = "EventTypeCode";
   private String eventTypeCode;
@@ -155,31 +155,6 @@ public class Event {
   }
 
 
-  public Event transmission(EfTransmission transmission) {
-    this.transmission = transmission;
-    return this;
-  }
-
-  /**
-   * Get transmission
-   * @return transmission
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_TRANSMISSION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public EfTransmission getTransmission() {
-    return transmission;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_TRANSMISSION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setTransmission(EfTransmission transmission) {
-    this.transmission = transmission;
-  }
-
-
   public Event repositoryCode(Integer repositoryCode) {
     this.repositoryCode = repositoryCode;
     return this;
@@ -202,6 +177,31 @@ public class Event {
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRepositoryCode(Integer repositoryCode) {
     this.repositoryCode = repositoryCode;
+  }
+
+
+  public Event transmission(EfTransmission transmission) {
+    this.transmission = transmission;
+    return this;
+  }
+
+  /**
+   * Get transmission
+   * @return transmission
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_TRANSMISSION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public EfTransmission getTransmission() {
+    return transmission;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_TRANSMISSION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setTransmission(EfTransmission transmission) {
+    this.transmission = transmission;
   }
 
 
@@ -527,8 +527,8 @@ public class Event {
     Event event = (Event) o;
     return Objects.equals(this.id, event.id) &&
         Objects.equals(this.version, event.version) &&
-        Objects.equals(this.transmission, event.transmission) &&
         Objects.equals(this.repositoryCode, event.repositoryCode) &&
+        Objects.equals(this.transmission, event.transmission) &&
         Objects.equals(this.eventTypeCode, event.eventTypeCode) &&
         Objects.equals(this.emitterTaxId, event.emitterTaxId) &&
         Objects.equals(this.issueDateTime, event.issueDateTime) &&
@@ -545,7 +545,7 @@ public class Event {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, version, transmission, repositoryCode, eventTypeCode, emitterTaxId, issueDateTime, issueReasonDescription, iuDs, year, ledCode, ledDescription, serie, documentTypeCode, documentNumberStart, documentNumberEnd);
+    return Objects.hash(id, version, repositoryCode, transmission, eventTypeCode, emitterTaxId, issueDateTime, issueReasonDescription, iuDs, year, ledCode, ledDescription, serie, documentTypeCode, documentNumberStart, documentNumberEnd);
   }
 
   @Override
@@ -554,8 +554,8 @@ public class Event {
     sb.append("class Event {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
-    sb.append("    transmission: ").append(toIndentedString(transmission)).append("\n");
     sb.append("    repositoryCode: ").append(toIndentedString(repositoryCode)).append("\n");
+    sb.append("    transmission: ").append(toIndentedString(transmission)).append("\n");
     sb.append("    eventTypeCode: ").append(toIndentedString(eventTypeCode)).append("\n");
     sb.append("    emitterTaxId: ").append(toIndentedString(emitterTaxId)).append("\n");
     sb.append("    issueDateTime: ").append(toIndentedString(issueDateTime)).append("\n");
