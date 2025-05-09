@@ -103,10 +103,10 @@ public class Doc106GetterView extends VerticalLayout implements BeforeEnterObser
                 FiscalReportService frs = new FiscalReportService(dfeApi, c.name);
 
                 if (direction.equals("in") || direction.equals("all"))
-                    frs.getMod106Suppliers("2024", startDate.toString(), endDate.toString());
+                    frs.getMod106Suppliers(null, startDate.toString(), endDate.toString());
 
                 if (direction.equals("out") || direction.equals("all"))
-                    frs.getMod106Clients("2024", startDate.toString(), endDate.toString());
+                    frs.getMod106Clients(null, startDate.toString(), endDate.toString());
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
