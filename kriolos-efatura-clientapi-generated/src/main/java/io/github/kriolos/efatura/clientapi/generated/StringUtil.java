@@ -16,7 +16,7 @@ package io.github.kriolos.efatura.clientapi.generated;
 import java.util.Collection;
 import java.util.Iterator;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T10:15:19.824086604-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-09T10:25:28.475671412-01:00[Atlantic/Cape_Verde]", comments = "Generator version: 7.7.0")
 public class StringUtil {
   /**
    * Check if the given array contains the given value (with case-insensitive comparison).
