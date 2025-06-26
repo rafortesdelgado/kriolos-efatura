@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import io.github.kriolos.efatura.ProgramSingle;
 import io.github.kriolos.efatura.clientapi.generated.ApiException;
 import io.github.kriolos.efatura.clientapi.generated.api.DfeApi;
 import io.github.kriolos.efatura.clientapi.generated.model.Dfe;

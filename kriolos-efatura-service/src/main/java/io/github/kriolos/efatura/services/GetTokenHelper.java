@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.v132.network.Network;
+import org.openqa.selenium.devtools.v137.network.Network;
 
 import io.github.bonigarcia.wdm.managers.ChromeDriverManager;
 import io.github.kriolos.efatura.components.LoginProcess;
