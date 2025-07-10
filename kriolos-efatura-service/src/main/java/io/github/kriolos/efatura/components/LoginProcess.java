@@ -11,22 +11,26 @@ public class LoginProcess {
 
     public static void run (WebDriver driver, String nif, String password) {
 
-        WebElement loginButton = new WebDriverWait(driver, Duration.ofSeconds(10))
+        int timeout = 20;
+        new WebDriverWait(driver, Duration.ofSeconds(timeout))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//body")));
+
+        WebElement loginButton = new WebDriverWait(driver, Duration.ofSeconds(timeout))
                 .until(ExpectedConditions.elementToBeClickable(By.xpath("//button")));
 
         loginButton.click();
 
-        WebElement nifInput = new WebDriverWait(driver, Duration.ofSeconds(10))
+        WebElement nifInput = new WebDriverWait(driver, Duration.ofSeconds(timeout))
                 .until(ExpectedConditions.elementToBeClickable(By.name("username")));
 
         nifInput.sendKeys(nif);
         
-        WebElement passwordInput = new WebDriverWait(driver, Duration.ofSeconds(10))
+        WebElement passwordInput = new WebDriverWait(driver, Duration.ofSeconds(timeout))
                 .until(ExpectedConditions.elementToBeClickable(By.name("password")));
 
         passwordInput.sendKeys(password);
 
-        loginButton = new WebDriverWait(driver, Duration.ofSeconds(10))
+        loginButton = new WebDriverWait(driver, Duration.ofSeconds(timeout))
                 .until(ExpectedConditions.elementToBeClickable(By.id("kc-login")));
 
         loginButton.click();

@@ -77,8 +77,11 @@ public class Mod106LineMapper implements ModLineIMapper{
 	}
 
 	private Double getPercentageTaxes(DfeLine l) {
-		if(l.getTaxes() == null ) return null;
+
+		var taxes = l.getTaxes();
 		
-		return l.getTaxes().get(0).getTaxPercentage();
+		if( taxes == null || taxes.isEmpty()) return null;
+		
+		return taxes.get(0).getTaxPercentage();
 	}
 }

@@ -3,11 +3,10 @@ package io.github.kriolos.efatura.services;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import org.openqa.selenium.bidi.module.Network;
+import org.openqa.selenium.bidi.network.Header;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.v137.network.Network;
-
 import io.github.bonigarcia.wdm.managers.ChromeDriverManager;
 import io.github.kriolos.efatura.components.LoginProcess;
 
@@ -15,58 +14,63 @@ public class GetTokenHelper {
 
 	public static String init(String nif, String password) {
 
-		
-		//WebDriverManager.chromedriver().browserVersion("126.0.6463.0").setup();
-		//WebDriverManager.chromedriver().browserVersion("125.0.6381.0").setup();
-		//ChromeDriverManager.chromedriver().browserVersion("133.0.6943.127").setup();
+		// WebDriverManager.chromedriver().browserVersion("126.0.6463.0").setup();
+		// WebDriverManager.chromedriver().browserVersion("125.0.6381.0").setup();
+		// ChromeDriverManager.chromedriver().browserVersion("133.0.6943.127").setup();
 		ChromeDriverManager.getInstance().setup();
-		
-		ChromeDriver driver = null;
-		try 
-		{
-			ChromeOptions options = new ChromeOptions();
-			// options.addArguments("start-maximized"); 
-			options.addArguments("enable-automation"); 
-			options.addArguments("--no-sandbox"); 
-			options.addArguments("--disable-infobars");
-			options.addArguments("--disable-dev-shm-usage");
-			options.addArguments("--disable-browser-side-navigation"); 
-			options.addArguments("--disable-gpu"); 
-			
-			driver = new ChromeDriver(options);
+		System.setProperty("webdriver.chrome.silentOutput", "true");
 
-			// Set Dev-Tools and create a session
-			DevTools tool = driver.getDevTools();
+		ChromeDriver driver = null;
+		Network network = null;
+		try {
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("--no-sandbox");
+			options.addArguments("--headless");
+			options.addArguments("--disable-gpu");
+			options.addArguments("--disable-crash-reporter");
+			options.addArguments("--disable-extensions");
+			options.addArguments("--disable-in-process-stack-traces");
+			options.addArguments("--disable-logging");
+			options.addArguments("--disable-dev-shm-usage");
+			options.addArguments("--log-level=3");
+			options.addArguments("--output=/dev/null");
+			options.setCapability("webSocketUrl", true);
+
+			driver = new ChromeDriver(options);
 			
-			tool.createSessionIfThereIsNotOne();
+			network = new Network(driver);
+			// String intercept = network
+			// 		.addIntercept(
+			// 				new AddInterceptParameters(InterceptPhase.BEFORE_REQUEST_SENT));
 
 			final Object o = new Object();
 
-			tool.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
-
 			final ConcurrentLinkedQueue<String> l = new ConcurrentLinkedQueue<>();
 
-			// add listener to intercept request and continue
 
-			tool.clearListeners();
-			tool.addListener(Network.requestWillBeSent(),
+			network.onBeforeRequestSent(
 					r -> {
-						if(r != null) 
-						{
-							Object authorization = r.getRequest().getHeaders().get("Authorization");
-							if (r.getRequest().getUrl().endsWith("/software") && authorization != null) {
-								String jwt = ((String) authorization).split(" ")[1];
+						if (r != null) {
+							Optional<Header> authorizationHeader = r.getRequest()
+									.getHeaders()
+									.stream()
+									.filter(h -> h.getName().equals("Authorization"))
+									.findFirst();
+
+							if (r.getRequest().getUrl().endsWith("/software") && authorizationHeader.isPresent()) {
+
+								String authorization = authorizationHeader.get().getValue().getValue();
+								String jwt = authorization.split(" ")[1];
 								synchronized (o) {
 									l.add(jwt);
 									o.notify();
 								}
 							}
 						}
-						
+
 					});
-
 			driver.get("https://pe.efatura.cv/");
-
+			
 			LoginProcess.run(driver, nif, password);
 
 			int i = 0;
@@ -84,24 +88,20 @@ public class GetTokenHelper {
 				i++;
 			}
 
-			tool.disconnectSession();
-			tool.close();
-			driver.quit();
+			// network.removeIntercept(intercept);
+			network.close();
 
 			if (l.size() > 0) {
 				return l.remove();
 			}
 
 			return null;
-		}
-		catch(Exception e) 
-		{
+		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-		}
-		finally
-		{
-			if(driver != null) driver.quit();
+		} finally {
+			if (network != null) network.close();
+			if (driver != null) driver.quit();
 		}
 
 		return null;

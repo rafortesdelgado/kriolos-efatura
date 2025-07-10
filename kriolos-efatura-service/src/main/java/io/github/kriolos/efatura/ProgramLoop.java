@@ -51,8 +51,8 @@ public class ProgramLoop
 				apiCli.setAccessToken(token);
 				
 				FiscalReportService frs = new FiscalReportService(dfeApi, clientName);
-				ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers(null, "2025-05-01", null), clientName);  
-				ExportToCsv.ExportDfeSummary(frs.getMod106Clients(null, "2025-05-01", null), clientName);  
+				ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers(null, "2025-06-01", null), clientName);  
+				ExportToCsv.ExportDfeSummary(frs.getMod106Clients(null, "2025-06-01", null), clientName);  
 
 			}
 			catch(Exception e ) 
