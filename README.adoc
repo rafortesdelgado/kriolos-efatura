@@ -44,14 +44,17 @@ Cabo Verde Elecronic Invoice
 .Build eFatura and SAFT-CV
 [source, bash]
 ----
-cd kriolos-efactura-clientapi-generated
+cd kriolos-efactura-clientapi
 mvn -P efcv,saftcv clean install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
 cd ..
+cd kriolos-efactura-clientapi-generated
+mvn install -Dmaven.javadoc.skip=true -Dmaven.test.skip=true 
+cd ..
+m
 mvn clean install
 
 
-cd kriolos-efactura-clientapi-generated
-mvn install -Dmaven.javadoc.skip=true
+
 ----
 
 == Reference

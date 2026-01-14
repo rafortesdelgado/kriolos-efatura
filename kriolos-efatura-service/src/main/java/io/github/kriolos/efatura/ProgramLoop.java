@@ -21,7 +21,7 @@ public class ProgramLoop
 		String line;
 		while( !(line=input.nextLine().trim()).isBlank())
 		{
-			if(!line.startsWith("#")) 
+			if(!line.startsWith("#"))
 			{
 				list.add(line.split(";"));
 			}
@@ -38,7 +38,10 @@ public class ProgramLoop
 		{
 			try
 			{
-				if(d.length != 3) continue;
+				if(d.length < 3 || d[0].startsWith("#")) 
+				{
+					continue;
+				}
 				String clientName  = d[0].replace(' ', '_').trim();
 				String nif = d[1].trim();
 				String password = d[2].trim();
@@ -51,8 +54,8 @@ public class ProgramLoop
 				apiCli.setAccessToken(token);
 				
 				FiscalReportService frs = new FiscalReportService(dfeApi, clientName);
-				ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers(null, "2025-06-01", null), clientName);  
-				ExportToCsv.ExportDfeSummary(frs.getMod106Clients(null, "2025-06-01", null), clientName);  
+				ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers(null, "2025-09-01", null), clientName);  
+				ExportToCsv.ExportDfeSummary(frs.getMod106Clients(null, "2025-09-01", null), clientName);  
 
 			}
 			catch(Exception e ) 
