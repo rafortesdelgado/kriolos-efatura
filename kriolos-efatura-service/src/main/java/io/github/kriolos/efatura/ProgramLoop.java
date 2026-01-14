@@ -36,37 +36,41 @@ public class ProgramLoop
 
 		for( String [] d : list) 
 		{
-			try
-			{
-				if(d.length < 3 || d[0].startsWith("#")) 
-				{
-					continue;
-				}
-				String clientName  = d[0].replace(' ', '_').trim();
-				String nif = d[1].trim();
-				String password = d[2].trim();
+			ProcessClient(apiCli, dfeApi, d);
+		}
+	}
 
-				if(nif.length() == 0 || password.length() == 0) continue;
-
-				String token = GetTokenHelper.init(nif,password);
-				
-				apiCli.setBasePath("https://services.efatura.cv/");
-				apiCli.setAccessToken(token);
-				
-				FiscalReportService frs = new FiscalReportService(dfeApi, clientName);
-				ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers(null, "2025-09-01", null), clientName);  
-				ExportToCsv.ExportDfeSummary(frs.getMod106Clients(null, "2025-09-01", null), clientName);  
-
-			}
-			catch(Exception e ) 
+	private static void ProcessClient(ApiClient apiCli, DfeApi dfeApi, String[] d) {
+		try
+		{
+			if(d.length < 3 || d[0].startsWith("#")) 
 			{
-				System.out.println(e.getMessage());
-				e.printStackTrace();
+				return;
 			}
-			finally 
-			{
-			}
+			String clientName  = d[0].replace(' ', '_').trim();
+			String nif = d[1].trim();
+			String password = d[2].trim();
+
+			if(nif.length() == 0 || password.length() == 0)
+				return;
+
+			String token = GetTokenHelper.init(nif,password);
 			
+			apiCli.setBasePath("https://services.efatura.cv/");
+			apiCli.setAccessToken(token);
+			
+			FiscalReportService frs = new FiscalReportService(dfeApi, clientName);
+			ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers(null, "2025-09-01", null), clientName);  
+			ExportToCsv.ExportDfeSummary(frs.getMod106Clients(null, "2025-09-01", null), clientName);  
+
+		}
+		catch(Exception e ) 
+		{
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		finally 
+		{
 		}
 	}
 }
