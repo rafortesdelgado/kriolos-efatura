@@ -47,7 +47,7 @@ public class ProgramLoop
 			{
 				return;
 			}
-			String clientName  = d[0].replace(' ', '_').trim();
+			String clientName  = d[0].replace(' ', '_').trim() + "_" + d[1].trim();
 			String nif = d[1].trim();
 			String password = d[2].trim();
 
@@ -60,8 +60,8 @@ public class ProgramLoop
 			apiCli.setAccessToken(token);
 			
 			FiscalReportService frs = new FiscalReportService(dfeApi, clientName);
-			ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers(null, "2025-09-01", null), clientName);  
-			ExportToCsv.ExportDfeSummary(frs.getMod106Clients(null, "2025-09-01", null), clientName);  
+			ExportToCsv.ExportDfeSummary(frs.getMod106Suppliers(null, "2025-10-01", null), clientName);  
+			ExportToCsv.ExportDfeSummary(frs.getMod106Clients(null, "2025-10-01", null), clientName);  
 
 		}
 		catch(Exception e ) 
