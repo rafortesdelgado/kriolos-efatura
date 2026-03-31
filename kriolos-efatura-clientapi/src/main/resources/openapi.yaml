@@ -1,7 +1,7 @@
 ---
 openapi: 3.0.3
 info:
-  title: e-Fatura API
+  title: DNRE API
   contact:
     name: e-Fatura
     url: https://efatura.cv
@@ -9,34 +9,34 @@ info:
   license:
     name: Termos de Uso
     url: https://efatura.cv
-  version: 1.2.0
+  version: 2.0.0
 externalDocs:
   description: Manual Técnico
   url: https://efatura.cv/docs/manual
 tags:
-- name: CERTIFICATE
-  description: Recurso para interagir com Certificados Digitais.
-- name: DATA
-  description: Recurso para obter informações básicas da Plataforma Eletrónica.
-- name: DFE
-  description: Recurso para interagir com DFEs.
-- name: EVENT
-  description: Recurso para interagir com eventos.
-- name: LED
-  description: Recurso para interagir com LEDs.
-- name: OPACC
+- name: DNRE OPACC
   description: Recurso para interagir com OPACC.
-- name: SOFTWARE
+- name: DNRE TAXPAYER/USER
+  description: Recurso para interagir com contribuintes/utilizadores.
+- name: EFATURA DATA
+  description: Recurso para obter informações básicas da Plataforma Eletrónica.
+- name: EFATURA DFE
+  description: Recurso para interagir com DFEs.
+- name: EFATURA DIGITAL CERTIFICATE
+  description: Recurso para interagir com certificados digitais.
+- name: EFATURA EVENT
+  description: Recurso para interagir com eventos.
+- name: EFATURA LED
+  description: Recurso para interagir com LEDs.
+- name: EFATURA SOFTWARE
   description: Recurso para interagir com software.
-- name: TAXPAYER
-  description: Recurso para interagir com contribuintes.
 paths:
   /v1/certificate/keystore:
     get:
       tags:
-      - CERTIFICATE
+      - EFATURA DIGITAL CERTIFICATE
       summary: Consulta de keystore.
-      operationId: CertificateResource_getKeystore
+      operationId: DigitalCertificateResource_getKeystore
       parameters:
       - name: UseType
         in: query
@@ -57,10 +57,10 @@ paths:
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseString'
+                $ref: '#/components/schemas/PayloadStringProcessingResponse'
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseString'
+                $ref: '#/components/schemas/PayloadStringProcessingResponse'
         "401":
           description: Not Authorized
         "403":
@@ -71,7 +71,7 @@ paths:
   /v1/data/pe-date-time:
     get:
       tags:
-      - DATA
+      - EFATURA DATA
       summary: Devolve a data/hora atual da Plataforma Eletrónica.
       operationId: PublicDataResource_getPeDateTime
       responses:
@@ -80,14 +80,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseString'
+                $ref: '#/components/schemas/PayloadStringProcessingResponse'
             application/xml:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseString'
+                $ref: '#/components/schemas/PayloadStringProcessingResponse'
   /v1/dfe:
     get:
       tags:
-      - DFE
+      - EFATURA DFE
       summary: Lista de DFEs limitada em 10000 DFEs.
       operationId: DfeResource_getDfeSummaryListV1
       parameters:
@@ -162,7 +162,7 @@ paths:
         - cv_ef_dfe_read_list
     post:
       tags:
-      - DFE
+      - EFATURA DFE
       summary: Comunicação de novos DFEs.
       operationId: DfeResource_createDfe
       parameters:
@@ -201,7 +201,7 @@ paths:
         - cv_ef_dfe_create
     delete:
       tags:
-      - DFE
+      - EFATURA DFE
       summary: Elimina todos os DFEs e os respetivos eventos no repositório de Homologação/Teste.
       operationId: DfeResource_deleteDfeAndEvent
       parameters:
@@ -226,10 +226,67 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_delete
+  /v1/dfe/new:
+    get:
+      tags:
+      - EFATURA DFE
+      summary: "Gera um template de DFE com alguns campos preenchidos, incluindo o\
+        \ IUD."
+      operationId: DfeResource_getNewDfe
+      parameters:
+      - name: DocumentNumber
+        in: query
+        schema:
+          type: string
+      - name: DocumentTypeCode
+        in: query
+        schema:
+          type: string
+      - name: IsSelfBilling
+        in: query
+        schema:
+          type: string
+      - name: IssueDate
+        in: query
+        schema:
+          type: string
+      - name: IssueTime
+        in: query
+        schema:
+          type: string
+      - name: LedCode
+        in: query
+        schema:
+          type: string
+      - name: OtherPartyTaxId
+        in: query
+        schema:
+          type: string
+      - name: cv-ef-repository-code
+        in: header
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseDfe'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseDfe'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_dfe_create
   /v1/dfe/pdf/{Id}:
     get:
       tags:
-      - DFE
+      - EFATURA DFE
       summary: Consulta de PDF de um DFE com IUD.
       operationId: DfeResource_getDfePdfById
       parameters:
@@ -248,10 +305,10 @@ paths:
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseString'
+                $ref: '#/components/schemas/PayloadStringProcessingResponse'
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseString'
+                $ref: '#/components/schemas/PayloadStringProcessingResponse'
         "401":
           description: Not Authorized
         "403":
@@ -262,7 +319,7 @@ paths:
   /v1/dfe/self-billing/authorize:
     post:
       tags:
-      - DFE
+      - EFATURA DFE
       summary: Pedido de autorização para autofaturação.
       operationId: DfeResource_authorizeSelfBilling
       parameters:
@@ -292,7 +349,7 @@ paths:
   /v1/dfe/xml/{Id}:
     get:
       tags:
-      - DFE
+      - EFATURA DFE
       summary: Consulta de XML com IUD exatamente como foi gerado e assinado pelo
         contribuinte e com aposição de timestamp.
       operationId: DfeResource_getDfeXmlById
@@ -312,10 +369,10 @@ paths:
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseString'
+                $ref: '#/components/schemas/PayloadStringProcessingResponse'
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseString'
+                $ref: '#/components/schemas/PayloadStringProcessingResponse'
         "401":
           description: Not Authorized
         "403":
@@ -326,7 +383,7 @@ paths:
   /v1/dfe/{Id}:
     get:
       tags:
-      - DFE
+      - EFATURA DFE
       summary: Consulta de DFE com IUD.
       operationId: DfeResource_getDfeById
       parameters:
@@ -359,7 +416,7 @@ paths:
   /v1/event:
     get:
       tags:
-      - EVENT
+      - EFATURA EVENT
       summary: Lista de eventos limitada em 10000 eventos.
       operationId: EventResource_getEventListV1
       parameters:
@@ -426,7 +483,7 @@ paths:
         - cv_ef_event_read
     post:
       tags:
-      - EVENT
+      - EFATURA EVENT
       summary: Comunicação de novos eventos.
       operationId: EventResource_createEvent
       parameters:
@@ -466,7 +523,7 @@ paths:
   /v1/event/xml/{Id}:
     get:
       tags:
-      - EVENT
+      - EFATURA EVENT
       summary: Consulta de evento com ID.
       operationId: EventResource_getEventXmlById
       parameters:
@@ -485,10 +542,10 @@ paths:
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseString'
+                $ref: '#/components/schemas/PayloadStringProcessingResponse'
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseString'
+                $ref: '#/components/schemas/PayloadStringProcessingResponse'
         "401":
           description: Not Authorized
         "403":
@@ -499,7 +556,7 @@ paths:
   /v1/event/{Id}:
     get:
       tags:
-      - EVENT
+      - EFATURA EVENT
       summary: Consulta de evento com ID.
       operationId: EventResource_getEventById
       parameters:
@@ -532,7 +589,7 @@ paths:
   /v1/led:
     get:
       tags:
-      - LED
+      - EFATURA LED
       summary: Lista de LEDs.
       operationId: LedResource_getAllLeds
       responses:
@@ -554,7 +611,7 @@ paths:
         - cv_ef_led_read
     post:
       tags:
-      - LED
+      - EFATURA LED
       summary: Regista uma nova LED.
       operationId: LedResource_createLed
       requestBody:
@@ -579,7 +636,7 @@ paths:
   /v1/led/{LedCode}:
     get:
       tags:
-      - LED
+      - EFATURA LED
       summary: Consulta de LED com código.
       operationId: LedResource_getLedByCode
       parameters:
@@ -604,7 +661,7 @@ paths:
         - cv_ef_led_read
     put:
       tags:
-      - LED
+      - EFATURA LED
       summary: Atualiza uma LED.
       operationId: LedResource_updateLed
       parameters:
@@ -634,7 +691,7 @@ paths:
         - cv_ef_led_update
     delete:
       tags:
-      - LED
+      - EFATURA LED
       summary: Elimina uma LED sem DFEs associados.
       operationId: LedResource_deleteLed
       parameters:
@@ -660,7 +717,7 @@ paths:
   /v1/opacc/accountant-customer:
     get:
       tags:
-      - OPACC
+      - DNRE OPACC
       summary: Lista de contribuintes que são clientes do contabilista certificado
         representado pelo utilizador autenticado.
       operationId: OpaccResource_getAccountantCustomers
@@ -679,7 +736,7 @@ paths:
       - SecurityScheme: []
     post:
       tags:
-      - OPACC
+      - DNRE OPACC
       summary: Regista um contribuinte como um cliente de um contabilista certificado.
       operationId: OpaccResource_createAccountantCustomer
       requestBody:
@@ -703,7 +760,7 @@ paths:
   /v1/opacc/accountant-customer/{CustomerId}:
     delete:
       tags:
-      - OPACC
+      - DNRE OPACC
       summary: Elimina um contribuinte como um cliente de um contabilista certificado.
       operationId: OpaccResource_deleteAccountantCustomer
       parameters:
@@ -728,7 +785,7 @@ paths:
   /v1/opacc/accountant-list:
     get:
       tags:
-      - OPACC
+      - DNRE OPACC
       summary: Lista Nacional de Auditores e Contabilistas Certificados Autorizados.
       operationId: OpaccResource_getAccountants
       responses:
@@ -747,7 +804,7 @@ paths:
         - cv_ef_opacc_read_accountant_list
     post:
       tags:
-      - OPACC
+      - DNRE OPACC
       summary: Carrega na PE a Lista Nacional de Auditores e Contabilistas Certificados
         Autorizados.
       operationId: OpaccResource_uploadAccountants
@@ -780,10 +837,10 @@ paths:
   /v1/software:
     get:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Lista de aplicações (software) de faturação/transmissão registadas
         na Plataforma Eletrónica.
-      operationId: SoftwareResource_readSoftwarePublicList
+      operationId: SoftwareResource_readSoftwareThatAuthUserCanSee
       responses:
         "200":
           description: OK
@@ -801,7 +858,7 @@ paths:
   /v1/software/customer:
     get:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Lista contribuintes clientes de software.
       operationId: SoftwareResource_readSoftwareCustomerList
       responses:
@@ -820,7 +877,7 @@ paths:
         - cv_ef_sw_ctm_read
     post:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Regista um novo contribuinte cliente de software.
       operationId: SoftwareResource_createSoftwareCustomer
       requestBody:
@@ -845,7 +902,7 @@ paths:
   /v1/software/customer/{Id}:
     get:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Consulta contribuinte cliente de software com ID.
       operationId: SoftwareResource_readSoftwareCustomerById
       parameters:
@@ -870,7 +927,7 @@ paths:
         - cv_ef_sw_ctm_read
     put:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Atualiza um contribuinte cliente de software.
       operationId: SoftwareResource_updateSoftwareCustomer
       parameters:
@@ -900,7 +957,7 @@ paths:
         - cv_ef_sw_ctm_update
     delete:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Elimina um contribuinte cliente de software.
       operationId: SoftwareResource_deleteSoftwareCustomer
       parameters:
@@ -926,7 +983,7 @@ paths:
   /v1/software/customer/{Id}/enabled:
     put:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Ativa/Desativa um contribuinte cliente de software.
       operationId: SoftwareResource_updateSoftwareCustomerEnabled
       parameters:
@@ -957,7 +1014,7 @@ paths:
   /v1/software/group-member:
     get:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Lista de membros de grupo de software.
       operationId: SoftwareResource_readSoftwareGroupMemberList
       responses:
@@ -976,7 +1033,7 @@ paths:
         - cv_ef_sw_gm_read
     post:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Regista novo membro de grupo de software.
       operationId: SoftwareResource_createSoftwareGroupMember
       requestBody:
@@ -1001,7 +1058,7 @@ paths:
   /v1/software/group-member/{Id}:
     get:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Consulta de membro de grupo de software com ID.
       operationId: SoftwareResource_readSoftwareGroupMemberById
       parameters:
@@ -1026,7 +1083,7 @@ paths:
         - cv_ef_sw_gm_read
     put:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Atualiza um membro de grupo de software.
       operationId: SoftwareResource_updateSoftwareGroupMember
       parameters:
@@ -1056,7 +1113,7 @@ paths:
         - cv_ef_sw_gm_update
     delete:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Elimina um membro de grupo de software.
       operationId: SoftwareResource_deleteSoftwareGroupMember
       parameters:
@@ -1082,7 +1139,7 @@ paths:
   /v1/software/transmitter:
     get:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Lista de transmissores associados a software.
       operationId: SoftwareResource_readSoftwareTransmitterList
       responses:
@@ -1101,7 +1158,7 @@ paths:
         - cv_ef_sw_tmt_read
     post:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Regista novo transmissor.
       operationId: SoftwareResource_createSoftwareTransmitter
       requestBody:
@@ -1126,7 +1183,7 @@ paths:
   /v1/software/transmitter/{Id}:
     get:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Consulta transmissor com ID.
       operationId: SoftwareResource_readSoftwareTransmitterById
       parameters:
@@ -1151,7 +1208,7 @@ paths:
         - cv_ef_sw_tmt_read
     put:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Atualiza um transmissor.
       operationId: SoftwareResource_updateSoftwareTransmitter
       parameters:
@@ -1181,7 +1238,7 @@ paths:
         - cv_ef_sw_tmt_update
     delete:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Elimina um transmissor.
       operationId: SoftwareResource_deleteSoftwareTransmitter
       parameters:
@@ -1207,7 +1264,7 @@ paths:
   /v1/software/transmitter/{Id}/enabled:
     put:
       tags:
-      - SOFTWARE
+      - EFATURA SOFTWARE
       summary: Ativa/Desativa um transmissor.
       operationId: SoftwareResource_updateSoftwareTransmitterEnabled
       parameters:
@@ -1238,7 +1295,7 @@ paths:
   /v1/taxpayer/search:
     get:
       tags:
-      - TAXPAYER
+      - DNRE TAXPAYER/USER
       summary: Pesquisa contribuintes por NIF e/ou Nome.
       operationId: TaxPayerResource_search
       parameters:
@@ -1275,7 +1332,7 @@ paths:
   /v2/dfe:
     get:
       tags:
-      - DFE
+      - EFATURA DFE
       summary: Lista de DFEs que suporta paginação.
       operationId: DfeResource_getDfeSummaryListV2
       parameters:
@@ -1359,7 +1416,7 @@ paths:
   /v2/event:
     get:
       tags:
-      - EVENT
+      - EFATURA EVENT
       summary: Lista de eventos que suporta paginação.
       operationId: EventResource_getEventListV2
       parameters:
@@ -1437,40 +1494,40 @@ components:
     Address:
       type: object
       properties:
+        CountryCode:
+          type: string
         AddressCode:
           type: string
         AddressDetail:
           type: string
-        BuildingFloor:
-          type: string
-        BuildingName:
-          type: string
-        BuildingNumber:
+        State:
           type: string
         City:
           type: string
-        CountryCode:
-          type: string
-        PostalCode:
-          type: string
         Region:
-          type: string
-        State:
           type: string
         Street:
           type: string
         StreetDetail:
           type: string
+        BuildingName:
+          type: string
+        BuildingNumber:
+          type: string
+        BuildingFloor:
+          type: string
+        PostalCode:
+          type: string
     Contacts:
       type: object
       properties:
-        Email:
+        Telephone:
           type: string
         Mobilephone:
           type: string
         Telefax:
           type: string
-        Telephone:
+        Email:
           type: string
         Website:
           type: string
@@ -1568,9 +1625,14 @@ components:
         Note:
           type: string
         AuthorizedDateTime:
-          type: string
+          $ref: '#/components/schemas/Date'
         CanceledDateTime:
+          $ref: '#/components/schemas/Date'
+        CanceledByDfeId:
           type: string
+        ReferencePayableAmountSum:
+          format: double
+          type: number
     DfeDiscount:
       type: object
       properties:
@@ -1598,7 +1660,7 @@ components:
         OrderLineReference:
           type: string
         Quantity:
-          $ref: '#/components/schemas/DfeLineQuantity'
+          $ref: '#/components/schemas/DfeQuantity'
         Price:
           format: double
           type: number
@@ -1613,7 +1675,7 @@ components:
         Taxes:
           type: array
           items:
-            $ref: '#/components/schemas/DfeLineTax'
+            $ref: '#/components/schemas/DfeTax'
         Item:
           $ref: '#/components/schemas/DfeLineItem'
     DfeLineItem:
@@ -1621,6 +1683,8 @@ components:
       properties:
         Description:
           type: string
+        PackQuantity:
+          $ref: '#/components/schemas/DfeQuantity'
         Name:
           type: string
         BrandName:
@@ -1637,34 +1701,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DfeProperty'
-    DfeLineQuantity:
-      type: object
-      properties:
-        UnitCode:
-          type: string
-        Value:
-          format: double
-          type: number
-    DfeLineTax:
-      type: object
-      properties:
-        TaxTypeCode:
-          type: string
-        StampTaxCode:
-          format: int32
-          type: integer
-        TaxPercentage:
-          format: double
-          type: number
-        TaxAmount:
-          format: double
-          type: number
-        TaxExemptionReasonCode:
-          format: int32
-          type: integer
-        TaxTotal:
-          format: double
-          type: number
     DfeListPaginationResponse:
       type: object
       properties:
@@ -1683,7 +1719,7 @@ components:
         payload:
           type: object
           allOf:
-          - $ref: '#/components/schemas/ItemsPaginationObject'
+          - $ref: '#/components/schemas/ItemsPaginationDfeSummary'
           xml:
             name: Payload
       xml:
@@ -1731,11 +1767,11 @@ components:
     DfePayeeFinancialAccount:
       type: object
       properties:
-        AccountNumber:
-          type: string
         NIB:
           type: string
         Name:
+          type: string
+        AccountNumber:
           type: string
     DfePayment:
       type: object
@@ -1779,6 +1815,16 @@ components:
           type: string
         Value:
           type: string
+    DfeQuantity:
+      type: object
+      properties:
+        UnitCode:
+          type: string
+        IsStandardUnitCode:
+          type: boolean
+        Value:
+          format: double
+          type: number
     DfeReference:
       type: object
       properties:
@@ -1792,7 +1838,7 @@ components:
         Taxes:
           type: array
           items:
-            $ref: '#/components/schemas/DfeLineTax'
+            $ref: '#/components/schemas/DfeTax'
     DfeRentReceipt:
       type: object
       properties:
@@ -1807,10 +1853,10 @@ components:
         RentTypeCode:
           format: int32
           type: integer
-        ReferencePeriod:
-          type: string
         Address:
           $ref: '#/components/schemas/Address'
+        ReferencePeriod:
+          type: string
     DfeSelfBilling:
       type: object
       properties:
@@ -1847,6 +1893,10 @@ components:
         documentNumber:
           format: int32
           type: integer
+        smsSent:
+          type: boolean
+        emailSent:
+          type: boolean
     DfeStandardIdentification:
       type: object
       properties:
@@ -1865,9 +1915,16 @@ components:
         DocumentTypeCode:
           format: int32
           type: integer
+        DocumentNumber:
+          format: int32
+          type: integer
+        InnerDocumentNumber:
+          type: string
         LedCode:
           format: int32
           type: integer
+        Serie:
+          type: string
         EmitterTaxId:
           format: int32
           type: integer
@@ -1898,6 +1955,26 @@ components:
           $ref: '#/components/schemas/Date'
         IssueDirection:
           type: string
+    DfeTax:
+      type: object
+      properties:
+        TaxTypeCode:
+          type: string
+        StampTaxCode:
+          format: int32
+          type: integer
+        TaxPercentage:
+          format: double
+          type: number
+        TaxAmount:
+          format: double
+          type: number
+        TaxExemptionReasonCode:
+          format: int32
+          type: integer
+        TaxTotal:
+          format: double
+          type: number
     DfeTotals:
       type: object
       properties:
@@ -2035,8 +2112,6 @@ components:
           $ref: '#/components/schemas/Address'
         Contacts:
           $ref: '#/components/schemas/Contacts'
-        Reference:
-          type: string
     EfSoftware:
       type: object
       properties:
@@ -2126,7 +2201,7 @@ components:
         payload:
           type: object
           allOf:
-          - $ref: '#/components/schemas/ItemsPaginationObject'
+          - $ref: '#/components/schemas/ItemsPaginationEventSummary'
           xml:
             name: Payload
       xml:
@@ -2168,7 +2243,7 @@ components:
           type: string
         AuthorizedDate:
           $ref: '#/components/schemas/Date'
-    ItemsPaginationItemsPaginationObject:
+    ItemsPaginationDfeSummary:
       type: object
       properties:
         allPagesItemCount:
@@ -2176,19 +2251,19 @@ components:
           type: integer
           xml:
             name: AllPagesItemCount
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ItemsPaginationObject'
-          xml:
-            name: Items
-            wrapped: true
         pageCount:
           format: int32
           type: integer
           xml:
             name: PageCount
-    ItemsPaginationObject:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DfeSummary'
+          xml:
+            name: Items
+            wrapped: true
+    ItemsPaginationEventSummary:
       type: object
       properties:
         allPagesItemCount:
@@ -2196,20 +2271,18 @@ components:
           type: integer
           xml:
             name: AllPagesItemCount
-        items:
-          type: array
-          items:
-            type: object
-            xml:
-              name: Item
-          xml:
-            name: Items
-            wrapped: true
         pageCount:
           format: int32
           type: integer
           xml:
             name: PageCount
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventSummary'
+          xml:
+            name: Items
+            wrapped: true
     LedDto:
       type: object
       properties:
@@ -2235,25 +2308,6 @@ components:
           type: string
           xml:
             name: Code
-        dateTime:
-          type: string
-          allOf:
-          - $ref: '#/components/schemas/Date'
-          xml:
-            name: DateTime
-        description:
-          type: string
-          xml:
-            name: Description
-        index:
-          format: int32
-          type: integer
-          xml:
-            name: Index
-        location:
-          type: string
-          xml:
-            name: Location
         source:
           type: string
           xml:
@@ -2262,6 +2316,25 @@ components:
           type: string
           xml:
             name: Type
+        description:
+          type: string
+          xml:
+            name: Description
+        dateTime:
+          type: string
+          allOf:
+          - $ref: '#/components/schemas/Date'
+          xml:
+            name: DateTime
+        location:
+          type: string
+          xml:
+            name: Location
+        index:
+          format: int32
+          type: integer
+          xml:
+            name: Index
     OpaccAccountantCustomerCreateDto:
       type: object
       properties:
@@ -2790,7 +2863,7 @@ components:
             name: Payload
       xml:
         name: Response
-    PayloadProcessingResponseString:
+    PayloadStringProcessingResponse:
       type: object
       properties:
         messages:
@@ -2871,6 +2944,8 @@ components:
           type: string
         TaxPayerSize:
           type: string
+        HasCeasedActivities:
+          type: boolean
     SoftwareCustomerDto:
       type: object
       properties:

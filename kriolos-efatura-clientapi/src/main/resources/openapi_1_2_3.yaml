@@ -9,7 +9,7 @@ info:
   license:
     name: Termos de Uso
     url: https://efatura.cv
-  version: 1.1.0
+  version: 1.2.0
 externalDocs:
   description: Manual Técnico
   url: https://efatura.cv/docs/manual
@@ -24,6 +24,8 @@ tags:
   description: Recurso para interagir com eventos.
 - name: LED
   description: Recurso para interagir com LEDs.
+- name: OPACC
+  description: Recurso para interagir com OPACC.
 - name: SOFTWARE
   description: Recurso para interagir com software.
 - name: TAXPAYER
@@ -66,7 +68,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_cert_read
-        - cv_ef_cert_all
   /v1/data/pe-date-time:
     get:
       tags:
@@ -77,10 +78,10 @@ paths:
         "200":
           description: OK
           content:
-            application/xml:
+            application/json:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseString'
-            application/json:
+            application/xml:
               schema:
                 $ref: '#/components/schemas/PayloadProcessingResponseString'
   /v1/dfe:
@@ -159,7 +160,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_list
-        - cv_ef_dfe_all
     post:
       tags:
       - DFE
@@ -199,12 +199,11 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_create
-        - cv_ef_dfe_all
     delete:
       tags:
       - DFE
       summary: Elimina todos os DFEs e os respetivos eventos no repositório de Homologação/Teste.
-      operationId: DfeResource_deleteDfeEvent
+      operationId: DfeResource_deleteDfeAndEvent
       parameters:
       - name: cv-ef-repository-code
         in: header
@@ -227,7 +226,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_delete
-        - cv_ef_dfe_all
   /v1/dfe/pdf/{Id}:
     get:
       tags:
@@ -261,7 +259,36 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_iud
-        - cv_ef_dfe_all
+  /v1/dfe/self-billing/authorize:
+    post:
+      tags:
+      - DFE
+      summary: Pedido de autorização para autofaturação.
+      operationId: DfeResource_authorizeSelfBilling
+      parameters:
+      - name: cv-ef-repository-code
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DfeSelfBillingAuthorizeRequest'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseDfeSelfBillingAuthorizeResponse'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_dfe_self_billing_authorize
   /v1/dfe/xml/{Id}:
     get:
       tags:
@@ -296,7 +323,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_iud
-        - cv_ef_dfe_all
   /v1/dfe/{Id}:
     get:
       tags:
@@ -330,7 +356,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_iud
-        - cv_ef_dfe_all
   /v1/event:
     get:
       tags:
@@ -399,7 +424,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_read
-        - cv_ef_event_all
     post:
       tags:
       - EVENT
@@ -439,7 +463,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_create
-        - cv_ef_event_all
   /v1/event/xml/{Id}:
     get:
       tags:
@@ -473,7 +496,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_read
-        - cv_ef_event_all
   /v1/event/{Id}:
     get:
       tags:
@@ -507,20 +529,22 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_read
-        - cv_ef_event_all
   /v1/led:
     get:
       tags:
       - LED
       summary: Lista de LEDs.
-      operationId: LedResource_readList
+      operationId: LedResource_getAllLeds
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseListLedEntity'
+                $ref: '#/components/schemas/PayloadProcessingResponseListLedDto'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseListLedDto'
         "401":
           description: Not Authorized
         "403":
@@ -528,24 +552,23 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_read
-        - cv_ef_led_all
     post:
       tags:
       - LED
-      summary: Regista um novo LED.
-      operationId: LedResource_create
+      summary: Regista uma nova LED.
+      operationId: LedResource_createLed
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LedEntity'
+              $ref: '#/components/schemas/SaveLedDto'
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseLedEntity'
+                $ref: '#/components/schemas/PayloadProcessingResponseLedDto'
         "401":
           description: Not Authorized
         "403":
@@ -553,13 +576,12 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_create
-        - cv_ef_led_all
   /v1/led/{LedCode}:
     get:
       tags:
       - LED
       summary: Consulta de LED com código.
-      operationId: LedResource_readByCode
+      operationId: LedResource_getLedByCode
       parameters:
       - name: LedCode
         in: path
@@ -572,7 +594,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseLedEntity'
+                $ref: '#/components/schemas/PayloadProcessingResponseLedDto'
         "401":
           description: Not Authorized
         "403":
@@ -580,12 +602,11 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_read
-        - cv_ef_led_all
     put:
       tags:
       - LED
-      summary: Atualiza um LED.
-      operationId: LedResource_update
+      summary: Atualiza uma LED.
+      operationId: LedResource_updateLed
       parameters:
       - name: LedCode
         in: path
@@ -596,14 +617,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LedEntity'
+              $ref: '#/components/schemas/SaveLedDto'
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseLedEntity'
+                $ref: '#/components/schemas/PayloadProcessingResponseLedDto'
         "401":
           description: Not Authorized
         "403":
@@ -611,12 +632,11 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_update
-        - cv_ef_led_all
     delete:
       tags:
       - LED
-      summary: Elimina um LED sem DFEs associados.
-      operationId: LedResource_delete
+      summary: Elimina uma LED sem DFEs associados.
+      operationId: LedResource_deleteLed
       parameters:
       - name: LedCode
         in: path
@@ -637,7 +657,126 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_led_delete
-        - cv_ef_led_all
+  /v1/opacc/accountant-customer:
+    get:
+      tags:
+      - OPACC
+      summary: Lista de contribuintes que são clientes do contabilista certificado
+        representado pelo utilizador autenticado.
+      operationId: OpaccResource_getAccountantCustomers
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseListOpaccAccountantCustomerDto'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme: []
+    post:
+      tags:
+      - OPACC
+      summary: Regista um contribuinte como um cliente de um contabilista certificado.
+      operationId: OpaccResource_createAccountantCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpaccAccountantCustomerCreateDto'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseOpaccAccountantCustomerDto'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme: []
+  /v1/opacc/accountant-customer/{CustomerId}:
+    delete:
+      tags:
+      - OPACC
+      summary: Elimina um contribuinte como um cliente de um contabilista certificado.
+      operationId: OpaccResource_deleteAccountantCustomer
+      parameters:
+      - name: CustomerId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessingResponse'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme: []
+  /v1/opacc/accountant-list:
+    get:
+      tags:
+      - OPACC
+      summary: Lista Nacional de Auditores e Contabilistas Certificados Autorizados.
+      operationId: OpaccResource_getAccountants
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadProcessingResponseListOpaccAccountantDto'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_opacc_read_accountant_list
+    post:
+      tags:
+      - OPACC
+      summary: Carrega na PE a Lista Nacional de Auditores e Contabilistas Certificados
+        Autorizados.
+      operationId: OpaccResource_uploadAccountants
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  format: binary
+                  type: string
+            encoding:
+              file:
+                contentType: application/octet-stream
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessingResponse'
+        "401":
+          description: Not Authorized
+        "403":
+          description: Not Allowed
+      security:
+      - SecurityScheme:
+        - cv_ef_opacc_upload_accountant_list
   /v1/software:
     get:
       tags:
@@ -659,7 +798,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_read_list
-        - cv_ef_sw_all
   /v1/software/customer:
     get:
       tags:
@@ -680,8 +818,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_read
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
     post:
       tags:
       - SOFTWARE
@@ -706,8 +842,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_create
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
   /v1/software/customer/{Id}:
     get:
       tags:
@@ -734,8 +868,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_read
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
     put:
       tags:
       - SOFTWARE
@@ -766,8 +898,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_update
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
     delete:
       tags:
       - SOFTWARE
@@ -793,8 +923,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_delete
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
   /v1/software/customer/{Id}/enabled:
     put:
       tags:
@@ -826,8 +954,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_ctm_update
-        - cv_ef_sw_ctm_all
-        - cv_ef_sw_all
   /v1/software/group-member:
     get:
       tags:
@@ -848,8 +974,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_read
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
     post:
       tags:
       - SOFTWARE
@@ -874,8 +998,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_create
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
   /v1/software/group-member/{Id}:
     get:
       tags:
@@ -902,8 +1024,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_read
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
     put:
       tags:
       - SOFTWARE
@@ -934,8 +1054,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_update
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
     delete:
       tags:
       - SOFTWARE
@@ -961,8 +1079,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_gm_delete
-        - cv_ef_sw_gm_all
-        - cv_ef_sw_all
   /v1/software/transmitter:
     get:
       tags:
@@ -983,8 +1099,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_read
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
     post:
       tags:
       - SOFTWARE
@@ -1009,8 +1123,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_create
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
   /v1/software/transmitter/{Id}:
     get:
       tags:
@@ -1037,8 +1149,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_read
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
     put:
       tags:
       - SOFTWARE
@@ -1069,8 +1179,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_update
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
     delete:
       tags:
       - SOFTWARE
@@ -1096,8 +1204,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_delete
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
   /v1/software/transmitter/{Id}/enabled:
     put:
       tags:
@@ -1129,8 +1235,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_sw_tmt_update
-        - cv_ef_sw_tmt_all
-        - cv_ef_sw_all
   /v1/taxpayer/search:
     get:
       tags:
@@ -1160,7 +1264,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayloadProcessingResponseListTaxPayerCv'
+                $ref: '#/components/schemas/PayloadProcessingResponseListSearchTaxPayerResponseDto'
         "401":
           description: Not Authorized
         "403":
@@ -1168,7 +1272,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_tp_search
-        - cv_ef_tp_all
   /v2/dfe:
     get:
       tags:
@@ -1253,7 +1356,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_dfe_read_list
-        - cv_ef_dfe_all
   /v2/event:
     get:
       tags:
@@ -1330,7 +1432,6 @@ paths:
       security:
       - SecurityScheme:
         - cv_ef_event_read
-        - cv_ef_event_all
 components:
   schemas:
     Address:
@@ -1373,6 +1474,11 @@ components:
           type: string
         Website:
           type: string
+    CvRegion:
+      enum:
+      - B
+      - S
+      type: string
     Date:
       format: date
       type: string
@@ -1384,16 +1490,20 @@ components:
           type: string
         Version:
           type: string
-        Transmission:
-          $ref: '#/components/schemas/EfTransmission'
         RepositoryCode:
           format: int32
           type: integer
+        Transmission:
+          $ref: '#/components/schemas/EfTransmission'
         DocumentTypeCode:
           format: int32
           type: integer
         IsSpecimen:
           type: boolean
+        IsIsolatedAct:
+          type: boolean
+        SelfBilling:
+          $ref: '#/components/schemas/DfeSelfBilling'
         LedCode:
           format: int32
           type: integer
@@ -1404,6 +1514,8 @@ components:
         DocumentNumber:
           format: int32
           type: integer
+        InnerDocumentNumber:
+          type: string
         IssueDate:
           type: string
         IssueTime:
@@ -1418,6 +1530,8 @@ components:
           type: string
         IssueReasonDescription:
           type: string
+        RappelPeriod:
+          $ref: '#/components/schemas/EfDatePeriod'
         EmitterParty:
           $ref: '#/components/schemas/EfParty'
         ReceiverParty:
@@ -1453,6 +1567,8 @@ components:
             $ref: '#/components/schemas/DfeReference'
         Note:
           type: string
+        AuthorizedDateTime:
+          type: string
         CanceledDateTime:
           type: string
     DfeDiscount:
@@ -1466,10 +1582,10 @@ components:
     DfeFiscalDocument:
       type: object
       properties:
-        Value:
-          type: string
         IsOldDocument:
           type: boolean
+        Value:
+          type: string
     DfeLine:
       type: object
       properties:
@@ -1559,23 +1675,17 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
+          type: object
           allOf:
           - $ref: '#/components/schemas/ItemsPaginationObject'
-          - xml:
-              name: Payload
+          xml:
+            name: Payload
       xml:
         name: Response
     DfeListProcessingResponse:
@@ -1588,13 +1698,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -1708,6 +1811,42 @@ components:
           type: string
         Address:
           $ref: '#/components/schemas/Address'
+    DfeSelfBilling:
+      type: object
+      properties:
+        AuthorizationId:
+          type: string
+        AuthorizationCode:
+          type: string
+    DfeSelfBillingAuthorizeRequest:
+      type: object
+      properties:
+        taxId:
+          type: string
+        documentTypeCode:
+          type: string
+        mobilePhoneNumber:
+          type: string
+        totalAmount:
+          type: string
+    DfeSelfBillingAuthorizeResponse:
+      type: object
+      properties:
+        authorizationId:
+          $ref: '#/components/schemas/UUID'
+        authorizationCodeExpirationSeconds:
+          format: int32
+          type: integer
+        iud:
+          type: string
+        serie:
+          type: string
+        ledCode:
+          format: int32
+          type: integer
+        documentNumber:
+          format: int32
+          type: integer
     DfeStandardIdentification:
       type: object
       properties:
@@ -1720,19 +1859,41 @@ components:
       properties:
         Id:
           type: string
-        EmitterTaxId:
+        IssueMode:
           format: int32
           type: integer
-        ReceiverTaxId:
-          type: string
         DocumentTypeCode:
           format: int32
           type: integer
         LedCode:
           format: int32
           type: integer
+        EmitterTaxId:
+          format: int32
+          type: integer
+        EmitterName:
+          type: string
+        ReceiverTaxIdCountryCode:
+          type: string
+        ReceiverTaxId:
+          type: string
+        ReceiverName:
+          type: string
+        SoftwareCode:
+          type: string
+        PayableAmount:
+          format: double
+          type: number
+        TaxTotalAmount:
+          format: double
+          type: number
+        IssueDateTime:
+          $ref: '#/components/schemas/Date'
         AuthorizedDateTime:
           $ref: '#/components/schemas/Date'
+        IssueAuthorizedDelayMilliseconds:
+          format: int64
+          type: integer
         CanceledDateTime:
           $ref: '#/components/schemas/Date'
         IssueDirection:
@@ -1810,6 +1971,13 @@ components:
           type: integer
         ReasonDescription:
           type: string
+    EfDatePeriod:
+      type: object
+      properties:
+        StartDate:
+          type: string
+        EndDate:
+          type: string
     EfEntriesProcessingResponse:
       type: object
       properties:
@@ -1831,13 +1999,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -1848,10 +2009,11 @@ components:
           xml:
             name: EntryName
         authorizedDateTime:
+          type: string
           allOf:
           - $ref: '#/components/schemas/Date'
-          - xml:
-              name: AuthorizedDateTime
+          xml:
+            name: AuthorizedDateTime
         signatureTimeStamp:
           type: string
           xml:
@@ -1910,11 +2072,11 @@ components:
           type: string
         Version:
           type: string
-        Transmission:
-          $ref: '#/components/schemas/EfTransmission'
         RepositoryCode:
           format: int32
           type: integer
+        Transmission:
+          $ref: '#/components/schemas/EfTransmission'
         EventTypeCode:
           type: string
         EmitterTaxId:
@@ -1956,23 +2118,17 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
+          type: object
           allOf:
           - $ref: '#/components/schemas/ItemsPaginationObject'
-          - xml:
-              name: Payload
+          xml:
+            name: Payload
       xml:
         name: Response
     EventListProcessingResponse:
@@ -1985,13 +2141,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2061,40 +2210,21 @@ components:
           type: integer
           xml:
             name: PageCount
-    LedEntity:
+    LedDto:
       type: object
       properties:
-        id:
-          type: string
-        taxId:
-          format: int32
-          maximum: 999999999
-          minimum: 100000000
-          type: integer
         code:
           format: int32
-          maximum: 99999
-          minimum: 1
           type: integer
         description:
-          maxLength: 200
-          minLength: 5
           type: string
         serie:
-          maxLength: 20
-          minLength: 1
           type: string
         addressCode:
-          maxLength: 20
-          minLength: 20
           type: string
         addressDetail:
-          maxLength: 200
-          minLength: 10
           type: string
         softwareCode:
-          maxLength: 10
-          minLength: 3
           type: string
         created:
           $ref: '#/components/schemas/Date'
@@ -2106,10 +2236,11 @@ components:
           xml:
             name: Code
         dateTime:
+          type: string
           allOf:
           - $ref: '#/components/schemas/Date'
-          - xml:
-              name: DateTime
+          xml:
+            name: DateTime
         description:
           type: string
           xml:
@@ -2131,6 +2262,54 @@ components:
           type: string
           xml:
             name: Type
+    OpaccAccountantCustomerCreateDto:
+      type: object
+      properties:
+        customerTaxId:
+          type: string
+    OpaccAccountantCustomerDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+        customerTaxId:
+          format: int32
+          type: integer
+        customerName:
+          type: string
+        customerJoinedPe:
+          type: boolean
+        accountantTaxId:
+          format: int32
+          type: integer
+        createdAt:
+          $ref: '#/components/schemas/Date'
+    OpaccAccountantDto:
+      type: object
+      properties:
+        taxId:
+          format: int32
+          type: integer
+        name:
+          type: string
+        opaccId:
+          format: int32
+          type: integer
+        region:
+          $ref: '#/components/schemas/CvRegion'
+        category:
+          $ref: '#/components/schemas/OpaccCategory'
+        createdAt:
+          $ref: '#/components/schemas/Date'
+        userJoinedPe:
+          type: boolean
+    OpaccCategory:
+      enum:
+      - A
+      - C
+      - SA
+      - SC
+      type: string
     PayloadProcessingResponseBoolean:
       type: object
       properties:
@@ -2141,13 +2320,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2169,23 +2341,40 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
+          type: object
           allOf:
           - $ref: '#/components/schemas/Dfe'
-          - xml:
-              name: Payload
+          xml:
+            name: Payload
+      xml:
+        name: Response
+    PayloadProcessingResponseDfeSelfBillingAuthorizeResponse:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
+        payload:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/DfeSelfBillingAuthorizeResponse'
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseEvent:
@@ -2198,26 +2387,20 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
+          type: object
           allOf:
           - $ref: '#/components/schemas/Event'
-          - xml:
-              name: Payload
+          xml:
+            name: Payload
       xml:
         name: Response
-    PayloadProcessingResponseLedEntity:
+    PayloadProcessingResponseLedDto:
       type: object
       properties:
         messages:
@@ -2227,26 +2410,20 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
+          type: object
           allOf:
-          - $ref: '#/components/schemas/LedEntity'
-          - xml:
-              name: Payload
+          - $ref: '#/components/schemas/LedDto'
+          xml:
+            name: Payload
       xml:
         name: Response
-    PayloadProcessingResponseListLedEntity:
+    PayloadProcessingResponseListLedDto:
       type: object
       properties:
         messages:
@@ -2256,13 +2433,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2271,7 +2441,76 @@ components:
         payload:
           type: array
           items:
-            $ref: '#/components/schemas/LedEntity'
+            $ref: '#/components/schemas/LedDto'
+          xml:
+            name: Payload
+      xml:
+        name: Response
+    PayloadProcessingResponseListOpaccAccountantCustomerDto:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
+        payload:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpaccAccountantCustomerDto'
+          xml:
+            name: Payload
+      xml:
+        name: Response
+    PayloadProcessingResponseListOpaccAccountantDto:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
+        payload:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpaccAccountantDto'
+          xml:
+            name: Payload
+      xml:
+        name: Response
+    PayloadProcessingResponseListSearchTaxPayerResponseDto:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
+        payload:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchTaxPayerResponseDto'
           xml:
             name: Payload
       xml:
@@ -2286,13 +2525,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2316,13 +2548,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2346,13 +2571,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2376,13 +2594,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2392,36 +2603,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SoftwareTransmitterDto'
-          xml:
-            name: Payload
-      xml:
-        name: Response
-    PayloadProcessingResponseListTaxPayerCv:
-      type: object
-      properties:
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
-          xml:
-            name: Messages
-            wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
-        succeeded:
-          type: boolean
-          xml:
-            name: Succeeded
-            attribute: true
-        payload:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaxPayerCv'
           xml:
             name: Payload
       xml:
@@ -2436,13 +2617,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2451,6 +2625,29 @@ components:
         payload:
           format: int64
           type: integer
+          xml:
+            name: Payload
+      xml:
+        name: Response
+    PayloadProcessingResponseOpaccAccountantCustomerDto:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
+        payload:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OpaccAccountantCustomerDto'
           xml:
             name: Payload
       xml:
@@ -2465,23 +2662,17 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
+          type: object
           allOf:
           - $ref: '#/components/schemas/SoftwareCustomerDto'
-          - xml:
-              name: Payload
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareCustomerEntity:
@@ -2494,23 +2685,17 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
+          type: object
           allOf:
           - $ref: '#/components/schemas/SoftwareCustomerEntity'
-          - xml:
-              name: Payload
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareGroupMemberDto:
@@ -2523,23 +2708,17 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
+          type: object
           allOf:
           - $ref: '#/components/schemas/SoftwareGroupMemberDto'
-          - xml:
-              name: Payload
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareGroupMemberEntity:
@@ -2552,23 +2731,17 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
+          type: object
           allOf:
           - $ref: '#/components/schemas/SoftwareGroupMemberEntity'
-          - xml:
-              name: Payload
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareTransmitterDto:
@@ -2581,23 +2754,17 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
+          type: object
           allOf:
           - $ref: '#/components/schemas/SoftwareTransmitterDto'
-          - xml:
-              name: Payload
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseSoftwareTransmitterEntity:
@@ -2610,23 +2777,17 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
             name: Succeeded
             attribute: true
         payload:
+          type: object
           allOf:
           - $ref: '#/components/schemas/SoftwareTransmitterEntity'
-          - xml:
-              name: Payload
+          xml:
+            name: Payload
       xml:
         name: Response
     PayloadProcessingResponseString:
@@ -2639,13 +2800,6 @@ components:
           xml:
             name: Messages
             wrapped: true
-        processedObject:
-          type: object
-          writeOnly: true
-        processingElapsedMilliseconds:
-          format: int64
-          type: integer
-          writeOnly: true
         succeeded:
           type: boolean
           xml:
@@ -2657,6 +2811,66 @@ components:
             name: Payload
       xml:
         name: Response
+    ProcessingResponse:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          xml:
+            name: Messages
+            wrapped: true
+        succeeded:
+          type: boolean
+          xml:
+            name: Succeeded
+            attribute: true
+      xml:
+        name: Response
+    SaveLedDto:
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+        serie:
+          type: string
+        addressCode:
+          type: string
+        addressDetail:
+          type: string
+        softwareCode:
+          type: string
+    SearchTaxPayerResponseDto:
+      type: object
+      properties:
+        TaxId:
+          format: int32
+          type: integer
+        Name:
+          type: string
+        NormalizedName:
+          type: string
+        TypeCode:
+          type: string
+        TypeDescription:
+          type: string
+        TaxAreaCode:
+          format: int32
+          type: integer
+        BI:
+          format: int32
+          type: integer
+        NicLast5Chars:
+          type: string
+        TaxRegimeCode:
+          type: string
+        TaxRegimeDescription:
+          type: string
+        TaxPayerSize:
+          type: string
     SoftwareCustomerDto:
       type: object
       properties:
@@ -2836,38 +3050,10 @@ components:
           $ref: '#/components/schemas/Date'
         updated:
           $ref: '#/components/schemas/Date'
-    TaxPayerCv:
-      type: object
-      properties:
-        Name:
-          type: string
-        NormalizedName:
-          type: string
-        TypeCode:
-          type: string
-        TypeDescription:
-          type: string
-        Email:
-          type: string
-        Mobile:
-          type: string
-        BI:
-          format: int32
-          type: integer
-        IsTaxable:
-          type: boolean
-        NicLast5Chars:
-          type: string
-        TaxAreaCode:
-          format: int32
-          type: integer
-        TaxId:
-          format: int32
-          type: integer
-        TaxRegimeCode:
-          type: string
-        TaxRegimeDescription:
-          type: string
+    UUID:
+      format: uuid
+      pattern: "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
+      type: string
   securitySchemes:
     SecurityScheme:
       type: oauth2
